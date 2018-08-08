@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html style="-webkit-app-region: drag">
+  <head>
+    <meta charset="UTF-8">
+    <title></title>
+	</head>
+	<style>
+		html, body {
+			padding: 0;
+			margin: 0;
+		}
+		body.loading {
+			background: url('loading.svg') center center no-repeat;
+			background-size: 20vw;
+		}
+		webview {
+			height: 100vh;
+			width: 100vw;
+		}
+	</style>
+  <body class="loading">
+		<webview id="wv" src="https://to-do.microsoft.com/"></webview>
+		<script>
+			var wv = document.querySelector('#wv')
+			wv.addEventListener('did-finish-load', (evt) => {
+				document.body.className = ''
+				wv.insertCSS(`
+					#sidebar,.tasksToolbar {
+						-webkit-app-region: drag;
+					}
+					#sidebar {
+						padding-top: 20px;
+					}
+				`)
+			})
+		</script>
+  </body>
+</html>
