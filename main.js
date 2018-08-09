@@ -16,6 +16,7 @@ let template = [
   }, {
     label: 'View',
     submenu: [
+			{ label: "Refresh", accelerator: "Command+R", click: () => mainWindow.reload() },
       { label: "Close", accelerator: "Command+W", click: () => app.hide() },
     ]
   }
