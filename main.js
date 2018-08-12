@@ -5,26 +5,9 @@ const {app, BrowserWindow, Menu} = require('electron')
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
 
-let template = [
-  {
-    label: "Application",
-    submenu: [
-      { label: "About", selector: "orderFrontStandardAboutPanel:" },
-      { type: "separator" },
-      { label: "Quit", accelerator: "Command+Q", click: () => app.quit() }
-    ]
-  }, {
-    label: 'View',
-    submenu: [
-			{ label: "Refresh", accelerator: "Command+R", click: () => mainWindow.reload() },
-      { label: "Close", accelerator: "Command+W", click: () => app.hide() },
-    ]
-  }
-]
-
 function createWindow () {
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-
+  // 注册菜单
+  registerShorcut()
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -36,32 +19,7 @@ function createWindow () {
       devTools: true
     }
   })
-
-  // globalShortcut.register('Cmd+w', () => {
-  //   mainWindow.close()
-  // })
-  // globalShortcut.register('Cmd+m', () => {
-  //   mainWindow.minimize()
-  // })
-
-  // let titleView = new BrowserView({
-  //   webPreferences: {
-  //     nodeIntegration: false
-  //   }
-  // })
-  // let view = new BrowserView({
-  //   webPreferences: {
-  //     nodeIntegration: false
-  //   }
-  // })
-  // mainWindow.setBrowserView(view)
-  // view.setBounds({ x: 0, y: 0, width: 800, height: 580 })
-  // view.setAutoResize({width: true, height: true})
-  // view.setBackgroundColor('#FFFFFF')
-  // view.webContents.loadURL('https://to-do.microsoft.com/')
-  // and load the index.html of the app.
   mainWindow.loadFile('index.html')
-  // mainWindow.loadURL('https://to-do.microsoft.com/')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
@@ -73,6 +31,63 @@ function createWindow () {
     // when you should delete the corresponding element.
     mainWindow = null
   })
+}
+
+function registerShorcut () {
+  let isZh = app.getLocale() === 'zh-CN'
+  let template = [
+    {
+      label: 'Application',
+      submenu: [
+        {
+          label: isZh ? '关于' : 'About',
+          selector: 'orderFrontStandardAboutPanel:'
+        },
+        { type: 'separator' },
+        {
+          label: isZh ? '退出' : 'Quit',
+          accelerator: 'Command+Q',
+          click: () => app.quit()
+        }
+      ]
+    },
+    {
+      label: isZh ? '编辑' : 'Edit',
+      submenu: [
+        {
+          label: isZh ? '新建清单' : 'New List',
+          accelerator: 'Command+N',
+          click: () => mainWindow.webContents.send('event-new-list')
+        },
+        {
+          label: isZh ? '新建待办事项' : 'New Todo',
+          accelerator: 'Command+Shift+N',
+          click: () => mainWindow.webContents.send('event-new-todo')
+        },
+        {
+          label: isZh ? '搜索' : 'Search',
+          accelerator: 'Command+F',
+          click: () => mainWindow.webContents.send('event-search')
+        }
+      ]
+    },
+    {
+      label: isZh ? '视图' : 'View',
+      submenu: [
+        {
+          label: isZh ? '刷新' : 'Refresh',
+          accelerator: 'Command+R',
+          click: () => mainWindow.reload()
+        },
+        {
+          label: isZh ? '关闭' : 'Close',
+          accelerator: 'Command+W',
+          click: () => app.hide()
+        }
+      ]
+    }
+  ]
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 }
 
 // This method will be called when Electron has finished

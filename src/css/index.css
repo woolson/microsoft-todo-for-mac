@@ -1,0 +1,12 @@
+html, body {
+  padding: 0;
+  margin: 0;
+}
+body.loading {
+  background: url('../img/loading.svg') center center no-repeat;
+  background-size: 20vw;
+}
+webview {
+  height: 100vh;
+  width: 100vw;
+}

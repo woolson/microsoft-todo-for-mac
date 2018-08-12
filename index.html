@@ -3,42 +3,11 @@
   <head>
     <meta charset="UTF-8">
     <title></title>
-	</head>
-	<style>
-		html, body {
-			padding: 0;
-			margin: 0;
-		}
-		body.loading {
-			background: url('loading.svg') center center no-repeat;
-			background-size: 20vw;
-		}
-		webview {
-			height: 100vh;
-			width: 100vw;
-		}
-	</style>
+    <script src="./src/js/hotkeys.min.js"></script>
+  </head>
+  <link rel="stylesheet" href="./src/css/index.css">
   <body class="loading">
-		<webview id="wv" src="https://to-do.microsoft.com/"></webview>
-		<script>
-			var wv = document.querySelector('#wv')
-			wv.addEventListener('did-finish-load', (evt) => {
-				document.body.className = ''
-				wv.insertCSS(`
-					#sidebar,.tasksToolbar {
-						-webkit-app-region: drag;
-					}
-					#sidebar {
-						padding-top: 20px;
-					}
-					#sidebar .sidebar-footer {
-						display: none !important;
-					}
-					html:lang(zh) body {
-						font-family: 'PingFangSC-Regular' !important;
-					}
-				`)
-			})
-		</script>
+    <webview id="wv" src="https://to-do.microsoft.com/"></webview>
+    <script src="./src/js/index.js"></script>
   </body>
 </html>
