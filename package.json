@@ -1,6 +1,6 @@
 {
   "name": "to-do",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Electron Todo application",
   "main": "main.js",
   "scripts": {
@@ -36,5 +36,9 @@
         "height": 300
       }
     }
+  },
+  "dependencies": {
+    "electron-config": "^1.0.0",
+    "nedb": "^1.8.0"
   }
 }

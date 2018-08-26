@@ -4,7 +4,7 @@ html, body {
 }
 body.loading {
   background: url('../img/loading.svg') center center no-repeat;
-  background-size: 20vw;
+  background-size: 120px;
 }
 webview {
   height: 100vh;
