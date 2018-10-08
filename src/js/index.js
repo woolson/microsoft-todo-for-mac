@@ -13,7 +13,8 @@ var client = {
     // 插入样式
     this.$wv.addEventListener('did-finish-load', (evt) => {
       wv.insertCSS(`
-        #sidebar,.tasksToolbar {
+        #sidebar,
+        .tasksToolbar {
             -webkit-app-region: drag;
         }
         #sidebar {

@@ -6,7 +6,7 @@ div.home
       h1 Microsoft To-Do
       p 微软出品 — 简洁清爽的TODO清单免费软件
       div
-        a(href="http://public.woolson.cn/file/To-Do-1.4.0.dmg") MacOS
+        a(href="http://public.woolson.cn/file/To-Do-1.4.1.dmg") MacOS
         a(href="https://itunes.apple.com/cn/app/microsoft-to-do/id1212616790?mt=8") iPhone
         a(href="https://www.microsoft.com/zh-cn/p/microsoft-to-do/9nblggh5r558?rtc=1") Window
         a(href="https://play.google.com/store/apps/details?id=com.microsoft.todos") Android
@@ -99,7 +99,6 @@ export default {
       background rgba(black, .3)
       &:hover
         background linear-gradient(45deg, #1C9FFF, #765EE7)
-        border-color transparent
         color white
   section.home__intro
     margin-bottom 50px
