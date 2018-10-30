@@ -1,6 +1,6 @@
 {
   "name": "to-do",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "Electron Todo application",
   "main": "main.js",
   "scripts": {

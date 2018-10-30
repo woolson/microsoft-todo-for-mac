@@ -3,28 +3,31 @@ const { ipcRenderer } = require('electron')
 var client = {
   // webview 元素
   $wv: document.querySelector('#wv'),
+  $nav: document.querySelector('#nav'),
   // 初始化
   init () {
     this.insertCSS()
     this.bindEvent()
   },
-  // 插入CSS
+  // 插入CS
   insertCSS () {
     // 插入样式
     this.$wv.addEventListener('did-finish-load', (evt) => {
       wv.insertCSS(`
-        #sidebar,
-        .tasksToolbar {
-            -webkit-app-region: drag;
-        }
-        #sidebar {
-          padding-top: 20px;
-        }
+        #FlexBoxLeftRegion,
+        #todoHelpBtn,
         #sidebar .sidebar-footer {
           display: none !important;
         }
         body:lang(zh) body {
           font-family: 'PingFangSC-Regular' !important;
+        }
+        html[dir=ltr] body.dark-theme #sidebar {
+          border-right: 1px solid #2D2D2D !important;
+        }
+        body.dark-theme .o365sx-navbar,
+        body.dark-theme .o365sx-button {
+          background-color: #222222 !important;
         }
         body.dark-theme .todayToolbar.active,
         body.dark-theme .todayToolbar-item.active,
@@ -61,12 +64,15 @@ var client = {
         body.dark-theme .userToolbar-name,
         body.dark-theme .taskItem-titleWrapper,
         body.dark-theme .addTask .addTask-input,
-        body.dark-theme .sidebar-inner .listItem .listItem-title {
+        body.dark-theme .sidebar-inner .listItem .listItem-title,
+        body.dark-theme .listTitle,
+        body.dark-theme .button {
         	color: white !important;
         }
         body.dark-theme #main .main-background,
         body.dark-theme .addTask,
-        body.dark-theme #sidebar
+        body.dark-theme #sidebar,
+        body.dark-theme .tasksToolbar
         {
         	background: #333333 !important;
         }
@@ -76,6 +82,9 @@ var client = {
         body.dark-theme .backgroundLines {
         	background: #333333 !important;
         	border-top: 1px solid #2d2d2d !important;
+        }
+        body.dark-theme .taskItem-body {
+          box-shadow: 0 17px 0 -16px #2d2d2d !important;
         }
         body.dark-theme .popover {
           background: #393939 !important;
@@ -114,6 +123,7 @@ var client = {
       `)
       // 设置主题
       let theme = ipcRenderer.sendSync('fetch-theme')
+      this.$nav.style.background = theme === 'dark-theme' ? '#222222' : '#0078D7'
       wv.executeJavaScript(`document.querySelector("body").className = "${theme}"`)
     })
   },
@@ -132,10 +142,12 @@ var client = {
     })
     // 切换暗主题
     ipcRenderer.on('event-dark-theme', () => {
+      this.$nav.style.background = '#222222'
       this.exec('document.querySelector("body").className = "dark-theme"')
     })
     // 切换亮主题
     ipcRenderer.on('event-light-theme', () => {
+      this.$nav.style.background = '#0078D7'
       this.exec('document.querySelector("body").className = ""')
     })
   },

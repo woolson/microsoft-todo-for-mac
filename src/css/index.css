@@ -5,8 +5,19 @@ html, body {
 body.loading {
   background: url('../img/loading.svg') center center no-repeat;
   background-size: 120px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 webview {
-  height: 100vh;
+  flex: 1;
   width: 100vw;
+}
+#nav {
+  background: white;
+  height: 20px;
+  flex-shrink: 0;
+  width: 100vw;
+  -webkit-app-region: drag;
+  cursor: move;
 }
