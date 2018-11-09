@@ -53,10 +53,10 @@ export default {
   data () {
     return {
       etcs: [
-        require('@/assets/etc-01.png'),
-        require('@/assets/etc-02.png'),
-        require('@/assets/etc-03.png'),
-        require('@/assets/etc-04.png')
+        // require('@/assets/etc-01.png'),
+        // require('@/assets/etc-02.png'),
+        require('@/assets/etc-05.png'),
+        require('@/assets/etc-06.png')
       ]
     }
   }
