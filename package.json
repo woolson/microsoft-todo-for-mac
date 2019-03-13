@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "pack": "ELECTRON_MIRROR=https://npm.taobao.org/mirrors/electron/ electron-builder --dir",
+    "dist": "ELECTRON_MIRROR=https://npm.taobao.org/mirrors/electron/ electron-builder"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
