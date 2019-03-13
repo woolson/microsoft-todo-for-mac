@@ -1,6 +1,6 @@
 {
   "name": "to-do",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "Electron Todo application",
   "main": "main.js",
   "scripts": {
@@ -19,7 +19,7 @@
   "author": "GitHub",
   "license": "CC0-1.0",
   "devDependencies": {
-    "electron": "^2.0.6",
+    "electron": "^4.0.8",
     "electron-builder": "^20.27.1"
   },
   "build": {
