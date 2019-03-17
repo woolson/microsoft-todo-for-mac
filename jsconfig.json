@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+        "@/*": ["./src/renderer/*"],
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "static",
+    "dist",
+    "mock",
+    ".nuxt",
+    ".vscode"
+  ]
+}

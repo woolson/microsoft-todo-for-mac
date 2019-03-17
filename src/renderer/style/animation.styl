@@ -1,0 +1,200 @@
+// 全局动画
+
+.u-animation-slide
+  transform translateY(-100%)
+  &.show
+    animation slideDown .3s forwards
+  &.hide
+    animation slideUp .3s forwards
+  &.reverse
+    &.show
+      animation slideUpReverse .3s forwards
+    &.hide
+      animation slideDownReverse .3s forwards
+
+.u-animation-fade
+  &.show
+    animation fadeIn .3s forwards
+  &.hide
+    animation fadeOut .3s forwards
+
+@keyframes slideDown
+  0%
+    transform translateY(-100%)
+    opacity 0
+  100%
+    transform translateY(0%)
+    opacity 1
+
+@keyframes slideUp
+  0%
+    transform translateY(0%)
+    opacity 1
+  100%
+    transform translateY(-100%)
+    opacity 0
+
+@keyframes slideDownReverse
+  0%
+    transform translateY(0%)
+    opacity 1
+  100%
+    transform translateY(100%)
+    opacity 0
+    display none
+
+@keyframes slideUpReverse
+  0%
+    transform translateY(100%)
+    display flex
+    opacity 0
+  100%
+    transform translateY(0%)
+    opacity 1
+
+@keyframes fadeIn
+  0%
+    opacity 0
+  100%
+    opacity 1
+
+@keyframes fadeOut
+  0%
+    opacity 1
+  100%
+    opacity 0
+
+@keyframes moveLeftIn
+  0%
+    // opacity 0
+    transform translate3d(30%, 0, 0)
+  to
+    // opacity 1
+    transform translateZ(0)
+
+  // 0%
+  // 	transform translateX(100%)
+  // 100%
+  // 	transform translateX(0%)
+
+@keyframes moveRightIn
+  0%
+    // opacity 0
+    transform translate3d(-30%, 0, 0)
+  to
+    // opacity 1
+    transform translateZ(0)
+  // 0%
+  // 	transform translateX(-100%)
+  // 100%
+  // 	transform translateX(0%)
+
+@keyframes moveLeftOut
+  0%
+    opacity .2
+    transform translateX(-50%)
+  100%
+    opacity 0
+    transform translateX(-100%)
+
+@keyframes moveRightOut
+  0%
+    opacity .2
+    transform translateX(50%)
+  100%
+    opacity 0
+    transform translateX(100%)
+
+@keyframes scroll
+  0%
+    transform translateX(100%)
+  100%
+    transform translateX(-100%)
+
+
+.u-slide
+  &.top-in
+    animation topIn .3s forwards
+  &.top-out
+    animation topOut .3s forwards
+  &.right-in
+    animation rightIn .3s forwards
+  &.right-out
+    animation rightOut .3s forwards
+  &.bottom-in
+    animation bottomIn .3s forwards
+  &.bottom-out
+    animation bottomOut .3s forwards
+  &.left-in
+    animation leftIn .3s forwards
+  &.left-out
+    animation leftOut .3s forwards
+  &.fade-in
+    animation fadeIn .3s forwards
+  &.fade-out
+    animation fadeOut .3s forwards
+.u-fade
+  &.in
+    animation fadeIn .3s forwards
+  &.out
+    animation fadeOut .3s forwards
+
+@keyframes topIn
+  0%
+    transform translateY(100%)
+  100%
+    transform translateY(0%)
+
+@keyframes topOut
+  0%
+    transform translateY(0%)
+  100%
+    transform translateY(-100%)
+
+@keyframes rightIn
+  0%
+    transform translateX(-100%)
+  100%
+    transform translateX(0%)
+
+@keyframes rightOut
+  0%
+    transform translateX(0%)
+  100%
+    transform translateX(100%)
+
+@keyframes bottomIn
+  0%
+    transform translateY(-100%)
+  100%
+    transform translateY(0%)
+
+@keyframes bottomOut
+  0%
+    transform translateY(0%)
+  100%
+    transform translateY(100%)
+
+@keyframes leftIn
+  0%
+    transform translateX(100%)
+  100%
+    transform translateX(0%)
+
+@keyframes leftOut
+  0%
+    transform translateX(0%)
+  100%
+    transform translateX(-100%)
+
+@keyframes fadeIn
+  0%
+    opacity 0
+  100%
+    opacity 1
+
+@keyframes fadeOut
+  0%
+    opacity 1
+  100%
+    opacity 0
