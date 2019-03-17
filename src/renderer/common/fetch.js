@@ -13,13 +13,17 @@ function checkAuth (options) {
     const isLogin = has(options.url, '/oauth2/v2.0/token')
     if (isEmpty(tokenInfo) && !isLogin) {
       store.commit('UPDATE_STATE', {hasLogin: false})
+      loading.close()
       reject(new Error('expired'))
     } else if (tokenInfo.expires_time < dater().format('X') && !isLogin) {
+      console.log(123, tokenInfo)
       refreshToken(tokenInfo.refresh_token).then(res => {
         token.set(res)
         store.commit('UPDATE_STATE', {token: res})
         options.headers.Authorization = `Bearer ${res.access_token}`
         axios(options).then(resolve)
+      }).catch(() => {
+        loading.close()
       })
     } else {
       axios(options).then(resolve)

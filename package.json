@@ -67,7 +67,6 @@
     }
   },
   "dependencies": {
-    "element-ui": "^2.3.3",
     "vue": "^2.3.3",
     "vue-electron": "^1.0.6",
     "vue-router": "^2.5.3",
@@ -98,6 +97,7 @@
     "electron-builder": "^20.39.0",
     "electron-debug": "^1.4.0",
     "electron-devtools-installer": "^2.2.0",
+    "element-ui": "^2.6.1",
     "eslint": "^4.4.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",

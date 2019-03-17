@@ -139,7 +139,9 @@ export default {
 .model--right
   .model__main
     height 100vh
-    width 55vw
+    width 50vw
+    max-width 400px
+    min-width 350px
 
 .model--top
 .model--bottom
