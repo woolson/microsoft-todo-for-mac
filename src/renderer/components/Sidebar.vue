@@ -6,7 +6,7 @@ div.sidebar
     :data="item"
     :key="item.id"
   )
-  div.task-add 新建清单
+  //- div.task-add 新建清单
 </template>
 
 <script>

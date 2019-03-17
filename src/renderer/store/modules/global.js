@@ -1,5 +1,5 @@
 import { Storage } from '@/common/utils'
-import { get } from '@/common/fetch'
+import { get, patch } from '@/common/fetch'
 
 const token = new Storage('TOKEN')
 const BASE_URL = 'https://graph.microsoft.com/beta'
@@ -56,6 +56,18 @@ const actions = {
       }
     })
     commit('UPDATE_STATE', {tasks: value.reverse()})
+  },
+  async UPDATE_TASK ({state, dispatch}, data) {
+    await patch({
+      url: `${BASE_URL}/me/outlook/tasks/${data.id}`,
+      data,
+      options: {
+        headers: {
+          Authorization: `Bearer ${state.token.access_token}`
+        }
+      }
+    })
+    dispatch('GET_TASKS')
   }
   // async GET_TASK_DETAIL ({state, commit}) {
   //   const { id } = state.currentTask

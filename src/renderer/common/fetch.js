@@ -39,6 +39,11 @@ export const get = (url, data, options) => {
   return common('GET', url, data, options)
 }
 
+export const patch = (url, data, options) => {
+  // console.log(url)
+  return common('PATCH', url, data, options)
+}
+
 export const common = (type, url, data = {}, options = {}) => {
   // console.log(typeof url)
   if (typeof url === 'object') {
@@ -67,6 +72,7 @@ export const common = (type, url, data = {}, options = {}) => {
     timeout: 15000,
     // 是否需要提示
     headers: {
+      'Prefer': 'outlook.timezone="Asia/Shanghai"',
       'content-type': 'application/json;charset=utf-8'
     }
   }, options)
@@ -99,5 +105,6 @@ axios.interceptors.response.use(function (response) {
 Vue.use(Vue => {
   Vue.prototype.$get = get
   Vue.prototype.$post = post
+  Vue.prototype.$patch = patch
   Vue.prototype.$fetch = common
 })

@@ -2,7 +2,7 @@
 div.task-detail-main
   div.task-detail__header.u-bb
     i.iconfont.u-mr10(:class="checkClass")
-    h1 {{currentTask.subject}}
+    h1(:style="titleStyle") {{currentTask.subject}}
     i.iconfont(:class="starClass")
   div.task-detail__content
     div.task-detail__row.u-bb

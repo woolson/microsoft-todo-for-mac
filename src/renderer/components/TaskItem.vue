@@ -3,14 +3,20 @@ div.task-item.u-bb(
   :class="{active: currentTask.id === data.id}"
   @click="updateState({currentTask: data, showTaskDetail: true})"
 )
-  i.iconfont(:class="checkClass")
+  i.iconfont(
+    :class="checkClass"
+    @click.stop="changeTaskStatus"
+  )
   div.task-item__content
     h1(:style="titleStyle") {{data.subject}}
-    i.iconfont(:class="starClass")
+    i.iconfont(
+      :class="starClass"
+      @click.stop="changeTaskImportance"
+    )
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
   props: {
@@ -42,7 +48,22 @@ export default {
   methods: {
     ...mapMutations({
       updateState: 'UPDATE_STATE'
-    })
+    }),
+    ...mapActions({
+      updateTask: 'UPDATE_TASK'
+    }),
+    changeTaskStatus () {
+      this.updateTask({
+        id: this.data.id,
+        status: this.data.status === 'completed' ? 'notStarted' : 'completed'
+      })
+    },
+    changeTaskImportance () {
+      this.updateTask({
+        id: this.data.id,
+        importance: this.data.importance === 'high' ? 'normal' : 'high'
+      })
+    }
   }
 }
 </script>
