@@ -15,7 +15,7 @@ import TaskList from '@/components/TaskList.vue'
 import TaskDetail from '@/components/TaskDetail.vue'
 
 export default {
-  name: 'todo-app',
+  name: 'ms-todo',
 
   components: {
     WebView,
