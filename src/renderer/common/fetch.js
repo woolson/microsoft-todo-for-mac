@@ -16,7 +16,6 @@ function checkAuth (options) {
       loading.close()
       reject(new Error('expired'))
     } else if (tokenInfo.expires_time < dater().format('X') && !isLogin) {
-      console.log(123, tokenInfo)
       refreshToken(tokenInfo.refresh_token).then(res => {
         token.set(res)
         store.commit('UPDATE_STATE', {token: res})

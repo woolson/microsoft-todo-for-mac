@@ -7,14 +7,14 @@ div.task-detail-main
   div.task-detail__content
     div.task-detail__row.u-bb
       i.iconfont.icon-alarm
-      div.content(@click="showRemindPicker")
+      div.content(@click.stop="showRemindPicker")
         span {{remindDateText}}
         el-date-picker(
           ref="remindPicker"
           v-model="dateTime"
           type="datetime"
         )
-    div.task-detail__row.u-bb(@click="showDatePicker")
+    div.task-detail__row.u-bb(@click.stop="showStopPicker")
       i.iconfont.icon-calendar
       div.content
         span {{stopDateText}}
@@ -77,10 +77,14 @@ export default {
 
   methods: {
     showRemindPicker () {
-      this.$refs.remindPicker.showPicker()
+      const { showPicker, hidePicker, pickerVisible } = this.$refs.remindPicker
+      if (pickerVisible) hidePicker()
+      else showPicker()
     },
-    showDatePicker () {
-      this.$refs.stopPicker.showPicker()
+    showStopPicker () {
+      const { showPicker, hidePicker, pickerVisible } = this.$refs.stopPicker
+      if (pickerVisible) hidePicker()
+      else showPicker()
     }
   }
 }
