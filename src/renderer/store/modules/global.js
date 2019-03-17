@@ -1,4 +1,4 @@
-import { Storage } from '@/common/utils'
+import { Storage, isEmpty } from '@/common/utils'
 import { get, patch } from '@/common/fetch'
 
 const token = new Storage('TOKEN')
@@ -55,7 +55,12 @@ const actions = {
         }
       }
     })
-    commit('UPDATE_STATE', {tasks: value.reverse()})
+    const newState = {tasks: value.reverse()}
+    if (!isEmpty(state.currentTask)) {
+      const currentTask = value.find(o => o.id === state.currentTask.id)
+      newState.currentTask = currentTask
+    }
+    commit('UPDATE_STATE', newState)
   },
   async UPDATE_TASK ({state, dispatch}, data) {
     await patch({
@@ -69,21 +74,6 @@ const actions = {
     })
     dispatch('GET_TASKS')
   }
-  // async GET_TASK_DETAIL ({state, commit}) {
-  //   const { id } = state.currentTask
-  //   const { value } = await get({
-  //     url: `${BASE_URL}/me/outlook/tasks/${id}`,
-  //     options: {
-  //       headers: {
-  //         Authorization: `Bearer ${state.token.access_token}`
-  //       }
-  //     }
-  //   })
-  //   commit('UPDATE_STATE', {
-  //     currentTaskDetail: value,
-  //     showTaskDetail: true
-  //   })
-  // }
 }
 
 export default {

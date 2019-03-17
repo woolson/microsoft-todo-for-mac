@@ -1,9 +1,15 @@
 <template lang="pug">
 div.task-detail-main
   div.task-detail__header.u-bb
-    i.iconfont.u-mr10(:class="checkClass")
+    i.iconfont.u-mr10(
+      :class="checkClass"
+      @click="changeTaskStatus"
+    )
     h1(:style="titleStyle") {{currentTask.subject}}
-    i.iconfont(:class="starClass")
+    i.iconfont(
+      :class="starClass"
+      @click="changeTaskImportance"
+    )
   div.task-detail__content
     div.task-detail__row.u-bb
       i.iconfont.icon-alarm
@@ -39,7 +45,7 @@ div.task-detail-main
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { dater } from '@/common/utils'
 
 export default {
@@ -76,6 +82,21 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      updateTask: 'UPDATE_TASK'
+    }),
+    changeTaskStatus () {
+      this.updateTask({
+        id: this.currentTask.id,
+        status: this.currentTask.status === 'completed' ? 'notStarted' : 'completed'
+      })
+    },
+    changeTaskImportance () {
+      this.updateTask({
+        id: this.currentTask.id,
+        importance: this.currentTask.importance === 'high' ? 'normal' : 'high'
+      })
+    },
     showRemindPicker () {
       const { showPicker, hidePicker, pickerVisible } = this.$refs.remindPicker
       if (pickerVisible) hidePicker()
