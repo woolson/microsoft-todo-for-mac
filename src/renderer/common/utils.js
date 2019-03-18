@@ -1,5 +1,6 @@
 import { ipcRenderer } from 'electron'
 import axios from 'axios'
+import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '@/common/static'
 // import { post } from '@/common/fetch'
 
 export function messager (name, args) {
@@ -339,12 +340,12 @@ export function refreshToken (refreshToken) {
   return new Promise((resolve, reject) => {
     const url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
     const queryObj = {
-      client_id: '6731de76-14a6-49ae-97bc-6eba6914391e',
-      scope: 'user.read%20Tasks.ReadWrite.Shared',
+      client_id: CLIENT_ID,
+      scope: AUTH_SCOPE,
       refresh_token: refreshToken,
-      redirect_uri: 'http%3A%2F%2Flocalhost%2Fmyapp%2F',
+      redirect_uri: REDIRECT_URI,
       grant_type: 'refresh_token',
-      client_secret: 'JqQX2PNo9bpM0uEihUPzyrh'
+      client_secret: CLIENT_SECRET
     }
 
     axios.post(url, objToForm(queryObj), {

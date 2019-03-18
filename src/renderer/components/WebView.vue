@@ -8,7 +8,8 @@ webview(
 
 <script>
 import { mapMutations, mapActions } from 'vuex'
-import { has, parseURL, objToForm, dater, Storage } from '@/common/utils.js'
+import { has, parseURL, objToForm, dater, Storage } from '@/common/utils'
+import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '@/common/static'
 
 const token = new Storage('TOKEN')
 
@@ -33,11 +34,11 @@ export default {
     }),
     login () {
       const query = {
-        client_id: '6731de76-14a6-49ae-97bc-6eba6914391e',
+        client_id: CLIENT_ID,
         response_type: 'code',
-        redirect_uri: 'http%3A%2F%2Flocalhost%2Fmyapp%2F',
+        redirect_uri: REDIRECT_URI,
         response_mode: 'query',
-        scope: 'https://outlook.office.com/tasks.readwrite',
+        scope: AUTH_SCOPE,
         state: 12345
       }
       this.loginUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${objToForm(query)}`
@@ -54,12 +55,12 @@ export default {
       if (has(href, ['http://localhost/myapp', 'code'], { strict: true })) {
         const url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
         const queryObj = {
-          client_id: '6731de76-14a6-49ae-97bc-6eba6914391e',
-          scope: 'https://outlook.office.com/tasks.readwrite',
+          client_id: CLIENT_ID,
+          scope: AUTH_SCOPE,
           code: urlQuery.code,
-          redirect_uri: 'http%3A%2F%2Flocalhost%2Fmyapp%2F',
+          redirect_uri: REDIRECT_URI,
           grant_type: 'authorization_code',
-          client_secret: 'JqQX2PNo9bpM0uEihUPzyrh'
+          client_secret: CLIENT_SECRET
         }
 
         const res = await this.$post(url, objToForm(queryObj), {
