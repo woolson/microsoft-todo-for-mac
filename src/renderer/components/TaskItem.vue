@@ -1,6 +1,6 @@
 <template lang="pug">
 div.task-item.u-bb(
-  :class="{active: currentTask.id === data.id}"
+  :class="{active: currentTask.Id === data.Id}"
   @click="updateState({currentTask: data, showTaskDetail: true})"
 )
   i.iconfont(
@@ -8,7 +8,7 @@ div.task-item.u-bb(
     @click.stop="changeTaskStatus"
   )
   div.task-item__content
-    h1(:style="titleStyle") {{data.subject}}
+    h1(:style="titleStyle") {{data.Subject}}
     i.iconfont(
       :class="starClass"
       @click.stop="changeTaskImportance"
@@ -31,17 +31,17 @@ export default {
       currentTask: ({global}) => global.currentTask
     }),
     titleStyle () {
-      const { status } = this.data
+      const { Status } = this.data
       return {
-        textDecoration: status === 'completed' ? 'line-through' : 'none',
-        color: status === 'completed' ? '#AAAAAA' : ''
+        textDecoration: Status === 'Completed' ? 'line-through' : 'none',
+        color: Status === 'Completed' ? '#AAAAAA' : ''
       }
     },
     checkClass () {
-      return this.data.status === 'completed' ? 'icon-check' : 'icon-check-o'
+      return this.data.Status === 'Completed' ? 'icon-check' : 'icon-check-o'
     },
     starClass () {
-      return this.data.importance === 'high' ? 'icon-star' : 'icon-star-o'
+      return this.data.Importance === 'High' ? 'icon-star' : 'icon-star-o'
     }
   },
 
@@ -54,14 +54,14 @@ export default {
     }),
     changeTaskStatus () {
       this.updateTask({
-        id: this.data.id,
-        status: this.data.status === 'completed' ? 'notStarted' : 'completed'
+        Id: this.data.Id,
+        Status: this.data.Status === 'Completed' ? 'NotStarted' : 'Completed'
       })
     },
     changeTaskImportance () {
       this.updateTask({
-        id: this.data.id,
-        importance: this.data.importance === 'high' ? 'normal' : 'high'
+        Id: this.data.Id,
+        Importance: this.data.Importance === 'High' ? 'Normal' : 'High'
       })
     }
   }

@@ -1,8 +1,10 @@
-import { Storage, isEmpty } from '@/common/utils'
+import { Storage } from '@/common/utils'
 import { get, patch } from '@/common/fetch'
 
 const token = new Storage('TOKEN')
-const BASE_URL = 'https://graph.microsoft.com/beta'
+const BASE_URL = 'https://outlook.office.com/api/v2.0'
+const PAGE_SIZE = 100
+// const BASE_URL = 'https://graph.microsoft.com/beta'
 
 const state = {
   hasLogin: true,
@@ -12,14 +14,18 @@ const state = {
   sort: false,
   tasks: [],
   currentTask: {},
-  currentTaskDetail: {},
   showTaskDetail: false
 }
 
 const getters = {
-  tasks ({sort, tasks}) {
-    if (sort) return tasks
-    else return [...tasks].reverse()
+  tasks ({sort, tasks, currentFolder}) {
+    let taskArr = [...tasks]
+    if (!sort) taskArr = [...tasks].reverse()
+    if (currentFolder.Key) {
+      return taskArr.filter(o => o[currentFolder.Key] === currentFolder.Value)
+    } else {
+      return taskArr.filter(o => o.ParentFolderId === currentFolder.Id)
+    }
   }
 }
 
@@ -33,38 +39,33 @@ const mutations = {
 }
 
 const actions = {
-  async GET_TASK_FOLDERS ({state, commit}) {
+  async GET_TASK_FOLDERS ({state, commit, dispatch}) {
     const { value } = await get({
-      url: `${BASE_URL}/me/outlook/taskFolders`,
+      url: `${BASE_URL}/me/taskfolders?$top=${PAGE_SIZE}`,
       options: {
         headers: {
           Authorization: `Bearer ${state.token.access_token}`
         }
       }
     })
-    const currentFolder = value.find(o => o.isDefaultFolder)
+    const currentFolder = value.find(o => o.IsDefaultFolder)
     commit('UPDATE_STATE', {taskFolders: value, currentFolder})
+    dispatch('GET_TASKS')
   },
   async GET_TASKS ({state, commit}) {
-    const { id } = state.currentFolder
     const { value } = await get({
-      url: `${BASE_URL}/me/outlook/taskFolders/${id}/tasks`,
+      url: `${BASE_URL}/me/tasks?$top=${PAGE_SIZE}`,
       options: {
         headers: {
           Authorization: `Bearer ${state.token.access_token}`
         }
       }
     })
-    const newState = {tasks: value.reverse()}
-    if (!isEmpty(state.currentTask)) {
-      const currentTask = value.find(o => o.id === state.currentTask.id)
-      newState.currentTask = currentTask
-    }
-    commit('UPDATE_STATE', newState)
+    commit('UPDATE_STATE', {tasks: value.reverse()})
   },
-  async UPDATE_TASK ({state, dispatch}, data) {
-    await patch({
-      url: `${BASE_URL}/me/outlook/tasks/${data.id}`,
+  async UPDATE_TASK ({state, commit}, data) {
+    const newTask = await patch({
+      url: `${BASE_URL}/me/tasks/${data.Id}`,
       data,
       options: {
         headers: {
@@ -72,7 +73,13 @@ const actions = {
         }
       }
     })
-    dispatch('GET_TASKS')
+    const newState = {tasks: [...state.tasks]}
+    const taskIndex = state.tasks.findIndex(o => o.Id === data.Id)
+    newState.tasks[taskIndex] = newTask
+    if (state.showTaskDetail) {
+      newState.currentTask = newTask
+    }
+    commit('UPDATE_STATE', newState)
   }
 }
 

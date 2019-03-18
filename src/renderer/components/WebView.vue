@@ -37,7 +37,7 @@ export default {
         response_type: 'code',
         redirect_uri: 'http%3A%2F%2Flocalhost%2Fmyapp%2F',
         response_mode: 'query',
-        scope: 'offline_access%20user.read%20Tasks.ReadWrite.Shared',
+        scope: 'https://outlook.office.com/tasks.readwrite',
         state: 12345
       }
       this.loginUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${objToForm(query)}`
@@ -55,7 +55,7 @@ export default {
         const url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
         const queryObj = {
           client_id: '6731de76-14a6-49ae-97bc-6eba6914391e',
-          scope: 'user.read%20Tasks.ReadWrite.Shared',
+          scope: 'https://outlook.office.com/tasks.readwrite',
           code: urlQuery.code,
           redirect_uri: 'http%3A%2F%2Flocalhost%2Fmyapp%2F',
           grant_type: 'authorization_code',

@@ -5,7 +5,7 @@ div.task-detail-main
       :class="checkClass"
       @click="changeTaskStatus"
     )
-    h1(:style="titleStyle") {{currentTask.subject}}
+    h1(:style="titleStyle") {{currentTask.Subject}}
     i.iconfont(
       :class="starClass"
       @click="changeTaskImportance"
@@ -61,17 +61,17 @@ export default {
       currentTask: ({global}) => global.currentTask
     }),
     titleStyle () {
-      const { status } = this.currentTask
+      const { Status } = this.currentTask
       return {
-        textDecoration: status === 'completed' ? 'line-through' : 'none',
-        color: status === 'completed' ? '#AAAAAA' : ''
+        textDecoration: Status === 'Completed' ? 'line-through' : 'none',
+        color: Status === 'Completed' ? '#AAAAAA' : ''
       }
     },
     checkClass () {
-      return this.currentTask.status === 'completed' ? 'icon-check' : 'icon-check-o'
+      return this.currentTask.Status === 'Completed' ? 'icon-check' : 'icon-check-o'
     },
     starClass () {
-      return this.currentTask.importance === 'high' ? 'icon-star' : 'icon-star-o'
+      return this.currentTask.Importance === 'High' ? 'icon-star' : 'icon-star-o'
     },
     remindDateText () {
       return this.dateTime ? dater(this.dateTime).format('MM月DD日 HH点mm分 提醒我') : '选择提醒时间'
@@ -87,14 +87,14 @@ export default {
     }),
     changeTaskStatus () {
       this.updateTask({
-        id: this.currentTask.id,
-        status: this.currentTask.status === 'completed' ? 'notStarted' : 'completed'
+        Id: this.currentTask.Id,
+        Status: this.currentTask.Status === 'Completed' ? 'NotStarted' : 'Completed'
       })
     },
     changeTaskImportance () {
       this.updateTask({
-        id: this.currentTask.id,
-        importance: this.currentTask.importance === 'high' ? 'normal' : 'high'
+        Id: this.currentTask.Id,
+        Importance: this.currentTask.Importance === 'High' ? 'Normal' : 'High'
       })
     },
     showRemindPicker () {

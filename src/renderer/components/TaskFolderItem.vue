@@ -1,8 +1,8 @@
 <template lang="pug">
 div.task-folder-item(
-  :class="{active: currentFolder.id === data.id}"
+  :class="{active: currentFolder.Id === data.Id}"
   @click="updateState({currentFolder: data})"
-) {{data.name}}
+) {{data.Name}}
 </template>
 
 <script>

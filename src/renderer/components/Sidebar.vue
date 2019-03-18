@@ -2,15 +2,18 @@
 div.sidebar
   div.sidebar__header
   TaskFolderItem(
+    :data="{Name: '重要', Key: 'Importance', Value: 'High'}"
+  )
+  TaskFolderItem(
     v-for="item in taskFolders"
     :data="item"
-    :key="item.id"
+    :key="item.Id"
   )
   //- div.task-add 新建清单
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState } from 'vuex'
 import TaskFolderItem from './TaskFolderItem'
 
 export default {
@@ -22,19 +25,6 @@ export default {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder
-    })
-  },
-
-  watch: {
-    currentFolder: {
-      handler: 'getTasks',
-      deep: true
-    }
-  },
-
-  methods: {
-    ...mapActions({
-      getTasks: 'GET_TASKS'
     })
   }
 }
