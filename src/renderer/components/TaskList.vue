@@ -10,7 +10,7 @@ div.task-list
     el-popover(
       placement="bottom"
       width="200"
-      trigger="hover"
+      trigger="click"
     )
       div.task-list__options
         div.u-bb
@@ -69,14 +69,19 @@ export default {
     }),
     async deleteTaskFolder () {
       try {
-        await this.$fetch('DELETE', `/me/taskfolders/${this.currentFolder.Id}`)
-        const taskFolders = [...this.taskFolders]
-        const taskIndex = this.taskFolders.findIndex(o => o.Id === this.currentFolder.Id)
-        taskFolders.splice(taskIndex, 1)
-        this.updateState({taskFolders, currentFolder: taskFolders[taskIndex - 1]})
-        this.$message.success('删除成功')
+        await this.$confirm(`确认删除清单 ${this.currentFolder.Name} ？`, '注意', { center: true })
+        try {
+          await this.$fetch('DELETE', `/me/taskfolders/${this.currentFolder.Id}`)
+          const taskFolders = [...this.taskFolders]
+          const taskIndex = this.taskFolders.findIndex(o => o.Id === this.currentFolder.Id)
+          taskFolders.splice(taskIndex, 1)
+          this.updateState({taskFolders, currentFolder: taskFolders[taskIndex - 1]})
+          this.$message.success('删除成功')
+        } catch (err) {
+          this.$message.error('删除失败')
+        }
       } catch (err) {
-        this.$message.error('删除失败')
+        console.log('已取消', err)
       }
     }
   }
@@ -127,12 +132,17 @@ export default {
 .task-list__options
   > div
     display flex
-    padding 5px 0
+    padding 10px 12px
     user-select none
   p
     color $red
     cursor pointer
-    padding 3px 0
-    margin-top 5px
-    margin-bottom 0
+    padding 10px 12px
+    margin 0
+    border-radius 0 0 5px 5px
+    transition all .2s
+    background white
+    &:hover
+      color white
+      background $red
 </style>

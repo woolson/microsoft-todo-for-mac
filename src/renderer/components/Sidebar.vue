@@ -63,7 +63,13 @@ export default {
   border-radius 5px
   cursor pointer
   color white
-  font-size 14px
+  text-align center
+  margin-bottom 10px
+  &:hover
+    i
+      text-shadow 0 0 5px rgba(black, .15)
+  i
+    font-size 24px
 
 .sidebar__setting
   display flex

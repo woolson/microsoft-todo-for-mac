@@ -2,11 +2,23 @@
 div.task-folder-item(
   :class="{active: currentFolder.Id === data.Id}"
   @click="updateState({currentFolder: data})"
-) {{data.Name}}
+)
+  i.iconfont(:class="folderIcon")
+  span.u-ml5 {{data.Name}}
 </template>
 
 <script>
 import { mapState, mapMutations } from 'vuex'
+
+const FOLDER_ICON = {
+  '任务': 'icon-task',
+  'task': 'icon-task',
+  'tasks': 'icon-task',
+  'Task': 'icon-task',
+  '重要': 'icon-star',
+  'Importance': 'icon-star',
+  'importance': 'icon-star'
+}
 
 export default {
   props: {
@@ -19,7 +31,10 @@ export default {
   computed: {
     ...mapState({
       currentFolder: ({global}) => global.currentFolder
-    })
+    }),
+    folderIcon () {
+      return FOLDER_ICON[this.data.Name] || 'icon-list'
+    }
   },
 
   methods: {
@@ -40,6 +55,12 @@ export default {
   cursor pointer
   user-select none
   color white
+  display flex
+  align-items center
+  i
+    font-size 18px
+    &.icon-star
+      font-size 16px
   &.active
     background rgba(black, .15)
 </style>

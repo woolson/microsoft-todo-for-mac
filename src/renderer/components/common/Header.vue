@@ -21,6 +21,7 @@ export default {
   align-items center
   padding 12px 15px
   box-shadow 0 0 5px rgba(black, .1)
+  user-select none
 
 .header__left
 .header__right

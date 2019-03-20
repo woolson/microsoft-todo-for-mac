@@ -83,11 +83,12 @@ export default {
   display flex
   align-items center
   background $background-color
-  padding 12px
+  padding 15px
   background-size 0px 100%
   position relative
   transition all .2s
   cursor pointer
+  user-select none
   > i
     font-size 18px
     margin-right 10px
@@ -105,14 +106,14 @@ export default {
 
 .task-item__content
   h1
-    font-size 15px
+    font-size 14px
     font-weight normal
     margin 0
     color $text
   i
     position absolute
-    right 10px
-    top 10px
+    right 15px
+    top 15px
     &.icon-star
       color $yellow
 </style>
