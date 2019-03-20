@@ -31,7 +31,7 @@ div.task-list
       slot="right"
       size="mini"
       type="success"
-      @click="updateState({showTaskAdd: true})"
+      @click="updateState({showTaskAddModel: true})"
     ) 新建任务
   div.task-list__content(v-if="tasks.length")
     TaskItem(

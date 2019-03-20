@@ -53,10 +53,19 @@ body
 .el-popover
   padding 0
 
-.form__main
-  margin-top 0
-  background $background-color
-  border-radius 5px
+.el-message-box
+  padding-bottom 15px
+
+.el-message-box__header
+  padding-top 15px !important
+
+.el-message-box__btns
+  button
+    width 120px
+
+.form__row-section
+  padding 0 12px
+  margin-bottom 10px
 
 .form__row
   display flex
@@ -68,6 +77,16 @@ body
   font-size 14px
   cursor pointer
   user-select none
+  background $background-color
   > label
     margin-right 10px
     white-space nowrap
+    width 60px
+  &:first-child
+    border-top-left-radius 5px
+    border-top-right-radius 5px
+  &:last-child
+    border-bottom-left-radius 5px
+    border-bottom-right-radius 5px
+    &:after
+      display none

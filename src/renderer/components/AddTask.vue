@@ -1,7 +1,7 @@
 <template lang="pug">
 Model.add-task(
-  v-model="showTaskAdd"
-  @cancel="updateState({showTaskAdd: false})"
+  v-model="showTaskAddModel"
+  @cancel="updateState({showTaskAddModel: false})"
 )
   Header
     span 添加任务
@@ -33,7 +33,7 @@ export default {
 
   computed: {
     ...mapState({
-      showTaskAdd: ({global}) => global.showTaskAdd
+      showTaskAddModel: ({global}) => global.showTaskAddModel
     })
   },
 

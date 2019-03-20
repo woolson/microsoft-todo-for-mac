@@ -1,7 +1,7 @@
 <template lang="pug">
 Model.task-detail(
-  v-model="showTaskDetail"
-  @cancel="updateState({showTaskDetail: false})"
+  v-model="showTaskDetailModel"
+  @cancel="updateState({showTaskDetailModel: false})"
 )
   Steps(v-model="currentStep")
     TaskDetailMain(:step.sync="currentStep")
@@ -27,7 +27,7 @@ export default {
 
   computed: {
     ...mapState({
-      showTaskDetail: ({global}) => global.showTaskDetail
+      showTaskDetailModel: ({global}) => global.showTaskDetailModel
     })
   },
 

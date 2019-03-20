@@ -46,7 +46,7 @@ export const patch = (url, data, options) => {
   return common('PATCH', url, data, options)
 }
 
-export const common = (type, url, data = {}, options = {}) => {
+export const common = (type, url, data, options = {}) => {
   const tokenInfo = token.get({})
   if (typeof url === 'object') {
     const request = url
@@ -82,7 +82,7 @@ export const common = (type, url, data = {}, options = {}) => {
 
   // 根据请求类型修改数据传输结构
   if (type.toLowerCase() === 'get') options.params = data
-  else options.data = data || {}
+  else options.data = data
 
   return checkAuth(options)
 }

@@ -1,7 +1,7 @@
 <template lang="pug">
 Model.add-task-folder(
-  v-model="showTaskFolderAdd"
-  @cancel="updateState({showTaskFolderAdd: false})"
+  v-model="showTaskFolderAddModel"
+  @cancel="updateState({showTaskFolderAddModel: false})"
 )
   Header
     span 添加清单
@@ -34,12 +34,12 @@ export default {
   computed: {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
-      showTaskFolderAdd: ({global}) => global.showTaskFolderAdd
+      showTaskFolderAddModel: ({global}) => global.showTaskFolderAddModel
     })
   },
 
   watch: {
-    showTaskFolderAdd (newValue) {
+    showTaskFolderAddModel (newValue) {
       if (newValue) this.$refs.input.focus()
     }
   },
@@ -53,7 +53,7 @@ export default {
         const newFolder = await this.$post(`/me/taskfolders`, {Name: this.name})
         this.updateState({
           taskFolders: [...this.taskFolders, newFolder],
-          showTaskFolderAdd: false
+          showTaskFolderAddModel: false
         })
         this.$message.success('添加成功')
       } catch (err) {

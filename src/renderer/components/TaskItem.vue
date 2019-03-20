@@ -1,7 +1,7 @@
 <template lang="pug">
 div.task-item.u-bb(
   :class="{active: currentTask.Id === data.Id}"
-  @click="updateState({currentTask: data, showTaskDetail: true})"
+  @click="updateState({currentTask: data, showTaskDetailModel: true})"
 )
   i.iconfont(
     :class="checkClass"
@@ -101,8 +101,10 @@ export default {
     &:after
       display none
   &:hover
-    background rgba($blue, .1)
-    // background linear-gradient(45deg, #1c9fff, #765ee7)
+    // background rgba($blue, .1)
+    *
+      color white
+    background linear-gradient(45deg, #1c9fff, #765ee7)
 
 .task-item__content
   h1

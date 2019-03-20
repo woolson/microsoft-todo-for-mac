@@ -14,9 +14,11 @@ const state = {
   tasks: [],
   currentTask: {},
   showCompleteTask: true,
-  showTaskDetail: false,
-  showTaskAdd: false,
-  showTaskFolderAdd: false
+  showTaskDetailModel: false,
+  showTaskAddModel: false,
+  showTaskFolderAddModel: false,
+  showSettingsModel: false,
+  showImportanceFolder: true
 }
 
 const getters = {
@@ -60,7 +62,7 @@ const actions = {
     const newState = {tasks: [...state.tasks]}
     const taskIndex = state.tasks.findIndex(o => o.Id === data.Id)
     newState.tasks[taskIndex] = newTask
-    if (state.showTaskDetail) {
+    if (state.showTaskDetailModel) {
       newState.currentTask = newTask
     }
     commit('UPDATE_STATE', newState)

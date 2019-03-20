@@ -1,11 +1,18 @@
 <template lang="pug">
 div#app
   WebView(v-if="!hasLogin")
+  //- 侧边栏
   Sidebar
+  //- 任务列表
   TaskList
+  //- 任务详情弹窗
   TaskDetail
+  //- 添加清单弹窗
   AddFolder
+  //- 添加任务弹窗
   AddTask
+  //- 设置弹窗
+  Settings
 </template>
 
 <script>
@@ -16,6 +23,7 @@ import TaskList from '@/components/TaskList'
 import TaskDetail from '@/components/TaskDetail'
 import AddFolder from '@/components/AddFolder'
 import AddTask from '@/components/AddTask'
+import Settings from '@/components/Settings'
 
 export default {
   name: 'ms-todo',
@@ -26,7 +34,8 @@ export default {
     TaskList,
     TaskDetail,
     AddFolder,
-    AddTask
+    AddTask,
+    Settings
   },
 
   computed: {

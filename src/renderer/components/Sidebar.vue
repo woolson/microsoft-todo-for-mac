@@ -2,8 +2,9 @@
 div.sidebar
   div.sidebar__header
   div.sidebar__add
-    i.task-add.iconfont.icon-add(@click="updateState({showTaskFolderAdd: true})")
+    i.task-add.iconfont.icon-add(@click="updateState({showTaskFolderAddModel: true})")
   TaskFolderItem(
+    v-show="showImportanceFolder"
     :data="{Name: '重要', Key: 'Importance', Value: 'High'}"
   )
   TaskFolderItem(
@@ -11,7 +12,7 @@ div.sidebar
     :data="item"
     :key="item.Id"
   )
-  div.sidebar__setting
+  div.sidebar__setting(@click="updateState({showSettingsModel: true})")
     i.iconfont.icon-setting
     span.u-ml5 设置
 </template>
@@ -28,7 +29,8 @@ export default {
   computed: {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
-      currentFolder: ({global}) => global.currentFolder
+      currentFolder: ({global}) => global.currentFolder,
+      showImportanceFolder: ({global}) => global.showImportanceFolder
     })
   },
 
