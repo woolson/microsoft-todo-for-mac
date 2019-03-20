@@ -2,33 +2,33 @@ import Vue from 'vue'
 import store from '../store/index'
 import axios from 'axios'
 import { Loading } from 'element-ui'
-// import { dater, isEmpty, Storage, refreshToken, has } from '@/common/utils'
+import { dater, isEmpty, Storage, refreshToken, has } from '@/common/utils'
 
 let loading
-// const token = new Storage('TOKEN')
+const token = new Storage('TOKEN')
 
-// function checkAuth (options) {
-//   const tokenInfo = token.get({})
-//   return new Promise((resolve, reject) => {
-//     const isLogin = has(options.url, '/oauth2/v2.0/token')
-//     if (isEmpty(tokenInfo) && !isLogin) {
-//       store.commit('UPDATE_STATE', {hasLogin: false})
-//       loading.close()
-//       reject(new Error('expired'))
-//     } else if (tokenInfo.expires_time < dater().format('X') && !isLogin) {
-//       refreshToken(tokenInfo.refresh_token).then(res => {
-//         token.set(res)
-//         store.commit('UPDATE_STATE', {token: res})
-//         options.headers.Authorization = `Bearer ${res.access_token}`
-//         axios(options).then(resolve)
-//       }).catch(() => {
-//         loading.close()
-//       })
-//     } else {
-//       axios(options).then(resolve)
-//     }
-//   })
-// }
+function checkAuth (options) {
+  const tokenInfo = token.get({})
+  return new Promise((resolve, reject) => {
+    const isLogin = has(options.url, '/oauth2/v2.0/token')
+    if (isEmpty(tokenInfo) && !isLogin) {
+      store.commit('UPDATE_STATE', {hasLogin: false})
+      loading.close()
+      reject(new Error('expired'))
+    } else if (tokenInfo.expires_time < dater().format('X') && !isLogin) {
+      refreshToken(tokenInfo.refresh_token).then(res => {
+        token.set(res)
+        store.commit('UPDATE_STATE', {token: res})
+        options.headers.Authorization = `Bearer ${res.access_token}`
+        axios(options).then(resolve)
+      }).catch(() => {
+        loading.close()
+      })
+    } else {
+      axios(options).then(resolve)
+    }
+  })
+}
 
 export const post = (url, data, options) => {
   return common('POST', url, data, options)
@@ -45,7 +45,7 @@ export const patch = (url, data, options) => {
 }
 
 export const common = (type, url, data = {}, options = {}) => {
-  // console.log(typeof url)
+  const tokenInfo = token.get({})
   if (typeof url === 'object') {
     const request = url
     url = request.url
@@ -72,7 +72,8 @@ export const common = (type, url, data = {}, options = {}) => {
     timeout: 15000,
     // 是否需要提示
     headers: {
-      'Prefer': 'outlook.timezone="Asia/Shanghai"',
+      Authorization: `Bearer ${tokenInfo.access_token}`,
+      Prefer: 'outlook.timezone="Asia/Shanghai"',
       'content-type': 'application/json;charset=utf-8'
     }
   }, options)
@@ -81,7 +82,7 @@ export const common = (type, url, data = {}, options = {}) => {
   if (type.toLowerCase() === 'get') options.params = data
   else options.data = data || {}
 
-  return axios(options)
+  return checkAuth(options)
 }
 
 axios.interceptors.request.use(function (config) {

@@ -77,7 +77,22 @@ export default {
       return this.dateTime ? dater(this.dateTime).format('MM月DD日 HH点mm分 提醒我') : '选择提醒时间'
     },
     stopDateText () {
-      return this.stopDate ? dater(this.stopDate).format('MM月DD日 到期') : '截止日期'
+      return this.stopDate ? dater(this.stopDate).format('MM月DD日 到期') : '选择截止日期'
+    }
+  },
+
+  watch: {
+    currentTask: {
+      handler (newValue) {
+        const { ReminderDateTime, DueDateTime, IsReminderOn } = newValue
+        if (ReminderDateTime && IsReminderOn) {
+          this.dateTime = dater(ReminderDateTime.DateTime).format('x')
+        }
+        if (DueDateTime) {
+          this.stopDate = dater(DueDateTime.DateTime).format('x')
+        }
+      },
+      deep: true
     }
   },
 

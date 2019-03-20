@@ -5,14 +5,14 @@ div.task-detail-repeat
   div.task-detail-repeat__content
     div.task-detail-repeat__row
       label.u-mr20 重复
-      el-select.u-flex-1(v-model="dateLevel")
+      el-select.u-flex-1(v-model="level")
         el-option(
           v-for="item in levelOptions"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         )
-  div.task-detail-repeat__content(v-show="dateLevel === 'custom'")
+  div.task-detail-repeat__content(v-show="level === 'custom'")
     div.task-detail-repeat__row
       label.u-mr20 周期
       el-input(v-model="repeatNumber" type="number")
@@ -23,7 +23,7 @@ div.task-detail-repeat
           :label="item.label"
           :value="item.value"
         )
-    div.task-detail-repeat__row(v-show="repeatLevel === 'week'")
+    div.task-detail-repeat__row(v-show="level === 'Weekly'")
       el-checkbox-group(v-model="customWeek")
         el-checkbox-button(
           v-for="item in weeks"
@@ -35,19 +35,21 @@ div.task-detail-repeat
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
+      level: null,
       repeatLevel: null,
       repeatNumber: null,
-      dateLevel: null,
       customWeek: [],
       levelOptions: [
-        { value: 'day', label: '每天' },
-        { value: 'weekday', label: '工作日' },
-        { value: 'week', label: '每周' },
-        { value: 'month', label: '每月' },
-        { value: 'year', label: '每年' },
+        { value: 'Daily', label: '每天' },
+        { value: 'WeekDays', label: '工作日' },
+        { value: 'Weekly', label: '每周' },
+        { value: 'AbsoluteMonthly', label: '每月' },
+        { value: 'AbsoluteYearly', label: '每年' },
         { value: 'custom', label: '自定义' }
       ],
       repeatLevelOptions: [
@@ -65,6 +67,28 @@ export default {
         { value: 6, label: '六' },
         { value: 7, label: '日' }
       ]
+    }
+  },
+
+  computed: {
+    ...mapState({
+      currentTask: ({global}) => global.currentTask
+    })
+  },
+
+  watch: {
+    currentTask: {
+      handler (newValue) {
+        const { Pattern } = newValue.Recurrence
+        if (Pattern) {
+          this.level = Pattern.Type
+          if (Pattern.Type === 'Weekly') {
+            this.customWeek = Pattern.DaysOfWeek
+            this.repeatNumber = Pattern.Interval
+          }
+        }
+      },
+      deep: true
     }
   }
 }
@@ -102,6 +126,6 @@ export default {
   cursor pointer
   user-select none
   .el-input
-    width 65px
+    width 55px
     margin-right 10px
 </style>

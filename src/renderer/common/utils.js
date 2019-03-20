@@ -353,9 +353,9 @@ export function refreshToken (refreshToken) {
         'content-type': 'application/x-www-form-urlencoded'
       }
     }).then(res => {
-      res.refresh_token = refreshToken
+      if (res.refresh_token) res.refresh_token = refreshToken
       res.expires_time = dater().format('X') + res.expires_in
       resolve(res)
-    })
+    }).catch(reject)
   })
 }

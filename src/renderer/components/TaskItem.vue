@@ -52,17 +52,27 @@ export default {
     ...mapActions({
       updateTask: 'UPDATE_TASK'
     }),
-    changeTaskStatus () {
-      this.updateTask({
-        Id: this.data.Id,
-        Status: this.data.Status === 'Completed' ? 'NotStarted' : 'Completed'
-      })
+    async changeTaskStatus () {
+      try {
+        await this.updateTask({
+          Id: this.data.Id,
+          Status: this.data.Status === 'Completed' ? 'NotStarted' : 'Completed'
+        })
+        this.$message.success('更新成功')
+      } catch (err) {
+        this.$message.error('更新失败')
+      }
     },
-    changeTaskImportance () {
-      this.updateTask({
-        Id: this.data.Id,
-        Importance: this.data.Importance === 'High' ? 'Normal' : 'High'
-      })
+    async changeTaskImportance () {
+      try {
+        await this.updateTask({
+          Id: this.data.Id,
+          Importance: this.data.Importance === 'High' ? 'Normal' : 'High'
+        })
+        this.$message.success('更新成功')
+      } catch (err) {
+        this.$message.error('更新失败')
+      }
     }
   }
 }

@@ -37,7 +37,7 @@ export default {
   padding 0 10px
   box-sizing border-box
   box-shadow inset 0 0 5px rgba(black, .15)
-  background linear-gradient(45deg, #765ee7, #1c9fff)
+  background linear-gradient(45deg, $purple, $blue)
 
 .sidebar__header
   height 50px

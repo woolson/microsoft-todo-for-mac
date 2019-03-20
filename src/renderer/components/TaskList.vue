@@ -5,8 +5,8 @@ div.task-list
     span.u-mlauto.u-pointer(
       @click="updateState({sort: !sort})"
     )
-      i.iconfont.u-pointer(:class="sort ? 'icon-down' : 'icon-up'")
-      span.u-ml20 切换排序
+      i.iconfont.u-pointer.u-s12(:class="sort ? 'icon-down' : 'icon-up'")
+      span.u-ml5 切换排序
     el-button.u-ml10(
       size="mini"
       type="success"

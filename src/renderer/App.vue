@@ -33,15 +33,6 @@ export default {
 
   mounted () {
     this.getTaskFolders()
-    // const current = dater().format('X')
-    // if (isEmpty(this.token)) {
-    //   this.updateState({hasLogin: false})
-    // } else if (this.token.expired_time < current) {
-    //   this.refreshToken()
-    // } else {
-    //   this.updateState({hasLogin: true})
-    //   this.getTaskFolders()
-    // }
   },
 
   methods: {
@@ -76,6 +67,10 @@ export default {
 </script>
 
 <style lang="stylus">
+html
+body
+  font-family Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
+
 #app
   width 100vw
   height 100vh

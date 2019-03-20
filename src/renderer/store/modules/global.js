@@ -40,39 +40,17 @@ const mutations = {
 
 const actions = {
   async GET_TASK_FOLDERS ({state, commit, dispatch}) {
-    const { value } = await get({
-      url: `${BASE_URL}/me/taskfolders?$top=${PAGE_SIZE}`,
-      options: {
-        headers: {
-          Authorization: `Bearer ${state.token.access_token}`
-        }
-      }
-    })
+    const { value } = await get(`${BASE_URL}/me/taskfolders?$top=${PAGE_SIZE}`)
     const currentFolder = value.find(o => o.IsDefaultFolder)
     commit('UPDATE_STATE', {taskFolders: value, currentFolder})
     dispatch('GET_TASKS')
   },
-  async GET_TASKS ({state, commit}) {
-    const { value } = await get({
-      url: `${BASE_URL}/me/tasks?$top=${PAGE_SIZE}`,
-      options: {
-        headers: {
-          Authorization: `Bearer ${state.token.access_token}`
-        }
-      }
-    })
+  async GET_TASKS ({commit}) {
+    const { value } = await get(`${BASE_URL}/me/tasks?$top=${PAGE_SIZE}`)
     commit('UPDATE_STATE', {tasks: value.reverse()})
   },
   async UPDATE_TASK ({state, commit}, data) {
-    const newTask = await patch({
-      url: `${BASE_URL}/me/tasks/${data.Id}`,
-      data,
-      options: {
-        headers: {
-          Authorization: `Bearer ${state.token.access_token}`
-        }
-      }
-    })
+    const newTask = await patch(`${BASE_URL}/me/tasks/${data.Id}`, data)
     const newState = {tasks: [...state.tasks]}
     const taskIndex = state.tasks.findIndex(o => o.Id === data.Id)
     newState.tasks[taskIndex] = newTask
