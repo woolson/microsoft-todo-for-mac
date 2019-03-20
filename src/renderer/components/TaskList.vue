@@ -22,11 +22,12 @@ div.task-list
             @change="updateState({showCompleteTask: !showCompleteTask})"
           )
         p(@click="deleteTaskFolder") 删除清单
-      div(slot="reference")
-        span.u-mr5 {{currentFolder.Name}}
-        span.u-mr-10.u-bold(
+      div.task-list__title(slot="reference")
+        span.u-ml-10.u-bold(
           :style="{color: showCompleteTask ? '#3DC550' : '#FA6260'}"
         ) &bull;
+        span.u-ml10 {{currentFolder.Name}}
+        i.iconfont.icon-down-o.u-ml10.u-s5
     el-button.u-ml10(
       slot="right"
       size="mini"
@@ -145,4 +146,7 @@ export default {
     &:hover
       color white
       background $red
+
+.task-list__title
+  outline none
 </style>

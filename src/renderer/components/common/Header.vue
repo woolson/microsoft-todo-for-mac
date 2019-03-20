@@ -39,5 +39,6 @@ export default {
   flex-shrink 0
   text-align center
   color $text
+  outline none
 </style>
 

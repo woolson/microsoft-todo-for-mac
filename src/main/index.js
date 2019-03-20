@@ -18,12 +18,13 @@ function createWindow () {
    */
   // setMenu()
   mainWindow = new BrowserWindow({
-    width: 1000,
+    width: 800,
     height: 600,
     minWidth: 500,
     minHeight: 400,
     useContentSize: true,
     frame: false,
+    show: false,
     titleBarStyle: 'hidden',
     // transparent: true,
     resizable: true,
@@ -41,6 +42,10 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+  })
+
+  mainWindow.once('ready-to-show', () => {
+    mainWindow.show()
   })
 }
 
