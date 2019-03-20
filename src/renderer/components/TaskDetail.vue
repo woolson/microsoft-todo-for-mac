@@ -10,8 +10,6 @@ Model.task-detail(
 
 <script>
 import { mapState, mapMutations } from 'vuex'
-import Steps from './Steps'
-import Model from './Model'
 import TaskDetailMain from './TaskDetailMain'
 import TaskDetailRepeat from './TaskDetailRepeat'
 
@@ -23,8 +21,6 @@ export default {
   },
 
   components: {
-    Steps,
-    Model,
     TaskDetailMain,
     TaskDetailRepeat
   },

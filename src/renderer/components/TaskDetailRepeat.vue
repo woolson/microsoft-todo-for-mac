@@ -79,7 +79,7 @@ export default {
   watch: {
     currentTask: {
       handler (newValue) {
-        const { Pattern } = newValue.Recurrence
+        const { Pattern } = newValue.Recurrence || {}
         if (Pattern) {
           this.level = Pattern.Type
           if (Pattern.Type === 'Weekly') {

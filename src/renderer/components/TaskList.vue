@@ -1,22 +1,47 @@
 <template lang="pug">
 div.task-list
-  div.task-list__header
-    h1 清单：{{currentFolder.Name}}
+  Header
     span.u-mlauto.u-pointer(
+      slot="left"
       @click="updateState({sort: !sort})"
     )
       i.iconfont.u-pointer.u-s12(:class="sort ? 'icon-down' : 'icon-up'")
       span.u-ml5 切换排序
+    el-popover(
+      placement="bottom"
+      width="200"
+      trigger="hover"
+    )
+      div.task-list__options
+        div.u-bb
+          span.u-mrauto 显示已完成任务
+          el-switch(
+            active-color="#3DC550"
+            inactive-color="#FA6260"
+            :value="showCompleteTask"
+            @change="updateState({showCompleteTask: !showCompleteTask})"
+          )
+        p(@click="deleteTaskFolder") 删除清单
+      div(slot="reference")
+        span.u-mr5 {{currentFolder.Name}}
+        span.u-mr-10.u-bold(
+          :style="{color: showCompleteTask ? '#3DC550' : '#FA6260'}"
+        ) &bull;
     el-button.u-ml10(
+      slot="right"
       size="mini"
       type="success"
+      @click="updateState({showTaskAdd: true})"
     ) 新建任务
-  div.task-list__content
+  div.task-list__content(v-if="tasks.length")
     TaskItem(
       v-for="item in tasks"
       :data="item"
       :key="item.Id"
     )
+  div.task-list__empty(v-else)
+    i.iconfont.icon-empty
+    span 清单暂无任务
 </template>
 
 <script>
@@ -30,8 +55,10 @@ export default {
 
   computed: {
     ...mapState({
+      taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder,
-      sort: ({global}) => global.sort
+      sort: ({global}) => global.sort,
+      showCompleteTask: ({global}) => global.showCompleteTask
     }),
     ...mapGetters(['tasks'])
   },
@@ -39,7 +66,19 @@ export default {
   methods: {
     ...mapMutations({
       updateState: 'UPDATE_STATE'
-    })
+    }),
+    async deleteTaskFolder () {
+      try {
+        await this.$fetch('DELETE', `/me/taskfolders/${this.currentFolder.Id}`)
+        const taskFolders = [...this.taskFolders]
+        const taskIndex = this.taskFolders.findIndex(o => o.Id === this.currentFolder.Id)
+        taskFolders.splice(taskIndex, 1)
+        this.updateState({taskFolders, currentFolder: taskFolders[taskIndex - 1]})
+        this.$message.success('删除成功')
+      } catch (err) {
+        this.$message.error('删除失败')
+      }
+    }
   }
 }
 </script>
@@ -69,4 +108,31 @@ export default {
   padding 15px
   flex 1
   overflow auto
+
+.task-list__empty
+  flex 1
+  display flex
+  flex-direction column
+  align-items center
+  justify-content center
+  padding-bottom 50px
+  i
+    color $gray
+    font-size 180px
+  span
+    color $gray
+    margin-top 10px
+    font-size 14px
+
+.task-list__options
+  > div
+    display flex
+    padding 5px 0
+    user-select none
+  p
+    color $red
+    cursor pointer
+    padding 3px 0
+    margin-top 5px
+    margin-bottom 0
 </style>

@@ -41,8 +41,5 @@ export default {
   user-select none
   color white
   &.active
-    // color #097BED
-    // font-weight bold
-    // background rgba(#097BED, .1)
     background rgba(black, .15)
 </style>

@@ -2,10 +2,13 @@ import Vue from 'vue'
 import store from '../store/index'
 import axios from 'axios'
 import { Loading } from 'element-ui'
+import { BASE_URL } from '@/common/static'
 import { dater, isEmpty, Storage, refreshToken, has } from '@/common/utils'
 
 let loading
 const token = new Storage('TOKEN')
+
+axios.defaults.baseURL = BASE_URL
 
 function checkAuth (options) {
   const tokenInfo = token.get({})
@@ -40,7 +43,6 @@ export const get = (url, data, options) => {
 }
 
 export const patch = (url, data, options) => {
-  // console.log(url)
   return common('PATCH', url, data, options)
 }
 

@@ -109,30 +109,40 @@ for $size in 10 11 12 13 14 15 20
 .u-flex-1
   flex 1
 
-.u-display-flex
+
+.u-center-center
   display flex
-.u-direction-column
-  flex-direction column !important
-.u-align-start
-  align-items flex-start !important
-.u-align-end
-  align-items flex-end !important
-.u-align-center
-  align-items center !important
-.u-align-stretch
-  align-items stretch !important
-.u-align-baseline
-  align-items baseline !important
-.u-justify-start
-  justify-content flex-start !important
-.u-justify-end
-  justify-content flex-end !important
-.u-justify-center
-  justify-content center !important
-.u-justify-around
-  justify-content space-around !important
-.u-justify-between
-  justify-content space-between !important
+  align-items center
+  justify-content center
+
+.u-center-center_
+  @extend .u-center-center
+  flex-direction column
+
+.u-center-between
+  display flex
+  align-items center
+  justify-content space-between
+
+.u-center-start
+  display flex
+  align-items center
+  justify-content flex-start
+
+.u-center-end
+  display flex
+  align-items center
+  justify-content flex-end
+
+.u-end-center
+  display flex
+  align-items flex-end
+  justify-content center
+
+.u-baseline-center
+  display flex
+  align-items baseline
+  justify-content center
 
 .u-text-center
   text-align center !important
@@ -201,208 +211,3 @@ for $size in 10 11 12 13 14 15 20
   &:after
     right 0
     common-border-vertivcle(270deg)
-
-._common-title
-  font-size .28rem
-  line-height .28rem
-  padding-left .12rem
-  position relative
-  &:after
-    position absolute
-    content ' '
-    height .28rem
-    width .04rem
-    background $color-danger
-    left 0
-    top 50%
-    margin-top -.14rem
-    border-radius .04rem
-
-._common-bottom
-  display flex
-  width 100%
-  justify-content center
-  border none !important
-  padding .2rem
-  box-sizing border-box
-  span
-    font-size .24rem !important
-    padding 0 .2rem
-    text-align center
-    color $color-disabled
-  &.need-line
-    position relative
-    &:after
-      common-border(360deg)
-      top 50%
-      z-index 1
-      width 94%
-      left 3%
-    span
-      position relative
-      z-index 2
-      background $color-bg
-
-._common-list
-  background white
-  position relative
-  padding-left .3rem !important
-  > li
-    display flex
-    padding .25rem .3rem .25rem 0
-    font-size .3rem
-    line-height 1
-    align-items center
-    common-horizen-border(180deg)
-    &:last-child
-      background-image none !important
-      &:after
-        display none
-  &.no-bt:before
-    display none
-  &.no-bb:after
-    display none
-  &:after
-    bottom -1px
-    common-border(360deg)
-
-._common-tabbar
-  .mint-tab-item
-    padding .25rem 0
-    border-bottom none !important
-    text-decoration none
-    .mint-tab-item-label
-      font-size .3rem
-    &.is-selected
-      color $color-primary
-      position relative
-      text-align center
-      display flex
-      justify-content center
-      font-family $font-family-default
-      &:after
-        position absolute
-        bottom .08rem
-        left 50%
-        margin-left -.25rem
-        content ' '
-        background $color-primary
-        height .04rem
-        border-radius .04rem
-        width .5rem
-
-._common-sidebar
-  color $font-color-second
-  width 1.9rem
-  li
-    height 1.2rem
-    display flex
-    justify-content center
-    align-items center
-    font-size .26rem
-    &.active
-      border-right none
-      border-left none
-      background white
-      position relative
-      font-size .3rem
-      color $font-color-dark
-      &:after
-        position absolute
-        left 0
-        top .45rem
-        content ' '
-        width .08rem
-        height .3rem
-        background $color-primary
-
-._common-mask
-  position fixed
-  top 0
-  left 0
-  background rgba(0, 0, 0, .45)
-  height 100vh
-  width 100vw
-  z-index 7
-  animation fadeIn .3s
-
-._common-dropdown
-  position absolute
-  top 1.28rem
-  width 100vw
-  margin 0
-  background white
-  z-index 8
-  transform translateY(-100%)
-  max-height 70vh
-  overflow auto
-  -webkit-overflow-scrolling touch
-  li
-    padding .2rem
-    font-size .25rem
-    text-align center
-    &.active
-      color $color-primary
-      span
-        position relative
-        &:after
-          font-family "iconfont" !important
-          content '\e601'
-          position absolute
-          right -.35rem
-
-._common-button
-  border 1px solid $color-primary
-  -webkit-apperance none
-  padding .03rem .1rem
-  font-size .24rem
-  color $color-primary
-  background white
-  border-radius .05rem
-  outline none
-  line-height 1
-  &:active
-    background $color-primary
-    color white
-  &.disabled
-    border-color $font-color-gray
-    color $font-color-second
-    &:active
-      background $font-color-second
-
-.platform-android ._common-button
-  border-width 1px
-
-._common-good-avatar
-  display flex
-  align-items center
-  justify-content center
-  width .8rem
-  height .8rem
-  box-sizing border-box
-  word-wrap break-word
-  font-size .24rem
-  color $color-primary
-  padding .1rem
-  text-align center
-  line-height 1.1
-  background $color-third
-  border-radius .05rem
-  flex-shrink 0
-
-._common-tag
-  font-size .2rem
-  line-height .3rem
-  padding 0 .1rem
-  height .3rem
-  background #FEF3EB
-  border-radius .05rem
-  color #FF5E38
-  flex-shrink 0
-  white-space nowrap
-
-._common-text
-  width 50vw
-  text-overflow ellipsis
-  white-space nowrap
-  overflow hidden

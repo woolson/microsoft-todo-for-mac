@@ -2,7 +2,6 @@ import { Storage } from '@/common/utils'
 import { get, patch } from '@/common/fetch'
 
 const token = new Storage('TOKEN')
-const BASE_URL = 'https://outlook.office.com/api/v2.0'
 const PAGE_SIZE = 100
 // const BASE_URL = 'https://graph.microsoft.com/beta'
 
@@ -14,18 +13,25 @@ const state = {
   sort: false,
   tasks: [],
   currentTask: {},
-  showTaskDetail: false
+  showCompleteTask: true,
+  showTaskDetail: false,
+  showTaskAdd: false,
+  showTaskFolderAdd: false
 }
 
 const getters = {
-  tasks ({sort, tasks, currentFolder}) {
+  tasks ({sort, tasks, currentFolder, showCompleteTask}) {
     let taskArr = [...tasks]
     if (!sort) taskArr = [...tasks].reverse()
     if (currentFolder.Key) {
-      return taskArr.filter(o => o[currentFolder.Key] === currentFolder.Value)
+      taskArr = taskArr.filter(o => o[currentFolder.Key] === currentFolder.Value)
     } else {
-      return taskArr.filter(o => o.ParentFolderId === currentFolder.Id)
+      taskArr = taskArr.filter(o => o.ParentFolderId === currentFolder.Id)
     }
+    if (!showCompleteTask) {
+      taskArr = taskArr.filter(o => o.Status !== 'Completed')
+    }
+    return taskArr
   }
 }
 
@@ -40,17 +46,17 @@ const mutations = {
 
 const actions = {
   async GET_TASK_FOLDERS ({state, commit, dispatch}) {
-    const { value } = await get(`${BASE_URL}/me/taskfolders?$top=${PAGE_SIZE}`)
+    const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`)
     const currentFolder = value.find(o => o.IsDefaultFolder)
     commit('UPDATE_STATE', {taskFolders: value, currentFolder})
     dispatch('GET_TASKS')
   },
   async GET_TASKS ({commit}) {
-    const { value } = await get(`${BASE_URL}/me/tasks?$top=${PAGE_SIZE}`)
+    const { value } = await get(`/me/tasks?$top=${PAGE_SIZE}`)
     commit('UPDATE_STATE', {tasks: value.reverse()})
   },
   async UPDATE_TASK ({state, commit}, data) {
-    const newTask = await patch(`${BASE_URL}/me/tasks/${data.Id}`, data)
+    const newTask = await patch(`/me/tasks/${data.Id}`, data)
     const newState = {tasks: [...state.tasks]}
     const taskIndex = state.tasks.findIndex(o => o.Id === data.Id)
     newState.tasks[taskIndex] = newTask

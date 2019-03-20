@@ -1,6 +1,8 @@
 <template lang="pug">
 div.sidebar
   div.sidebar__header
+  div.sidebar__add
+    i.task-add.iconfont.icon-add(@click="updateState({showTaskFolderAdd: true})")
   TaskFolderItem(
     :data="{Name: '重要', Key: 'Importance', Value: 'High'}"
   )
@@ -9,11 +11,13 @@ div.sidebar
     :data="item"
     :key="item.Id"
   )
-  //- div.task-add 新建清单
+  div.sidebar__setting
+    i.iconfont.icon-setting
+    span.u-ml5 设置
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 import TaskFolderItem from './TaskFolderItem'
 
 export default {
@@ -25,6 +29,12 @@ export default {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder
+    })
+  },
+
+  methods: {
+    ...mapMutations({
+      updateState: 'UPDATE_STATE'
     })
   }
 }
@@ -38,20 +48,33 @@ export default {
   box-sizing border-box
   box-shadow inset 0 0 5px rgba(black, .15)
   background linear-gradient(45deg, $purple, $blue)
+  display flex
+  flex-direction column
 
 .sidebar__header
   height 50px
   -webkit-app-region drag
 
-.task-add
+.sidebar__add
   padding 0 10px
   font-size 16px
-  color $red
   height 36px
   line-height 36px
   border-radius 5px
   cursor pointer
-  &:hover
-    background $red
-    color white
+  color white
+  font-size 14px
+
+.sidebar__setting
+  display flex
+  align-items center
+  margin-top auto
+  height 36px
+  line-height 36px
+  font-size 14px
+  padding 0 10px
+  cursor pointer
+  user-select none
+  color white
+  margin-bottom 20px
 </style>
