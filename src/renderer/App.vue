@@ -45,16 +45,17 @@ export default {
     })
   },
 
-  async mounted () {
-    // this.getUserPhoto()
-    const loading = this.$loading({
-      lock: true,
-      text: '加载中',
-      background: 'rgba(0, 0, 0, 0.7)'
+  mounted () {
+    this.init()
+    window.addEventListener('keydown', evt => {
+      if (evt.keyCode !== 27) return
+      this.updateState({
+        showTaskDetailModel: false,
+        showTaskAddModel: false,
+        showTaskFolderAddModel: false,
+        showSettingsModel: false
+      })
     })
-    await this.getTaskFolders()
-    await this.getTasks()
-    loading.close()
   },
 
   methods: {
@@ -65,7 +66,17 @@ export default {
       getUserPhoto: 'GET_USER_PHOTO',
       getTaskFolders: 'GET_TASK_FOLDERS',
       getTasks: 'GET_TASKS'
-    })
+    }),
+    async init () {
+      const loading = this.$loading({
+        lock: true,
+        text: '加载中',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      await this.getTaskFolders()
+      await this.getTasks()
+      loading.close()
+    }
   }
 }
 </script>

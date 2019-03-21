@@ -2,7 +2,14 @@
 div.sidebar
   div.sidebar__header
   div.sidebar__add
-    i.task-add.iconfont.icon-add(@click="updateState({showTaskFolderAddModel: true})")
+    el-tooltip(
+      slot="right"
+      content="新建清单"
+      placement="right"
+    )
+      i.task-add.iconfont.icon-add(
+        @click="updateState({showTaskFolderAddModel: true})"
+      )
   TaskFolderItem(
     v-show="showImportanceFolder"
     :data="{Name: '重要', Key: 'Importance', Value: 'High'}"

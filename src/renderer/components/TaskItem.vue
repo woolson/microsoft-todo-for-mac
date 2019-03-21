@@ -103,10 +103,9 @@ export default {
     &:after
       display none
   &:hover
-    // background rgba($blue, .1)
     *
       color white
-    background linear-gradient(45deg, #1c9fff, #765ee7)
+    background linear-gradient(45deg, $blue, $purple)
 
 .task-item__content
   h1

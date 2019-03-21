@@ -10,6 +10,12 @@ Model.add-task-folder(
       type="success"
       @click="submit"
     ) 确认
+  el-alert(
+    title="可在输入框使用 Enter 确认提交"
+    type="info"
+    show-icon
+    :closable="false"
+  )
   div.add-task-folder__content
     div.form__main
       div.form__row

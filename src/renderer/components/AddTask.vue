@@ -11,7 +11,7 @@ Model.add-task(
       @click="submit"
     ) 确认
   el-alert(
-    title="可在输入框使用enter确认提交"
+    title="可在输入框使用 Enter 确认提交"
     type="info"
     show-icon
     :closable="false"
