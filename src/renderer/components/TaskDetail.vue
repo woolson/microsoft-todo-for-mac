@@ -1,7 +1,7 @@
 <template lang="pug">
 Model.task-detail(
   v-model="showTaskDetailModel"
-  @cancel="updateState({showTaskDetailModel: false})"
+  @cancel="updateState({showTaskDetailModel: false});currentStep = 0"
 )
   Steps(v-model="currentStep")
     TaskDetailMain(:step.sync="currentStep")

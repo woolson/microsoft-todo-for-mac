@@ -30,7 +30,8 @@ export default {
       updateState: 'UPDATE_STATE'
     }),
     ...mapActions({
-      getTaskFolders: 'GET_TASK_FOLDERS'
+      getTaskFolders: 'GET_TASK_FOLDERS',
+      getTasks: 'GET_TASKS'
     }),
     login () {
       const query = {
@@ -71,7 +72,14 @@ export default {
         res.expires_time = dater().format('X') + res.expires_in
         token.set(res)
         this.updateState({token: res, hasLogin: true})
-        this.getTaskFolders()
+        const loading = this.$loading({
+          lock: true,
+          text: '加载中',
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+        await this.getTaskFolders()
+        await this.getTasks()
+        loading.close()
       }
     }
   }

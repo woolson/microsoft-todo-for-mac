@@ -104,7 +104,7 @@ export default {
       display none
   &:hover
     *
-      color white
+      color white !important
     background linear-gradient(45deg, $blue, $purple)
 
 .task-item__content

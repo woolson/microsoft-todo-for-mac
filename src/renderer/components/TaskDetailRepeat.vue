@@ -2,8 +2,8 @@
 div.task-detail-repeat
   div.task-detail-repeat__header.u-bb
     span.u-pointer(@click="$emit('update:step', 0)") 返回
-  div.task-detail-repeat__content
-    div.task-detail-repeat__row
+  div.form__row-section
+    div.form__row.u-bb
       label.u-mr20 重复
       el-select.u-flex-1(v-model="level")
         el-option(
@@ -12,10 +12,14 @@ div.task-detail-repeat
           :label="item.label"
           :value="item.value"
         )
-  div.task-detail-repeat__content(v-show="level === 'custom'")
-    div.task-detail-repeat__row
+  div.form__row-section(v-show="level === 'Custom'")
+    div.form__row.u-bb
       label.u-mr20 周期
-      el-input(v-model="repeatNumber" type="number")
+      el-input(
+        v-model="repeatNumber"
+        type="number"
+        :min="1"
+      )
       el-select(v-model="repeatLevel")
         el-option(
           v-for="item in repeatLevelOptions"
@@ -23,24 +27,28 @@ div.task-detail-repeat
           :label="item.label"
           :value="item.value"
         )
-    div.task-detail-repeat__row(v-show="level === 'Weekly'")
-      el-checkbox-group(v-model="customWeek")
+    div.form__row(v-show="repeatLevel === 'week'")
+      el-checkbox-group.u-mlauto.u-mrauto(v-model="customWeek")
         el-checkbox-button(
           v-for="item in weeks"
           :key="item.value"
           :label="item.label"
           :value="item.value"
         )
-  el-button(type="primary" plain size="") 确定
+  el-button(
+    type="primary"
+    round
+    @click="submit"
+  ) 确定
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
     return {
-      level: null,
+      level: 'Daily',
       repeatLevel: null,
       repeatNumber: null,
       customWeek: [],
@@ -50,7 +58,7 @@ export default {
         { value: 'Weekly', label: '每周' },
         { value: 'AbsoluteMonthly', label: '每月' },
         { value: 'AbsoluteYearly', label: '每年' },
-        { value: 'custom', label: '自定义' }
+        { value: 'Custom', label: '自定义' }
       ],
       repeatLevelOptions: [
         { value: 'day', label: '天' },
@@ -59,13 +67,13 @@ export default {
         { value: 'year', label: '年' }
       ],
       weeks: [
-        { value: 1, label: '一' },
-        { value: 2, label: '二' },
-        { value: 3, label: '三' },
-        { value: 4, label: '四' },
-        { value: 5, label: '五' },
-        { value: 6, label: '六' },
-        { value: 7, label: '日' }
+        { value: 'Monday', label: '一' },
+        { value: 'Tuesday', label: '二' },
+        { value: 'Wednesday', label: '三' },
+        { value: 'Thursday', label: '四' },
+        { value: 'Friday', label: '五' },
+        { value: 'Saturday', label: '六' },
+        { value: 'Sunday', label: '日' }
       ]
     }
   },
@@ -89,6 +97,22 @@ export default {
         }
       },
       deep: true
+    }
+  },
+
+  methods: {
+    ...mapActions({
+      updateTask: 'UPDATE_TASK'
+    }),
+    async submit () {
+      await this.updateTask({
+        Id: this.currentTask.Id,
+        Recurrence: {
+          Pattern: {
+            Type: this.level
+          }
+        }
+      })
     }
   }
 }

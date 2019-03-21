@@ -1,47 +1,66 @@
 <template lang="pug">
-div.task-detail-main
-  div.task-detail__header.u-bb
+div.task-detail-main(
+  v-loading.lock="loading"
+)
+  div.task-detail__header
     i.iconfont.u-mr10(
       :class="checkClass"
       @click="changeTaskStatus"
     )
-    h1(:style="titleStyle") {{currentTask.Subject}}
-    i.iconfont(
+    el-input(
+      v-model="name"
+      clearable
+      @blur="subjectSubmit"
+      @keyup.enter.native="subjectSubmit"
+    )
+    i.iconfont.u-ml10(
       :class="starClass"
       @click="changeTaskImportance"
     )
-  div.task-detail__content
-    div.task-detail__row.u-bb
-      i.iconfont.icon-alarm
+  el-alert(
+    title="可在输入框使用 Enter 确认提交"
+    type="info"
+    show-icon
+    :closable="false"
+  )
+  div.form__row-section.u-mt12
+    div.form__row.u-bb
+      label 提醒时间
       div.content(@click.stop="showRemindPicker")
-        span {{remindDateText}}
         el-date-picker(
           ref="remindPicker"
           v-model="dateTime"
           type="datetime"
+          @change="remindSubmit"
         )
-    div.task-detail__row.u-bb(@click.stop="showStopPicker")
-      i.iconfont.icon-calendar
-      div.content
-        span {{stopDateText}}
+        span {{remindDateText}}
+        i.iconfont.icon-right.u-ml5
+    div.form__row
+      label 截止日期
+      div.content(@click.stop="showStopPicker")
         el-date-picker(
           ref="stopPicker"
           v-model="stopDate"
           type="date"
+          @change="stopDateSubmit"
         )
-    div.task-detail__row(@click="$emit('update:step', 1)")
-      i.iconfont.icon-repeat-o
-      div.content
-        span 重复
-  div.task-detail__content
-    div.task-detail__row
-      i.iconfont.icon-attachment
-      div.content
-        span 添加文件
-  div.task-detail__content
-    div.task-detail__row
-      div.content
-        textarea(placeholder="添加备注")
+        span {{stopDateText}}
+        i.iconfont.icon-right.u-ml5
+    //- div.form__row(@click="$emit('update:step', 1)")
+    //-   label 重复
+    //-   i.iconfont.icon-right.u-ml5
+  div.form__row-section
+    div.form__row(@click="selectFile")
+      label 添加文件
+      input.u-transparent(type="file" ref="file" )
+  div.form__row-section
+    div.form__row
+      textarea(
+        v-model="note"
+        placeholder="添加备注"
+        @blur="noteSubmit"
+        @keyup.enter="noteSubmit"
+      )
 </template>
 
 <script>
@@ -51,8 +70,11 @@ import { dater } from '@/common/utils'
 export default {
   data () {
     return {
+      name: '',
       dateTime: '',
-      stopDate: ''
+      stopDate: '',
+      note: '',
+      loading: false
     }
   },
 
@@ -74,23 +96,26 @@ export default {
       return this.currentTask.Importance === 'High' ? 'icon-star' : 'icon-star-o'
     },
     remindDateText () {
-      return this.dateTime ? dater(this.dateTime).format('MM月DD日 HH点mm分 提醒我') : '选择提醒时间'
+      return this.dateTime ? dater(this.dateTime).format('MM月DD日 HH点mm分 提醒我') : '选择'
     },
     stopDateText () {
-      return this.stopDate ? dater(this.stopDate).format('MM月DD日 到期') : '选择截止日期'
+      return this.stopDate ? dater(this.stopDate).format('MM月DD日 到期') : '选择'
     }
   },
 
   watch: {
     currentTask: {
       handler (newValue) {
-        const { ReminderDateTime, DueDateTime, IsReminderOn } = newValue
+        const { ReminderDateTime, DueDateTime, IsReminderOn, Body, Subject } = newValue
         if (ReminderDateTime && IsReminderOn) {
           this.dateTime = dater(ReminderDateTime.DateTime).format('x')
-        }
+        } else this.dateTime = ''
         if (DueDateTime) {
           this.stopDate = dater(DueDateTime.DateTime).format('x')
-        }
+        } else this.stopDate = ''
+
+        this.name = Subject
+        this.note = Body && Body.Content
       },
       deep: true
     }
@@ -121,21 +146,69 @@ export default {
       const { showPicker, hidePicker, pickerVisible } = this.$refs.stopPicker
       if (pickerVisible) hidePicker()
       else showPicker()
+    },
+    async remindSubmit (value) {
+      this.loading = true
+      await this.updateTask({
+        Id: this.currentTask.Id,
+        IsReminderOn: true,
+        ReminderDateTime: {
+          DateTime: value.toISOString(),
+          TimeZone: 'Asia/Shanghai'
+        }
+      })
+      this.loading = false
+    },
+    async stopDateSubmit (value) {
+      this.loading = true
+      await this.updateTask({
+        Id: this.currentTask.Id,
+        DueDateTime: {
+          DateTime: value.toISOString(),
+          TimeZone: 'Asia/Shanghai'
+        }
+      })
+      this.loading = false
+    },
+    selectFile () {
+      this.$refs.file.click()
+    },
+    async noteSubmit () {
+      const Body = this.currentTask.Body || {}
+      if (this.note === Body.Content) return
+
+      this.loading = true
+      await this.updateTask({
+        Id: this.currentTask.Id,
+        Body: {
+          ContentType: 'Text',
+          Content: this.note
+        }
+      })
+      this.loading = false
+    },
+    async subjectSubmit () {
+      if (!this.name || this.name === this.currentTask.Subject) return
+      this.loading = true
+      await this.updateTask({
+        Id: this.currentTask.Id,
+        Subject: this.name
+      })
+      this.loading = false
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-
 .task-detail__header
   padding 15px
   display flex
   align-items center
-  margin-bottom 10px
+  box-shadow 0 0 5px rgba(black, .1)
   h1
     flex 1
-    font-size 18px
+    font-size 16px
     font-weight normal
     overflow hidden
     text-overflow ellipsis
@@ -143,47 +216,21 @@ export default {
     margin 0
   i
     font-size 20px
+    cursor pointer
     &.icon-check
       color $green
     &.icon-star
       color $yellow
 
-.task-detail__content
-  margin 10px
-  margin-top 0
-  background $background-color
-  border-radius 5px
-
-.task-detail__row
-  display flex
-  align-items center
-  min-height 40px
-  padding 12px
-  box-sizing border-box
-  color $text
+textarea
+  width 100%
+  height 60px
+  border none
+  resize none
+  outline none
   font-size 14px
-  cursor pointer
-  user-select none
-  > i
-    margin-right 10px
-  .content
-    flex 1
-    display flex
-  textarea
-    width 100%
-    height 60px
-    border none
-    resize none
-    outline none
-    font-size 14px
-    color $text
-    background transparent
-  &:hover
-    background rgba($blue, .05)
-  &:first-child
-    border-radius 5px 5px 0 0
-  &:last-child
-    border-radius 0 0 5px 5px
+  color $text
+  background transparent
 
 .el-date-editor
   width 0px
