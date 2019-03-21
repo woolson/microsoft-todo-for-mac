@@ -28,6 +28,7 @@ Model.add-task(
           ref="input"
           v-model="name"
           placeholder="任务名称"
+          @keyup.enter.native="submit"
           autofocus
         )
 </template>
@@ -45,6 +46,7 @@ export default {
 
   computed: {
     ...mapState({
+      tasks: ({global}) => global.tasks,
       taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder,
       showTaskAddModel: ({global}) => global.showTaskAddModel
@@ -54,7 +56,12 @@ export default {
   watch: {
     showTaskAddModel (newValue) {
       if (!newValue) return
-      this.belongFolder = this.currentFolder.Id
+      if (this.currentFolder.Id) {
+        this.belongFolder = this.currentFolder.Id
+      } else {
+        const hasIdFolder = this.taskFolders.find(o => o.Id)
+        if (hasIdFolder) this.belongFolder = hasIdFolder.Id
+      }
       this.$nextTick(this.$refs.input.focus)
     }
   },
@@ -65,8 +72,13 @@ export default {
     }),
     async submit () {
       try {
-        const newFolder = await this.$post(`/me/taskfolders`, {Name: this.name})
-        this.updateState({taskFolders: [...this.taskFolders, newFolder]})
+        const newTask = await this.$post(`/me/${this.belongFolder}/tasks`, {
+          Subject: this.name
+        })
+        this.updateState({
+          tasks: [...this.tasks, newTask],
+          showTaskAddModel: false
+        })
         this.$message.success('添加成功')
       } catch (err) {
         this.$message.error('添加失败')
