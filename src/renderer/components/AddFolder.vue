@@ -4,7 +4,7 @@ Model.add-task-folder(
   @cancel="updateState({showTaskFolderAddModel: false})"
 )
   Header
-    span 添加清单
+    span {{operateType}}清单
     el-button(
       slot="right"
       type="success"
@@ -43,13 +43,22 @@ export default {
   computed: {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
+      currentFolder: ({global}) => global.currentFolder,
       showTaskFolderAddModel: ({global}) => global.showTaskFolderAddModel
-    })
+    }),
+    operateType () {
+      return this.currentFolder.Type ? '编辑' : '新建'
+    }
   },
 
   watch: {
     showTaskFolderAddModel (newValue) {
-      if (newValue) this.$nextTick(this.$refs.input.focus)
+      if (newValue) {
+        this.$nextTick(this.$refs.input.focus)
+        if (this.currentFolder.Type) {
+          this.name = this.currentFolder.Name
+        }
+      }
     }
   },
 
@@ -58,15 +67,29 @@ export default {
       updateState: 'UPDATE_STATE'
     }),
     async submit () {
+      const { Type, Name, Id } = this.currentFolder
+      if ((Type && Name === this.name) || !this.name) return
       try {
-        const newFolder = await this.$post(`/me/taskfolders`, {Name: this.name})
-        this.updateState({
-          taskFolders: [...this.taskFolders, newFolder],
-          showTaskFolderAddModel: false
-        })
-        this.$message.success('添加成功')
+        if (Type) {
+          await this.$patch(`/me/taskfolders/${Id}`, {Name: this.name})
+          const folders = JSON.parse(JSON.stringify(this.taskFolders))
+          const index = folders.findIndex(o => o.Id === Id)
+          folders[index].Name = this.name
+          this.updateState({
+            taskFolders: folders,
+            currentFolder: folders[index],
+            showTaskFolderAddModel: false
+          })
+        } else {
+          const newFolder = await this.$post(`/me/taskfolders`, {Name: this.name})
+          this.updateState({
+            taskFolders: [...this.taskFolders, newFolder],
+            showTaskFolderAddModel: false
+          })
+        }
+        this.$message.success(`${this.operateType}成功`)
       } catch (err) {
-        this.$message.error('添加失败')
+        this.$message.error(`${this.operateType}失败`)
       }
     }
   }

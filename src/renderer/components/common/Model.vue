@@ -2,6 +2,7 @@
 
 <template lang="pug">
 div.model(
+  ref="model"
   :class="'model--' + position"
   v-show="showRoot"
 )
@@ -93,6 +94,10 @@ export default {
     value (newValue) {
       if (newValue) {
         this.showRoot = true
+        const lastIndex = this.getLastIndex()
+        if (+this.$refs.model.style.zIndex < lastIndex) {
+          this.$refs.model.style.zIndex = lastIndex + 1
+        }
       } else {
         setTimeout(() => {
           this.showRoot = false
@@ -104,6 +109,13 @@ export default {
   methods: {
     cancel () {
       this.$emit('cancel')
+    },
+    getLastIndex () {
+      const $domAll = Array.from(document.all)
+      return Math.max(...$domAll.map(dom => {
+        const zIndex = dom.style.zIndex
+        return isNaN(zIndex) ? -1 : zIndex
+      }))
     }
   }
 }

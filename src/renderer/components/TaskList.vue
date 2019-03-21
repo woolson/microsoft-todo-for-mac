@@ -13,7 +13,7 @@ div.task-list
     el-popover(
       placement="bottom"
       width="200"
-      trigger="click"
+      trigger="hover"
     )
       div.task-list__options
         div.u-bb
@@ -24,7 +24,11 @@ div.task-list
             :value="showCompleteTask"
             @change="updateState({showCompleteTask: !showCompleteTask})"
           )
-        p(
+        p.rename.u-bb(
+          v-show="currentFolder.Id"
+          @click="renameTaskFolder"
+        ) 重命名
+        p.delete(
           v-show="currentFolder.Id"
           @click="deleteTaskFolder"
         ) 删除清单
@@ -95,6 +99,12 @@ export default {
       } catch (err) {
         console.log('已取消', err)
       }
+    },
+    renameTaskFolder () {
+      this.updateState({
+        currentFolder: {...this.currentFolder, Type: 'Rename'},
+        showTaskFolderAddModel: true
+      })
     }
   }
 }
@@ -147,16 +157,22 @@ export default {
     padding 10px 12px
     user-select none
   p
-    color $red
     cursor pointer
     padding 10px 12px
     margin 0
-    border-radius 0 0 5px 5px
     transition all .2s
     background white
+    &.rename
+      color $green
+      &:hover
+        background $green
+    &.delete
+      color $red
+      border-radius 0 0 5px 5px
+      &:hover
+        background $red
     &:hover
       color white
-      background $red
 
 .task-list__title
   outline none
