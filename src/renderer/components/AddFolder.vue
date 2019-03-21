@@ -18,6 +18,7 @@ Model.add-task-folder(
           ref="input"
           v-model="name"
           placeholder="清单名称"
+          autofocus
         )
 </template>
 
@@ -40,7 +41,7 @@ export default {
 
   watch: {
     showTaskFolderAddModel (newValue) {
-      if (newValue) this.$refs.input.focus()
+      if (newValue) this.$nextTick(this.$refs.input.focus)
     }
   },
 

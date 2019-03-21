@@ -6,7 +6,7 @@ div.task-list
       @click="updateState({sort: !sort})"
     )
       i.iconfont.u-pointer.u-s12(:class="sort ? 'icon-down' : 'icon-up'")
-      span.u-ml5 切换排序
+      span.u-ml5 排序
     el-popover(
       placement="bottom"
       width="200"
@@ -23,7 +23,7 @@ div.task-list
           )
         p(@click="deleteTaskFolder") 删除清单
       div.task-list__title(slot="reference")
-        span.u-ml-10.u-bold(
+        span.u-bold(
           :style="{color: showCompleteTask ? '#3DC550' : '#FA6260'}"
         ) &bull;
         span.u-ml10 {{currentFolder.Name}}
@@ -149,4 +149,7 @@ export default {
 
 .task-list__title
   outline none
+  display flex
+  align-items center
+  justify-content center
 </style>
