@@ -29,6 +29,7 @@ Model.add-task(
           v-model="name"
           placeholder="任务名称"
           @keyup.enter.native="submit"
+          clearable
           autofocus
         )
 </template>
@@ -72,7 +73,7 @@ export default {
     }),
     async submit () {
       try {
-        const newTask = await this.$post(`/me/${this.belongFolder}/tasks`, {
+        const newTask = await this.$post(`/me/taskfolders/${this.belongFolder}/tasks`, {
           Subject: this.name
         })
         this.updateState({

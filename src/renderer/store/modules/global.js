@@ -6,6 +6,7 @@ const PAGE_SIZE = 100
 // const BASE_URL = 'https://graph.microsoft.com/beta'
 
 const state = {
+  userPhoto: null,
   hasLogin: true,
   token: token.get({}),
   taskFolders: [],
@@ -47,6 +48,10 @@ const mutations = {
 }
 
 const actions = {
+  async GET_USER_PHOTO ({commit}) {
+    const { value } = await get('/me/photo')
+    console.log(value)
+  },
   async GET_TASK_FOLDERS ({state, commit, dispatch}) {
     const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`)
     const currentFolder = value.find(o => o.IsDefaultFolder)

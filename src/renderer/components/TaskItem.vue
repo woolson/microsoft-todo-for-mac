@@ -95,9 +95,11 @@ export default {
     &.icon-check
       color $green
   &:first-child
-    border-radius 5px 5px 0 0
+    border-top-left-radius 5px
+    border-top-right-radius 5px
   &:last-child
-    border-radius 0 0 5px 5px
+    border-bottom-left-radius 5px
+    border-bottom-right-radius 5px
     &:after
       display none
   &:hover

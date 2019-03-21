@@ -35,15 +35,22 @@ body
 .el-message-box
   border none
 
-.el-message
+.el-message--success
+.el-message--error
   margin-left 80px
-  background $green
-  border-color $green
   p,
   i
     color white !important
 
-.el-button--success
+.el-message--success
+  background $green
+  border-color $green
+
+.el-message--error
+  background $red
+  border-color $red
+
+.el-button--success:not(.is-plain)
   background $green
   border-color $green
 

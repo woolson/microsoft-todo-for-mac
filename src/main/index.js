@@ -18,7 +18,7 @@ function createWindow () {
    */
   // setMenu()
   mainWindow = new BrowserWindow({
-    width: 800,
+    width: 1200,
     height: 600,
     minWidth: 500,
     minHeight: 400,

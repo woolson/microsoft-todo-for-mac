@@ -19,6 +19,8 @@ Model.add-task-folder(
           v-model="name"
           placeholder="清单名称"
           autofocus
+          clearable
+          @keyup.enter.native="submit"
         )
 </template>
 
@@ -29,7 +31,7 @@ export default {
   name: 'AddFolder',
 
   data: () => ({
-    name: ''
+    name: '测试清单'
   }),
 
   computed: {

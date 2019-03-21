@@ -134,7 +134,7 @@ export class Storage {
     }
   }
 
-  delete () {
+  remove () {
     window.localStorage.removeItem(this.name)
   }
 }

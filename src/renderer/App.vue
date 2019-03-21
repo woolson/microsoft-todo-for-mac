@@ -46,6 +46,7 @@ export default {
   },
 
   mounted () {
+    // this.getUserPhoto()
     this.getTaskFolders()
   },
 
@@ -54,6 +55,7 @@ export default {
       updateState: 'UPDATE_STATE'
     }),
     ...mapActions({
+      getUserPhoto: 'GET_USER_PHOTO',
       getTaskFolders: 'GET_TASK_FOLDERS'
     })
   }

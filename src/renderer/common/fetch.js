@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import store from '../store/index'
 import axios from 'axios'
-import { Loading } from 'element-ui'
+import { Loading, Message } from 'element-ui'
 import { BASE_URL } from '@/common/static'
 import { dater, isEmpty, Storage, refreshToken, has } from '@/common/utils'
 
@@ -99,6 +99,7 @@ axios.interceptors.response.use(function (response) {
   return response.data || {}
 }, function (error) {
   loading && loading.close()
+  Message.error(error.message)
   if (error.response.status === 401) {
     store.commit('UPDATE_STATE', {hasLogin: false})
   }

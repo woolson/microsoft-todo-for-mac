@@ -57,10 +57,14 @@ export default {
   color white
   display flex
   align-items center
+  transition all .2s
   i
     font-size 18px
     &.icon-star
-      font-size 16px
+      margin-left 1px
+      font-size 15px
+      margin-right 1px
   &.active
-    background rgba(black, .15)
+    box-shadow inset 0 0 12px rgba(black, .05)
+    background rgba(black, .1)
 </style>

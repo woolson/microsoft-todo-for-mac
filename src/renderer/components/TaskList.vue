@@ -3,9 +3,12 @@ div.task-list
   Header
     span.u-mlauto.u-pointer(
       slot="left"
+      v-show="tasks.length"
       @click="updateState({sort: !sort})"
     )
-      i.iconfont.u-pointer.u-s12(:class="sort ? 'icon-down' : 'icon-up'")
+      i.iconfont.u-pointer.u-s12(
+        :class="sort ? 'icon-down' : 'icon-up'"
+      )
       span.u-ml5 排序
     el-popover(
       placement="bottom"
@@ -28,12 +31,17 @@ div.task-list
         ) &bull;
         span.u-ml10 {{currentFolder.Name}}
         i.iconfont.icon-down-o.u-ml10.u-s5
-    el-button.u-ml10(
+    el-tooltip(
       slot="right"
-      size="mini"
-      type="success"
-      @click="updateState({showTaskAddModel: true})"
-    ) 新建任务
+      content="新建任务"
+      placement="left"
+    )
+      el-button.u-ml10(
+        size="mini"
+        circle
+        icon="el-icon-plus"
+        @click="updateState({showTaskAddModel: true})"
+      )
   div.task-list__content(v-if="tasks.length")
     TaskItem(
       v-for="item in tasks"
@@ -72,7 +80,7 @@ export default {
       try {
         await this.$confirm(`确认删除清单 ${this.currentFolder.Name} ？`, '注意', { center: true })
         try {
-          await this.$fetch('DELETE', `/me/taskfolders/${this.currentFolder.Id}`)
+          await this.$fetch('delete', `/me/taskfolders/${this.currentFolder.Id}`)
           const taskFolders = [...this.taskFolders]
           const taskIndex = this.taskFolders.findIndex(o => o.Id === this.currentFolder.Id)
           taskFolders.splice(taskIndex, 1)

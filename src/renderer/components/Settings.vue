@@ -27,10 +27,17 @@ Model.settings(
           :value="showCompleteTask"
           @change="updateState({showCompleteTask: !showCompleteTask})"
         )
+    el-button.u-ml12.u-mr12.u-mtauto(
+      type="danger"
+      @click="logout"
+    ) 注销
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from 'vuex'
+import { Storage } from '@/common/utils'
+
+const token = new Storage('TOKEN')
 
 export default {
   computed: {
@@ -47,13 +54,21 @@ export default {
     }),
     ...mapActions({
       getTaskFolders: 'GET_TASK_FOLDERS'
-    })
+    }),
+    logout () {
+      token.remove()
+      this.updateState({showSettingsModel: false, hasLogin: false})
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
 .settings__content
+  flex 1
   padding 12px 0
+  display flex
+  flex-direction column
+  align-items stretch
 </style>
 
