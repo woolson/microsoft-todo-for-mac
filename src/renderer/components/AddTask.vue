@@ -10,11 +10,17 @@ Model.add-task(
       type="success"
       @click="submit"
     ) 确认
+  el-alert(
+    title="可在输入框使用enter确认提交"
+    type="info"
+    show-icon
+    :closable="false"
+  )
   div.add-task__content
     div.form__row-section
       div.form__row
         label 所属清单
-        el-select.u-flex-1(v-model="belongFolder")
+        el-select.u-w200(v-model="belongFolder")
           el-option(
             v-for="item in taskFolders"
             :key="item.Id"
@@ -24,7 +30,7 @@ Model.add-task(
     div.form__row-section
       div.form__row
         label 名称
-        el-input(
+        el-input.u-w200(
           ref="input"
           v-model="name"
           placeholder="任务名称"

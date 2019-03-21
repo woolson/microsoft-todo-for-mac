@@ -19,7 +19,8 @@ const state = {
   showTaskAddModel: false,
   showTaskFolderAddModel: false,
   showSettingsModel: false,
-  showImportanceFolder: true
+  showImportanceFolder: true,
+  showScheduleFolder: true
 }
 
 const getters = {
@@ -52,14 +53,13 @@ const actions = {
     const { value } = await get('/me/photo')
     console.log(value)
   },
-  async GET_TASK_FOLDERS ({state, commit, dispatch}) {
-    const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`)
+  async GET_TASK_FOLDERS ({commit}) {
+    const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`, null, {showLoading: false})
     const currentFolder = value.find(o => o.IsDefaultFolder)
     commit('UPDATE_STATE', {taskFolders: value, currentFolder})
-    dispatch('GET_TASKS')
   },
   async GET_TASKS ({commit}) {
-    const { value } = await get(`/me/tasks?$top=${PAGE_SIZE}`)
+    const { value } = await get(`/me/tasks?$top=${PAGE_SIZE}`, null, {showLoading: false})
     commit('UPDATE_STATE', {tasks: value.reverse()})
   },
   async UPDATE_TASK ({state, commit}, data) {

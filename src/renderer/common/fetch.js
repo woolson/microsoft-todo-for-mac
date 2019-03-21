@@ -52,15 +52,19 @@ export const common = (type, url, data, options = {}) => {
     const request = url
     url = request.url
     data = request.data
-    options = request.options || {}
+    options = Object.assign({
+      showLoading: true
+    }, request.options || {})
   }
 
-  loading = Loading.service({
-    lock: true,
-    text: '加载中',
-    // spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.7)'
-  })
+  if (options.showLoading) {
+    loading = Loading.service({
+      lock: true,
+      text: '加载中',
+      // spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
+  }
 
   // 设置默认值
   options = Object.assign({

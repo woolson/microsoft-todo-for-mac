@@ -45,9 +45,16 @@ export default {
     })
   },
 
-  mounted () {
+  async mounted () {
     // this.getUserPhoto()
-    this.getTaskFolders()
+    const loading = this.$loading({
+      lock: true,
+      text: '加载中',
+      background: 'rgba(0, 0, 0, 0.7)'
+    })
+    await this.getTaskFolders()
+    await this.getTasks()
+    loading.close()
   },
 
   methods: {
@@ -56,7 +63,8 @@ export default {
     }),
     ...mapActions({
       getUserPhoto: 'GET_USER_PHOTO',
-      getTaskFolders: 'GET_TASK_FOLDERS'
+      getTaskFolders: 'GET_TASK_FOLDERS',
+      getTasks: 'GET_TASKS'
     })
   }
 }

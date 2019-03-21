@@ -1,6 +1,6 @@
 <template lang="pug">
 div.task-folder-item(
-  :class="{active: currentFolder.Id === data.Id}"
+  :class="activeClass"
   @click="updateState({currentFolder: data})"
 )
   i.iconfont(:class="folderIcon")
@@ -17,7 +17,10 @@ const FOLDER_ICON = {
   'Task': 'icon-task',
   '重要': 'icon-star',
   'Importance': 'icon-star',
-  'importance': 'icon-star'
+  'importance': 'icon-star',
+  '计划日程': 'icon-calendar-o',
+  'Schedule': 'icon-calendar-o',
+  'schedule': 'icon-calendar-o'
 }
 
 export default {
@@ -34,6 +37,13 @@ export default {
     }),
     folderIcon () {
       return FOLDER_ICON[this.data.Name] || 'icon-list'
+    },
+    activeClass () {
+      if (this.data.Id) {
+        return { active: this.currentFolder.Id === this.data.Id }
+      } else {
+        return { active: this.currentFolder.Key === this.data.Key }
+      }
     }
   },
 
@@ -58,13 +68,18 @@ export default {
   display flex
   align-items center
   transition all .2s
+  margin 1px 0
   i
     font-size 18px
     &.icon-star
       margin-left 1px
       font-size 15px
       margin-right 1px
+    &.icon-calendar-o
+      font-size 16px
   &.active
     box-shadow inset 0 0 12px rgba(black, .05)
     background rgba(black, .1)
+  &:hover
+    text-shadow 0 0 5px rgba(black, .5)
 </style>

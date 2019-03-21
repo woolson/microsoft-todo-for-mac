@@ -24,7 +24,10 @@ div.task-list
             :value="showCompleteTask"
             @change="updateState({showCompleteTask: !showCompleteTask})"
           )
-        p(@click="deleteTaskFolder") 删除清单
+        p(
+          v-show="currentFolder.Id"
+          @click="deleteTaskFolder"
+        ) 删除清单
       div.task-list__title(slot="reference")
         span.u-bold(
           :style="{color: showCompleteTask ? '#3DC550' : '#FA6260'}"

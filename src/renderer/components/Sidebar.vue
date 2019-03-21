@@ -8,6 +8,13 @@ div.sidebar
     :data="{Name: '重要', Key: 'Importance', Value: 'High'}"
   )
   TaskFolderItem(
+    v-show="showScheduleFolder"
+    :data="{Name: '计划日程', Key: 'IsReminderOn', Value: true}"
+  )
+  div.sidebar__separate(
+    v-show="showScheduleFolder || showImportanceFolder"
+  )
+  TaskFolderItem(
     v-for="item in taskFolders"
     :data="item"
     :key="item.Id"
@@ -30,6 +37,7 @@ export default {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder,
+      showScheduleFolder: ({global}) => global.showScheduleFolder,
       showImportanceFolder: ({global}) => global.showImportanceFolder
     })
   },
@@ -72,6 +80,10 @@ export default {
       text-shadow 0 0 5px rgba(black, .15)
   i
     font-size 24px
+
+.sidebar__separate
+  margin 5px 0
+  border-top 1px solid rgba(black, .1)
 
 .sidebar__setting
   display flex
