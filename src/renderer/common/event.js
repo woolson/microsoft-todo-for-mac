@@ -45,6 +45,11 @@ export default function () {
     })
   })
 
+  // 搜索
+  ipcRenderer.on('search', () => {
+    commit('UPDATE_STATE', { showSearch: true })
+  })
+
   // 完成任务
   ipcRenderer.on('complete-task', async () => {
     try {
@@ -107,7 +112,6 @@ function nextFolder (dir) {
       currentFolder: folders[dir < 0 ? folders.length - 1 : 0]
     })
   } else {
-    console.log(folders[nextIndex])
     store.commit('UPDATE_STATE', {
       currentFolder: folders[nextIndex]
     })
@@ -115,9 +119,9 @@ function nextFolder (dir) {
 }
 
 // 调整当前任务
-function nextTask (dir) {
-  const { currentTask } = store.state.global
-  const taskList = store.getters.tasks
+export function nextTask (dir, tasks) {
+  const { currentTask, showSearch } = store.state.global
+  const taskList = showSearch ? tasks : store.getters.tasks
   const index = taskList.findIndex(o => o.Id === currentTask.Id)
   const nextIndex = index + dir
 

@@ -26,12 +26,14 @@ export default {
 .header__left
 .header__right
   flex 1
+  display flex
+  align-items center
 
 .header__left
-  text-align left
+  justify-content flex-start
 
 .header__right
-  text-align right
+  justify-content flex-end
 
 .header__content
   flex 2

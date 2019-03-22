@@ -14,6 +14,7 @@ const state = {
   sort: false,
   tasks: [],
   currentTask: {},
+  showSearch: false,
   showCompleteTask: true,
   showTaskDetailModel: false,
   showTaskAddModel: false,

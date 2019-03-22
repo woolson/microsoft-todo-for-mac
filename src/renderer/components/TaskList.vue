@@ -1,7 +1,18 @@
 <template lang="pug">
 div.task-list
-  Header
-    span.u-mlauto.u-pointer(
+  Header(v-show="showSearch")
+    el-input.u-flex-1(
+      ref="search"
+      v-model="searchStr"
+      @keydown.27.native="cancelSearch"
+    )
+    el-button(
+      slot="right"
+      @click="cancelSearch"
+      round
+    ) 取消
+  Header(v-if="!showSearch")
+    span.u-pointer(
       slot="left"
       v-show="tasks.length"
       @click="updateState({sort: !sort})"
@@ -49,9 +60,9 @@ div.task-list
         icon="el-icon-plus"
         @click="updateState({showTaskAddModel: true})"
       )
-  div.task-list__content(v-if="tasks.length")
+  div.task-list__content(v-if="showSearch ? searchTasks.length : tasks.length")
     TaskItem(
-      v-for="item in tasks"
+      v-for="item in showSearch ? searchTasks : tasks"
       :data="item"
       :key="item.Id"
     )
@@ -64,7 +75,8 @@ div.task-list
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import TaskItem from './TaskItem'
 import { ipcRenderer } from 'electron'
-import { has } from '@/common/utils'
+import { has, isEmpty } from '@/common/utils'
+import { nextTask } from '@/common/event'
 
 export default {
   components: {
@@ -73,7 +85,12 @@ export default {
 
   data () {
     return {
-      has
+      has,
+      searchStr: '',
+      cache: {
+        showCompleteTask: false,
+        currentFolder: {}
+      }
     }
   },
 
@@ -83,9 +100,33 @@ export default {
       currentTask: ({global}) => global.currentTask,
       currentFolder: ({global}) => global.currentFolder,
       sort: ({global}) => global.sort,
+      allTasks: ({global}) => global.tasks,
+      showSearch: ({global}) => global.showSearch,
       showCompleteTask: ({global}) => global.showCompleteTask
     }),
-    ...mapGetters(['tasks'])
+    ...mapGetters(['tasks']),
+    searchTasks () {
+      if (!this.searchStr) return []
+      return this.allTasks.filter(o => {
+        return has(o.Subject.toLowerCase(), this.searchStr.toLowerCase())
+      })
+    }
+  },
+
+  watch: {
+    showSearch (newValue) {
+      if (!newValue) {
+        window.removeEventListener('keydown', this.moveTask, true)
+      } else {
+        window.addEventListener('keydown', this.moveTask, true)
+        this.cache = {
+          showCompleteTask: this.showCompleteTask,
+          currentFolder: this.currentFolder
+        }
+        this.updateState({showCompleteTask: true, currentFolder: {}})
+        this.$nextTick(this.$refs.search.focus)
+      }
+    }
   },
 
   methods: {
@@ -112,6 +153,23 @@ export default {
         currentFolder: {...this.currentFolder, Type: 'Rename'},
         showTaskFolderAddModel: true
       })
+    },
+    cancelSearch () {
+      this.searchStr = ''
+      this.updateState({
+        showSearch: false,
+        ...this.cache
+      })
+      this.cache = {}
+    },
+    moveTask (evt) {
+      if (!has([38, 40, 13], evt.keyCode)) return
+      evt.stopPropagation()
+      if (evt.keyCode === 13 && !isEmpty(this.currentTask)) {
+        this.updateState({showTaskDetailModel: true})
+      } else {
+        nextTask(evt.keyCode === 40 ? 1 : -1, this.searchTasks)
+      }
     }
   }
 }

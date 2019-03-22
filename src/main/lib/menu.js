@@ -34,6 +34,11 @@ export default function setMenu (mainWindow) {
       label: isZh ? '视图' : 'View',
       submenu: [
         {
+          label: isZh ? '搜索' : 'Search',
+          accelerator: 'Command+F',
+          click: () => mainWindow.webContents.send('search')
+        },
+        {
           label: isZh ? '刷新' : 'Refresh',
           accelerator: 'Command+R',
           click: () => mainWindow.reload()

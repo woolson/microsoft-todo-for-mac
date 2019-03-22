@@ -101,6 +101,7 @@ export default {
   transition all .2s
   cursor pointer
   user-select none
+  box-sizing border-box
   > i
     font-size 18px
     margin-right 10px
@@ -115,10 +116,11 @@ export default {
     &:after
       display none
   &.active
-  &:hover
     *
       color white !important
     background linear-gradient(45deg, $blue, $purple)
+  &:hover:not(.active)
+    background rgba($blue, .15)
 
 .task-item__content
   h1
