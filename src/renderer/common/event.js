@@ -95,17 +95,21 @@ export default function () {
 
 // 调整当前清单
 function nextFolder (dir) {
-  const { taskFolders, currentFolder } = store.state.global
-  const index = taskFolders.findIndex(o => o.Id === currentFolder.Id)
+  const { currentFolder } = store.state.global
+  const folders = store.getters.folders.filter(o => o.Key !== 'Spacer')
+  const index = folders.findIndex(o => {
+    return (o.Key === currentFolder.Key && o.Key) || (o.Id === currentFolder.Id && o.Id)
+  })
   const nextIndex = index + dir
 
-  if (nextIndex < 0 || nextIndex === taskFolders.length) {
+  if (nextIndex < 0 || nextIndex === folders.length) {
     store.commit('UPDATE_STATE', {
-      currentFolder: taskFolders[dir < 0 ? taskFolders.length - 1 : 0]
+      currentFolder: folders[dir < 0 ? folders.length - 1 : 0]
     })
   } else {
+    console.log(folders[nextIndex])
     store.commit('UPDATE_STATE', {
-      currentFolder: taskFolders[index + dir]
+      currentFolder: folders[nextIndex]
     })
   }
 }
@@ -123,7 +127,7 @@ function nextTask (dir) {
     })
   } else {
     store.commit('UPDATE_STATE', {
-      currentTask: taskList[index + dir]
+      currentTask: taskList[nextIndex]
     })
   }
 }

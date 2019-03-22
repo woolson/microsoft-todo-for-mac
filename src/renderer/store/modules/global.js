@@ -24,6 +24,19 @@ const state = {
 }
 
 const getters = {
+  folders ({taskFolders, showScheduleFolder, showImportanceFolder}) {
+    const folders = [...taskFolders]
+    if (showScheduleFolder || showImportanceFolder) {
+      folders.unshift({ Key: 'Spacer' })
+    }
+    if (showScheduleFolder) {
+      folders.unshift({ Name: '计划日程', Key: 'IsReminderOn', Value: true })
+    }
+    if (showImportanceFolder) {
+      folders.unshift({ Name: '重要', Key: 'Importance', Value: 'High' })
+    }
+    return folders
+  },
   tasks ({sort, tasks, currentFolder, showCompleteTask}) {
     let taskArr = [...tasks]
     if (!sort) taskArr = [...tasks].reverse()

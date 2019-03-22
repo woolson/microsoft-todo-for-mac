@@ -10,29 +10,16 @@ div.sidebar
       i.task-add.iconfont.icon-add(
         @click="updateState({showTaskFolderAddModel: true})"
       )
-  TaskFolderItem(
-    v-show="showImportanceFolder"
-    :data="{Name: '重要', Key: 'Importance', Value: 'High'}"
-  )
-  TaskFolderItem(
-    v-show="showScheduleFolder"
-    :data="{Name: '计划日程', Key: 'IsReminderOn', Value: true}"
-  )
-  div.sidebar__separate(
-    v-show="showScheduleFolder || showImportanceFolder"
-  )
-  TaskFolderItem(
-    v-for="item in taskFolders"
-    :data="item"
-    :key="item.Id"
-  )
+  template(v-for="item in folders")
+    div.sidebar__separate(v-if="item.Key === 'Spacer'")
+    TaskFolderItem(:data="item" v-else)
   div.sidebar__setting(@click="updateState({showSettingsModel: true})")
     i.iconfont.icon-setting
     span.u-ml5 设置
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 import TaskFolderItem from './TaskFolderItem'
 
 export default {
@@ -46,7 +33,8 @@ export default {
       currentFolder: ({global}) => global.currentFolder,
       showScheduleFolder: ({global}) => global.showScheduleFolder,
       showImportanceFolder: ({global}) => global.showImportanceFolder
-    })
+    }),
+    ...mapGetters(['folders'])
   },
 
   methods: {
