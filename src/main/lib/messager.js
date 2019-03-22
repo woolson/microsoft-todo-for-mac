@@ -1,7 +1,5 @@
-// import moment from 'moment'
-// import db from './db'
-
-// const DATE_TEMP = 'YYYY-MM-DD HH:mm:SS'
+import { dialog } from 'electron'
+import setTouchBar from './touchbar'
 
 export default function (app, ipc, mainWindow) {
   // 退出软件
@@ -16,35 +14,26 @@ export default function (app, ipc, mainWindow) {
     mainWindow.minimize()
     event.returnValue = 'ok'
   })
-
-  // 获取历史数据
-  // ipc.on('get-history', (event, arg) => {
-  //   db.find({}, (err, docs) => {
-  //     if (err) event.returnValue = []
-  //     else event.returnValue = docs
-  //   })
-  //   // event.returnValue = JSON.parse(fs.readFileSync(HISTORY_FILE))
-  // })
-
-  // 保存历史
-  // ipc.on('insert-history', (event, arg) => {
-  //   const docs = arg.map(item => {
-  //     return {
-  //       imageUrl: item.imageUrl,
-  //       success: item.success,
-  //       name: item.name,
-  //       date: moment().format(DATE_TEMP)
-  //     }
-  //   })
-
-  //   db.insert(docs, (err, result) => (event.returnValue = !!err))
-  // })
-
-  // 保存历史
-  // ipc.on('clear-history', (event, arg) => {
-  //   db.remove({}, { multi: true }, (err, numRemoved) => {
-  //     if (err) event.returnValue = false
-  //     else event.returnValue = numRemoved
-  //   })
-  // })
+  // 更新touchbar
+  ipc.on('update-touchbar', (event, arg) => {
+    setTouchBar(mainWindow, arg)
+  })
+  // 删除清单
+  ipc.on('delete-folder', (event, arg) => {
+    dialog.showMessageBox(mainWindow, {
+      type: 'question',
+      buttons: ['取消', '确认'],
+      message: `注意`,
+      detail: `确认删除清单 ${arg.Name} ？`
+    }, res => (event.returnValue = res))
+  })
+  // 删除任务
+  ipc.on('delete-task', (event, arg) => {
+    dialog.showMessageBox(mainWindow, {
+      type: 'question',
+      buttons: ['取消', '确认'],
+      message: `注意`,
+      detail: `确认删除任务 ${arg.Subject} ？`
+    }, res => (event.returnValue = res))
+  })
 }

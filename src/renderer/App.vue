@@ -25,6 +25,7 @@ import TaskDetail from '@/components/TaskDetail'
 import AddFolder from '@/components/AddFolder'
 import AddTask from '@/components/AddTask'
 import Settings from '@/components/Settings'
+import { ipcRenderer } from 'electron'
 
 export default {
   name: 'ms-todo',
@@ -42,13 +43,34 @@ export default {
   computed: {
     ...mapState({
       token: ({global}) => global.token,
-      hasLogin: ({global}) => global.hasLogin
+      hasLogin: ({global}) => global.hasLogin,
+      currentTask: ({global}) => global.currentTask,
+      currentFolder: ({global}) => global.currentFolder,
+      showCompleteTask: ({global}) => global.showCompleteTask
     })
   },
 
   mounted () {
     this.init()
     initShortCut()
+  },
+
+  watch: {
+    currentTask: {
+      handler (newValue) {
+        ipcRenderer.send('update-touchbar', {
+          ...this.currentTask,
+          showCompleteTask: this.showCompleteTask
+        })
+      },
+      deep: true
+    },
+    currentFolder: {
+      handler (newValue) {
+        this.updateState({currentTask: {}})
+      },
+      deep: true
+    }
   },
 
   methods: {
@@ -58,7 +80,8 @@ export default {
     ...mapActions({
       getUserPhoto: 'GET_USER_PHOTO',
       getTaskFolders: 'GET_TASK_FOLDERS',
-      getTasks: 'GET_TASKS'
+      getTasks: 'GET_TASKS',
+      updateTask: 'UPDATE_TASK'
     }),
     async init () {
       const loading = this.$loading({
@@ -66,9 +89,12 @@ export default {
         text: '加载中',
         background: 'rgba(0, 0, 0, 0.7)'
       })
-      await this.getTaskFolders()
-      await this.getTasks()
-      loading.close()
+      try {
+        await this.getTaskFolders()
+        await this.getTasks()
+      } finally {
+        loading.close()
+      }
     }
   }
 }

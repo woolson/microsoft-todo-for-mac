@@ -16,7 +16,7 @@ function checkAuth (options) {
     const isLogin = has(options.url, '/oauth2/v2.0/token')
     if (isEmpty(tokenInfo) && !isLogin) {
       store.commit('UPDATE_STATE', {hasLogin: false})
-      loading.close()
+      loading && loading.close()
       reject(new Error('expired'))
     } else if (tokenInfo.expires_time < dater().format('X') && !isLogin) {
       refreshToken(tokenInfo.refresh_token).then(res => {

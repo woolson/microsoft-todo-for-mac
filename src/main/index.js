@@ -2,6 +2,7 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron'
 import initMessager from './lib/messager'
+import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
 
 if (process.env.NODE_ENV !== 'development') {
@@ -35,6 +36,7 @@ function createWindow () {
   })
   // 菜单栏
   setMenu(mainWindow)
+  setTouchBar(mainWindow)
 
   mainWindow.loadURL(winURL)
   // mainWindow.webContents.openDevTools()

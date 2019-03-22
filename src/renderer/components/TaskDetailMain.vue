@@ -72,6 +72,7 @@ div.task-detail-main(
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { dater } from '@/common/utils'
+import { ipcRenderer } from 'electron'
 
 export default {
   data () {
@@ -130,7 +131,8 @@ export default {
 
   methods: {
     ...mapActions({
-      updateTask: 'UPDATE_TASK'
+      updateTask: 'UPDATE_TASK',
+      deleteTask: 'DELETE_TASK'
     }),
     ...mapMutations({
       updateState: 'UPDATE_STATE'
@@ -206,21 +208,16 @@ export default {
       })
       this.loading = false
     },
-    async deleteTask () {
+    async delete () {
       try {
-        await this.$confirm(`确认删除任务 ${this.currentTask.Subject} ？`)
-        try {
-          await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}`)
-          const tasks = [...this.tasks]
-          const index = this.tasks.findIndex(o => o.Id === this.currentTask.Id)
-          tasks.splice(index, 1)
-          this.updateState({showTaskDetailModel: false, tasks, currentTask: {}})
+        const result = ipcRenderer.sendSync('delete-task', this.currentTask)
+        if (result) {
+          await this.deleteTask()
           this.$message.success('删除成功')
-        } catch (err) {
-          this.$message.error('删除失败')
         }
       } catch (err) {
-        console.log('cancel', err)
+        console.log(err)
+        this.$message.error('删除失败')
       }
     }
   }

@@ -25,11 +25,11 @@ div.task-list
             @change="updateState({showCompleteTask: !showCompleteTask})"
           )
         p.rename.u-bb(
-          v-show="currentFolder.Id"
+          v-show="currentFolder.Id && !has(['任务', 'Task', 'task'], currentFolder.Name)"
           @click="renameTaskFolder"
         ) 重命名
         p.delete(
-          v-show="currentFolder.Id"
+          v-show="currentFolder.Id && !has(['任务', 'Task', 'task'], currentFolder.Name)"
           @click="deleteTaskFolder"
         ) 删除清单
       div.task-list__title(slot="reference")
@@ -61,17 +61,26 @@ div.task-list
 </template>
 
 <script>
-import { mapState, mapGetters, mapMutations } from 'vuex'
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import TaskItem from './TaskItem'
+import { ipcRenderer } from 'electron'
+import { has } from '@/common/utils'
 
 export default {
   components: {
     TaskItem
   },
 
+  data () {
+    return {
+      has
+    }
+  },
+
   computed: {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
+      currentTask: ({global}) => global.currentTask,
       currentFolder: ({global}) => global.currentFolder,
       sort: ({global}) => global.sort,
       showCompleteTask: ({global}) => global.showCompleteTask
@@ -80,24 +89,22 @@ export default {
   },
 
   methods: {
+    ...mapActions({
+      updateTask: 'UPDATE_TASK',
+      deleteFolder: 'DELETE_FOLDER'
+    }),
     ...mapMutations({
       updateState: 'UPDATE_STATE'
     }),
     async deleteTaskFolder () {
-      try {
-        await this.$confirm(`确认删除清单 ${this.currentFolder.Name} ？`)
+      const result = ipcRenderer.sendSync('delete-folder', this.currentFolder)
+      if (result) {
         try {
-          await this.$fetch('delete', `/me/taskfolders/${this.currentFolder.Id}`)
-          const taskFolders = [...this.taskFolders]
-          const taskIndex = this.taskFolders.findIndex(o => o.Id === this.currentFolder.Id)
-          taskFolders.splice(taskIndex, 1)
-          this.updateState({taskFolders, currentFolder: taskFolders[taskIndex - 1]})
+          await this.deleteFolder()
           this.$message.success('删除成功')
         } catch (err) {
           this.$message.error('删除失败')
         }
-      } catch (err) {
-        console.log('已取消', err)
       }
     },
     renameTaskFolder () {

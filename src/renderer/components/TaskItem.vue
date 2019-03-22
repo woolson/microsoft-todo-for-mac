@@ -1,5 +1,6 @@
 <template lang="pug">
 div.task-item.u-bb(
+  ref="root"
   :class="{active: currentTask.Id === data.Id}"
   @click="updateState({currentTask: data, showTaskDetailModel: true})"
 )
@@ -42,6 +43,17 @@ export default {
     },
     starClass () {
       return this.data.Importance === 'High' ? 'icon-star' : 'icon-star-o'
+    }
+  },
+
+  watch: {
+    currentTask: {
+      handler () {
+        if (this.data.Id === this.currentTask.Id) {
+          this.$refs.root.scrollIntoViewIfNeeded()
+        }
+      },
+      deep: true
     }
   },
 
@@ -102,6 +114,7 @@ export default {
     border-bottom-right-radius 5px
     &:after
       display none
+  &.active
   &:hover
     *
       color white !important
