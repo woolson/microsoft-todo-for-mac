@@ -2,6 +2,7 @@
 
 import { app, BrowserWindow, ipcMain } from 'electron'
 import initMessager from './lib/messager'
+import setMenu from './lib/menu'
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
@@ -16,7 +17,6 @@ function createWindow () {
   /**
    * Initial window options
    */
-  // setMenu()
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 600,
@@ -33,6 +33,8 @@ function createWindow () {
       webSecurity: false
     }
   })
+  // 菜单栏
+  setMenu(mainWindow)
 
   mainWindow.loadURL(winURL)
   // mainWindow.webContents.openDevTools()
@@ -48,56 +50,6 @@ function createWindow () {
     mainWindow.show()
   })
 }
-
-// function setMenu () {
-//   let isZh = app.getLocale() === 'zh-CN'
-//   let template = [
-//     {
-//       label: 'Application',
-//       submenu: [
-//         {
-//           label: isZh ? '关于' : 'About',
-//           selector: 'orderFrontStandardAboutPanel:'
-//         },
-//         { type: 'separator' },
-//         {
-//           label: isZh ? '退出' : 'Quit',
-//           accelerator: 'Command+Q',
-//           click: () => app.quit()
-//         }
-//       ]
-//     },
-//     {
-//       label: isZh ? '视图' : 'View',
-//       submenu: [
-//         {
-//           label: isZh ? '刷新' : 'Refresh',
-//           accelerator: 'Command+R',
-//           click: () => mainWindow.reload()
-//         },
-//         {
-//           label: isZh ? '隐藏' : 'Hide',
-//           accelerator: 'command+w',
-//           click: () => app.hide()
-//         }
-//       ]
-//     },
-//     {
-//       label: isZh ? '编辑' : 'Edit',
-//       submenu: [
-//         {
-//           label: isZh ? '粘贴' : 'Paste',
-//           accelerator: 'Command+V',
-//           click: () => {
-//             console.log(123)
-//             mainWindow.webContents.send('onPaste', clipboard.readImage().toDataURL())
-//           }
-//         }
-//       ]
-//     }
-//   ]
-//   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
-// }
 
 app.on('ready', createWindow)
 

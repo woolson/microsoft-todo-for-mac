@@ -17,6 +17,7 @@ div#app
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
+import initShortCut from './common/event'
 import WebView from '@/components/WebView'
 import Sidebar from '@/components/Sidebar'
 import TaskList from '@/components/TaskList'
@@ -47,15 +48,7 @@ export default {
 
   mounted () {
     this.init()
-    window.addEventListener('keydown', evt => {
-      if (evt.keyCode !== 27) return
-      this.updateState({
-        showTaskDetailModel: false,
-        showTaskAddModel: false,
-        showTaskFolderAddModel: false,
-        showSettingsModel: false
-      })
-    })
+    initShortCut()
   },
 
   methods: {

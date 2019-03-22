@@ -4,10 +4,10 @@ Model.add-task(
   @cancel="updateState({showTaskAddModel: false})"
 )
   Header
-    span 添加任务
+    span 新建任务
     el-button(
       slot="right"
-      type="success"
+      round
       @click="submit"
     ) 确认
   el-alert(

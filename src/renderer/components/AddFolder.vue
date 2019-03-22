@@ -7,8 +7,8 @@ Model.add-task-folder(
     span {{operateType}}清单
     el-button(
       slot="right"
-      type="success"
       @click="submit"
+      round
     ) 确认
   el-alert(
     title="可在输入框使用 Enter 确认提交"
