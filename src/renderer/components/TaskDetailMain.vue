@@ -61,10 +61,16 @@ div.task-detail-main(
         @blur="noteSubmit"
         @keyup.enter="noteSubmit"
       )
+  div.form__row-section.u-mtauto
+    el-button.u-w100_(
+      type="danger"
+      @click="deleteTask"
+      round
+    ) 删除
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { dater } from '@/common/utils'
 
 export default {
@@ -80,6 +86,7 @@ export default {
 
   computed: {
     ...mapState({
+      tasks: ({global}) => global.tasks,
       currentTask: ({global}) => global.currentTask
     }),
     titleStyle () {
@@ -124,6 +131,9 @@ export default {
   methods: {
     ...mapActions({
       updateTask: 'UPDATE_TASK'
+    }),
+    ...mapMutations({
+      updateState: 'UPDATE_STATE'
     }),
     changeTaskStatus () {
       this.updateTask({
@@ -195,12 +205,34 @@ export default {
         Subject: this.name
       })
       this.loading = false
+    },
+    async deleteTask () {
+      try {
+        await this.$confirm(`确认删除任务 ${this.currentTask.Subject} ？`)
+        try {
+          await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}`)
+          const tasks = [...this.tasks]
+          const index = this.tasks.findIndex(o => o.Id === this.currentTask.Id)
+          tasks.splice(index, 1)
+          this.updateState({showTaskDetailModel: false, tasks, currentTask: {}})
+          this.$message.success('删除成功')
+        } catch (err) {
+          this.$message.error('删除失败')
+        }
+      } catch (err) {
+        console.log('cancel', err)
+      }
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
+.task-detail-main
+  height 100vh
+  display flex
+  flex-direction column
+
 .task-detail__header
   padding 15px
   display flex

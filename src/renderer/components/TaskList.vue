@@ -85,7 +85,7 @@ export default {
     }),
     async deleteTaskFolder () {
       try {
-        await this.$confirm(`确认删除清单 ${this.currentFolder.Name} ？`, '注意', { center: true })
+        await this.$confirm(`确认删除清单 ${this.currentFolder.Name} ？`)
         try {
           await this.$fetch('delete', `/me/taskfolders/${this.currentFolder.Id}`)
           const taskFolders = [...this.taskFolders]
