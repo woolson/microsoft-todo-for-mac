@@ -31,7 +31,6 @@ export default function (mainWindow) {
   })
   // Update setting content
   ipcMain.on('update-setting', (event, arg) => {
-    console.log(arg)
     store.set(arg)
     event.returnValue = true
   })

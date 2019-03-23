@@ -4,8 +4,8 @@
 
 [EN Docs](README_EN.md)
 
-- 基于 `Electron` & `Vue.js`
-- 微软 `Outlook Task REST API v2.0`
+- 基于 [Electron](https://electronjs.org/) & [Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/)
+- 微软 [Outlook Task API](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)
 
 Feature/TODO
 
@@ -41,6 +41,7 @@ Feature/TODO
   - 完成/开始任务 ✔︎
   - 重要/取消重要 ✔︎
   - 删除任务 ✔︎
-- 中英文支持
+- 中英文支持 ✔︎
+- 在线升级
 - 暗黑模式（支持macOS 10.14 Mojave的系统设置，其他系统版本可手动设置）
 - 提示：同步事件到macOS日历（不因关闭软件错过提示）
