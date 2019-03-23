@@ -50,6 +50,9 @@ export default {
   mounted () {
     this.init()
     initShortCut()
+    window.onfocus = () => {
+      this.init(false)
+    }
   },
 
   watch: {
@@ -92,17 +95,20 @@ export default {
       getTasks: 'GET_TASKS',
       updateTask: 'UPDATE_TASK'
     }),
-    async init () {
-      const loading = this.$loading({
-        lock: true,
-        text: this.$t('base.loading'),
-        background: 'rgba(0, 0, 0, 0.7)'
-      })
+    async init (showLoading) {
+      let loading
+      if (showLoading !== false) {
+        loading = this.$loading({
+          lock: true,
+          text: this.$t('base.loading'),
+          background: 'rgba(0, 0, 0, 0.7)'
+        })
+      }
       try {
         await this.getTaskFolders()
         await this.getTasks()
       } finally {
-        loading.close()
+        loading && loading.close()
       }
     }
   }
