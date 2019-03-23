@@ -37,10 +37,13 @@ export default {
   computed: {
     ...mapState({
       token: ({global}) => global.token,
+      language: ({global}) => global.language,
       hasLogin: ({global}) => global.hasLogin,
       currentTask: ({global}) => global.currentTask,
       currentFolder: ({global}) => global.currentFolder,
-      showCompleteTask: ({global}) => global.showCompleteTask
+      showCompleteTask: ({global}) => global.showCompleteTask,
+      showPlannedFolder: ({global}) => global.showPlannedFolder,
+      showImportanceFolder: ({global}) => global.showImportanceFolder
     })
   },
 
@@ -64,6 +67,18 @@ export default {
         this.updateState({currentTask: {}})
       },
       deep: true
+    },
+    language (newValue) {
+      ipcRenderer.sendSync('update-setting', {language: newValue})
+    },
+    showCompleteTask (newValue) {
+      ipcRenderer.sendSync('update-setting', {showCompleteTask: newValue})
+    },
+    showPlannedFolder (newValue) {
+      ipcRenderer.sendSync('update-setting', {showPlannedFolder: newValue})
+    },
+    showImportanceFolder (newValue) {
+      ipcRenderer.sendSync('update-setting', {showImportanceFolder: newValue})
     }
   },
 

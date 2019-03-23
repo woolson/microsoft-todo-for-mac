@@ -42,6 +42,7 @@ Modal.settings(
           v-model="currentLang"
           @change="languageChange"
           size="mini"
+          :fill="$color.green"
         )
           el-radio-button(name="language" label="中")
           el-radio-button(name="language" label="EN")
@@ -57,12 +58,11 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import { Storage } from '@/common/utils'
 
 const token = new Storage('TOKEN')
-const language = new Storage('LANGUAGE')
 
 export default {
   data () {
     return {
-      currentLang: this.language === 'en' ? 'EN' : '中'
+      currentLang: null
     }
   },
 
@@ -74,6 +74,15 @@ export default {
       showPlannedFolder: ({global}) => global.showPlannedFolder,
       showImportanceFolder: ({global}) => global.showImportanceFolder
     })
+  },
+
+  watch: {
+    language: {
+      handler (newValue) {
+        this.currentLang = newValue === 'zh' ? '中' : 'EN'
+      },
+      immediate: true
+    }
   },
 
   methods: {
@@ -101,7 +110,6 @@ export default {
     },
     languageChange (value) {
       const lang = value === 'EN' ? 'en' : 'zh'
-      language.set(lang)
       this.$i18n.locale = lang
       this.updateState({language: lang})
     }

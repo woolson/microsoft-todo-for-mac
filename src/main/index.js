@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, ipcMain } from 'electron'
+import { app, BrowserWindow } from 'electron'
 import initMessager from './lib/messager'
 import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
@@ -42,7 +42,7 @@ function createWindow () {
   // mainWindow.webContents.openDevTools()
 
   // 创建窗口后加载事件
-  initMessager(app, ipcMain, mainWindow)
+  initMessager(mainWindow)
 
   mainWindow.on('closed', () => {
     mainWindow = null

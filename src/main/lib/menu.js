@@ -8,7 +8,7 @@ export default function setMenu (mainWindow) {
       submenu: [
         {
           label: isZh ? '关于' : 'About',
-          selector: 'orderFrontStandardAboutPanel:'
+          role: 'about'
         },
         { type: 'separator' },
         {
@@ -18,35 +18,37 @@ export default function setMenu (mainWindow) {
             mainWindow.webContents.send('preferences')
           }
         },
-        {
-          label: isZh ? '隐藏' : 'Hide',
-          role: 'hide'
-        },
         { type: 'separator' },
         {
           label: isZh ? '退出' : 'Quit',
-          accelerator: 'Command+Q',
-          click: () => app.quit()
+          role: 'quit'
         }
       ]
     },
     {
-      label: isZh ? '视图' : 'View',
+      label: isZh ? '窗口' : 'Window',
       submenu: [
         {
           label: isZh ? '搜索' : 'Search',
           accelerator: 'Command+F',
           click: () => mainWindow.webContents.send('search')
         },
+        // {
+        //   label: isZh ? '刷新' : 'Refresh',
+        //   accelerator: 'Command+R',
+        //   click: () => mainWindow.reload()
+        // },
         {
-          label: isZh ? '刷新' : 'Refresh',
-          accelerator: 'Command+R',
-          click: () => mainWindow.reload()
+          label: isZh ? '关闭' : 'Close',
+          role: 'close'
+        },
+        {
+          label: isZh ? '最小化' : 'Minimize',
+          role: 'minimize'
         },
         {
           label: isZh ? '隐藏' : 'Hide',
-          accelerator: 'command+w',
-          click: () => app.hide()
+          role: 'hide'
         }
       ]
     },

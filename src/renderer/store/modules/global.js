@@ -1,23 +1,34 @@
+import { ipcRenderer } from 'electron'
 import { Storage } from '@/common/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
+import { PAGE_SIZE } from '@/common/static'
+
+// Get store settings
+const storeSetting = ipcRenderer.sendSync('fetch-setting')
 
 const token = new Storage('TOKEN')
 const sysLang = window.navigator.language === 'zh-CN' ? 'zh' : 'en'
-const language = new Storage('LANGUAGE').get(null) || sysLang
-const PAGE_SIZE = 100
-// const BASE_URL = 'https://graph.microsoft.com/beta'
+
+// Get setting from store
+function getValue (key, defaultValue) {
+  if (storeSetting[key] === void 0) {
+    return defaultValue
+  } else {
+    return storeSetting[key]
+  }
+}
 
 const state = {
   currentFolder: {},
   currentTask: {},
   hasLogin: true,
-  language,
-  showCompleteTask: true,
+  language: getValue('language', sysLang),
+  showCompleteTask: getValue('showCompleteTask', true),
   // display importance folder on sidebar
-  showImportanceFolder: true,
+  showImportanceFolder: getValue('showImportanceFolder', true),
   // display schedule folder on sidebar
-  showPlannedFolder: true,
+  showPlannedFolder: getValue('showPlannedFolder', true),
   // display global task search
   showSearch: false,
   showSettingsModal: false,

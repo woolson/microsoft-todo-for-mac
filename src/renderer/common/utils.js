@@ -1,14 +1,6 @@
-import { ipcRenderer } from 'electron'
 import axios from 'axios'
 import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '@/common/static'
 // import { post } from '@/common/fetch'
-
-export function messager (name, args) {
-  ipcRenderer.sendSync(name, args)
-  return new Promise((resolve, reject) => {
-    ipcRenderer.sendSync(`${name}-replay`, resolve)
-  })
-}
 
 export function fileToBase64 (file) {
   return new Promise((resolve, reject) => {
@@ -17,27 +9,6 @@ export function fileToBase64 (file) {
     reader.onloadend = evt => {
       const base64 = evt.target.result
       resolve(base64)
-    }
-  })
-}
-
-export function imgCompress (data, quality, outputFormat = 'image/jpeg') {
-  return new Promise((resolve, reject) => {
-    let canvas = document.createElement('CANVAS')
-    const ctx = canvas.getContext('2d')
-    const img = new Image()
-
-    img.crossOrigin = 'Anonymous'
-    img.src = data
-    img.onload = function () {
-      const { width, height } = img || {}
-      // 按比例压缩4倍
-      canvas.width = width
-      canvas.height = height
-      ctx.drawImage(img, 0, 0, width, height)
-      var dataURL = canvas.toDataURL(outputFormat, quality)
-      resolve(dataURL)
-      canvas = null
     }
   })
 }
