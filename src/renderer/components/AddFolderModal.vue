@@ -1,17 +1,17 @@
 <template lang="pug">
-Model.add-task-folder(
-  v-model="showTaskFolderAddModel"
-  @cancel="updateState({showTaskFolderAddModel: false})"
+Modal.add-task-folder(
+  v-model="showTaskFolderAddModal"
+  @cancel="updateState({showTaskFolderAddModal: false})"
 )
   Header
-    span {{operateType}}清单
+    span {{$t('folder.createFolder', [operateType])}}
     el-button(
       slot="right"
       @click="submit"
       round
-    ) 确认
+    ) {{$t('base.submit')}}
   el-alert(
-    title="可在输入框使用 Enter 确认提交"
+    :title="$t('message.enterToSubmit')"
     type="info"
     show-icon
     :closable="false"
@@ -19,11 +19,11 @@ Model.add-task-folder(
   div.add-task-folder__content
     div.form__main
       div.form__row
-        label 名称
+        label {{$t('base.name')}}
         el-input(
           ref="input"
           v-model="name"
-          placeholder="清单名称"
+          :placeholder="$t('folder.name')"
           autofocus
           clearable
           @keyup.enter.native="submit"
@@ -37,22 +37,22 @@ export default {
   name: 'AddFolder',
 
   data: () => ({
-    name: '测试清单'
+    name: ''
   }),
 
   computed: {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder,
-      showTaskFolderAddModel: ({global}) => global.showTaskFolderAddModel
+      showTaskFolderAddModal: ({global}) => global.showTaskFolderAddModal
     }),
     operateType () {
-      return this.currentFolder.Type ? '编辑' : '新建'
+      return this.currentFolder.Type ? this.$t('base.edit') : this.$t('base.create')
     }
   },
 
   watch: {
-    showTaskFolderAddModel (newValue) {
+    showTaskFolderAddModal (newValue) {
       if (newValue) {
         this.$nextTick(this.$refs.input.focus)
         if (this.currentFolder.Type) {
@@ -78,13 +78,13 @@ export default {
           this.updateState({
             taskFolders: folders,
             currentFolder: folders[index],
-            showTaskFolderAddModel: false
+            showTaskFolderAddModal: false
           })
         } else {
           const newFolder = await this.$post(`/me/taskfolders`, {Name: this.name})
           this.updateState({
             taskFolders: [...this.taskFolders, newFolder],
-            showTaskFolderAddModel: false
+            showTaskFolderAddModal: false
           })
         }
         this.$message.success(`${this.operateType}成功`)

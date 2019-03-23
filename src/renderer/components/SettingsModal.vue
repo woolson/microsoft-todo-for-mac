@@ -1,37 +1,37 @@
 <template lang="pug">
-Model.settings(
-  v-model="showSettingsModel"
-  @cancel="updateState({showSettingsModel: false})"
+Modal.settings(
+  v-model="showSettingsModal"
+  @cancel="updateState({showSettingsModal: false})"
 )
   Header
-    span 设置
+    span {{$t('base.setting')}}
   div.settings__content
     div.form__row-section
       div.form__row
-        label 同步数据
-        el-button(round @click="syncData") 立即同步
+        label {{$t('base.async')}}
+        el-button(round @click="syncData") {{$t('base.async')}}
     div.form__row-section
       div.form__row.u-bb
-        label 显示重要清单
+        label {{$t('task.showImportance')}}
         el-switch(
-          active-color="#3DC550"
-          inactive-color="#FA6260"
+          :active-color="$color.green"
+          :inactive-color="$color.red"
           :value="showImportanceFolder"
           @change="updateState({showImportanceFolder: !showImportanceFolder})"
         )
       div.form__row.u-bb
-        label 显示已计划日程
+        label {{$t('task.showPlanned')}}
         el-switch(
-          active-color="#3DC550"
-          inactive-color="#FA6260"
+          :active-color="$color.green"
+          :inactive-color="$color.red"
           :value="showScheduleFolder"
           @change="updateState({showScheduleFolder: !showScheduleFolder})"
         )
       div.form__row
-        label 显示已完成任务
+        label {{$t('task.showCompleted')}}
         el-switch(
-          active-color="#3DC550"
-          inactive-color="#FA6260"
+          :active-color="$color.green"
+          :inactive-color="$color.red"
           :value="showCompleteTask"
           @change="updateState({showCompleteTask: !showCompleteTask})"
         )
@@ -39,7 +39,7 @@ Model.settings(
       round
       type="danger"
       @click="logout"
-    ) 注销
+    ) {{$t('base.logout')}}
 </template>
 
 <script>
@@ -51,7 +51,7 @@ const token = new Storage('TOKEN')
 export default {
   computed: {
     ...mapState({
-      showSettingsModel: ({global}) => global.showSettingsModel,
+      showSettingsModal: ({global}) => global.showSettingsModal,
       showCompleteTask: ({global}) => global.showCompleteTask,
       showScheduleFolder: ({global}) => global.showScheduleFolder,
       showImportanceFolder: ({global}) => global.showImportanceFolder
@@ -67,10 +67,10 @@ export default {
       getTasks: 'GET_TASKS'
     }),
     async syncData () {
-      this.updateState({showSettingsModel: false})
+      this.updateState({showSettingsModal: false})
       const loading = this.$loading({
         lock: true,
-        text: '加载中',
+        text: this.$t('base.loading'),
         background: 'rgba(0, 0, 0, 0.7)'
       })
       this.getTaskFolders()
@@ -79,7 +79,7 @@ export default {
     },
     logout () {
       token.remove()
-      this.updateState({showSettingsModel: false, hasLogin: false})
+      this.updateState({showSettingsModal: false, hasLogin: false})
     }
   }
 }

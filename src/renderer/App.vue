@@ -1,18 +1,12 @@
 <template lang="pug">
 div#app
   WebView(v-if="!hasLogin")
-  //- 侧边栏
   Sidebar
-  //- 任务列表
   TaskList
-  //- 任务详情弹窗
-  TaskDetail
-  //- 添加清单弹窗
-  AddFolder
-  //- 添加任务弹窗
-  AddTask
-  //- 设置弹窗
-  Settings
+  TaskDetailModal
+  AddFolderModal
+  AddTaskModal
+  SettingsModal
 </template>
 
 <script>
@@ -20,11 +14,11 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import initShortCut from './common/event'
 import WebView from '@/components/WebView'
 import Sidebar from '@/components/Sidebar'
-import TaskList from '@/components/TaskList'
-import TaskDetail from '@/components/TaskDetail'
-import AddFolder from '@/components/AddFolder'
-import AddTask from '@/components/AddTask'
-import Settings from '@/components/Settings'
+import TaskList from '@/components/TaskList/'
+import TaskDetailModal from '@/components/TaskDetailModal'
+import AddFolderModal from '@/components/AddFolderModal'
+import AddTaskModal from '@/components/AddTaskModal'
+import SettingsModal from '@/components/SettingsModal'
 import { ipcRenderer } from 'electron'
 
 export default {
@@ -34,10 +28,10 @@ export default {
     WebView,
     Sidebar,
     TaskList,
-    TaskDetail,
-    AddFolder,
-    AddTask,
-    Settings
+    TaskDetailModal,
+    AddFolderModal,
+    AddTaskModal,
+    SettingsModal
   },
 
   computed: {
@@ -86,7 +80,7 @@ export default {
     async init () {
       const loading = this.$loading({
         lock: true,
-        text: '加载中',
+        text: this.$t('base.loading'),
         background: 'rgba(0, 0, 0, 0.7)'
       })
       try {
@@ -103,7 +97,8 @@ export default {
 <style lang="stylus">
 html
 body
-  font-family Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
+  *
+    font-family Operator Mono, Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
 
 #app
   width 100vw

@@ -4,18 +4,18 @@ div.sidebar
   div.sidebar__add
     el-tooltip(
       slot="right"
-      content="新建清单"
+      :content="$t('folder.create')"
       placement="right"
     )
       i.task-add.iconfont.icon-add(
-        @click="updateState({showTaskFolderAddModel: true})"
+        @click="updateState({showTaskFolderAddModal: true})"
       )
   template(v-for="item in folders")
     div.sidebar__separate(v-if="item.Key === 'Spacer'")
     TaskFolderItem(:data="item" v-else)
-  div.sidebar__setting(@click="updateState({showSettingsModel: true})")
+  div.sidebar__setting(@click="updateState({showSettingsModal: true})")
     i.iconfont.icon-setting
-    span.u-ml5 设置
+    span.u-ml5 {{$t('base.setting')}}
 </template>
 
 <script>

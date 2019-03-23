@@ -10,7 +10,7 @@ div.task-list
       slot="right"
       @click="cancelSearch"
       round
-    ) 取消
+    ) {{$t('base.cancel')}}
   Header(v-if="!showSearch")
     span.u-pointer(
       slot="left"
@@ -20,7 +20,7 @@ div.task-list
       i.iconfont.u-pointer.u-s12(
         :class="sort ? 'icon-down' : 'icon-up'"
       )
-      span.u-ml5 排序
+      span.u-ml5 {{$t('base.sort')}}
     el-popover(
       placement="bottom"
       width="200"
@@ -28,59 +28,59 @@ div.task-list
     )
       div.task-list__options
         div.u-bb
-          span.u-mrauto 显示已完成任务
+          span.u-mrauto {{$t('task.showCompleted')}}
           el-switch(
-            active-color="#3DC550"
-            inactive-color="#FA6260"
+            :active-color="$color.green"
+            :inactive-color="$color.red"
             :value="showCompleteTask"
             @change="updateState({showCompleteTask: !showCompleteTask})"
           )
         p.rename.u-bb(
           v-show="currentFolder.Id && !has(['任务', 'Task', 'task'], currentFolder.Name)"
           @click="renameTaskFolder"
-        ) 重命名
+        ) {{$t('base.rename')}}
         p.delete(
           v-show="currentFolder.Id && !has(['任务', 'Task', 'task'], currentFolder.Name)"
           @click="deleteTaskFolder"
-        ) 删除清单
+        ) {{$t('base.delete')}}
       div.task-list__title(slot="reference")
         span.u-bold(
-          :style="{color: showCompleteTask ? '#3DC550' : '#FA6260'}"
+          :style="{color: showCompleteTask ? $color.green : $color.red}"
         ) &bull;
         span.u-ml10 {{currentFolder.Name}}
         i.iconfont.icon-down-o.u-ml10.u-s5
     el-tooltip(
       slot="right"
-      content="新建任务"
+      :content="$t('task.create')"
       placement="left"
     )
       el-button.u-ml10(
         size="mini"
         circle
         icon="el-icon-plus"
-        @click="updateState({showTaskAddModel: true})"
+        @click="updateState({showTaskAddModal: true})"
       )
   div.task-list__content(v-if="showSearch ? searchTasks.length : tasks.length")
-    TaskItem(
+    Item(
       v-for="item in showSearch ? searchTasks : tasks"
       :data="item"
       :key="item.Id"
     )
   div.task-list__empty(v-else)
     i.iconfont.icon-empty
-    span 清单暂无任务
+    span {{$t('folder.empty')}}
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
-import TaskItem from './TaskItem'
+import Item from './Item'
 import { ipcRenderer } from 'electron'
 import { has, isEmpty } from '@/common/utils'
 import { nextTask } from '@/common/event'
 
 export default {
   components: {
-    TaskItem
+    Item
   },
 
   data () {
@@ -151,7 +151,7 @@ export default {
     renameTaskFolder () {
       this.updateState({
         currentFolder: {...this.currentFolder, Type: 'Rename'},
-        showTaskFolderAddModel: true
+        showTaskFolderAddModal: true
       })
     },
     cancelSearch () {
@@ -166,7 +166,7 @@ export default {
       if (!has([38, 40, 13], evt.keyCode)) return
       evt.stopPropagation()
       if (evt.keyCode === 13 && !isEmpty(this.currentTask)) {
-        this.updateState({showTaskDetailModel: true})
+        this.updateState({showTaskDetailModal: true})
       } else {
         nextTask(evt.keyCode === 40 ? 1 : -1, this.searchTasks)
       }

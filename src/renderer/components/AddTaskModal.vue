@@ -1,17 +1,17 @@
 <template lang="pug">
-Model.add-task(
-  v-model="showTaskAddModel"
-  @cancel="updateState({showTaskAddModel: false})"
+Modal.add-task(
+  v-model="showTaskAddModal"
+  @cancel="updateState({showTaskAddModal: false})"
 )
   Header
-    span 新建任务
+    span {{$t('task.create')}}
     el-button(
       slot="right"
       round
       @click="submit"
-    ) 确认
+    ) {{$t('base.submit')}}
   el-alert(
-    title="可在输入框使用 Enter 确认提交"
+    :title="$t('message.enterToSubmit')"
     type="info"
     show-icon
     :closable="false"
@@ -19,8 +19,8 @@ Model.add-task(
   div.add-task__content
     div.form__row-section
       div.form__row
-        label 所属清单
-        el-select.u-w200(v-model="belongFolder")
+        label.u-w50 {{$t('base.folder')}}
+        el-select.u-flex-1(v-model="belongFolder")
           el-option(
             v-for="item in taskFolders"
             :key="item.Id"
@@ -29,11 +29,11 @@ Model.add-task(
           )
     div.form__row-section
       div.form__row
-        label 名称
-        el-input.u-w200(
+        label.u-w50 {{$t('base.name')}}
+        el-input(
           ref="input"
           v-model="name"
-          placeholder="任务名称"
+          :placeholder="$t('task.name')"
           @keyup.enter.native="submit"
           clearable
           autofocus
@@ -56,12 +56,12 @@ export default {
       tasks: ({global}) => global.tasks,
       taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder,
-      showTaskAddModel: ({global}) => global.showTaskAddModel
+      showTaskAddModal: ({global}) => global.showTaskAddModal
     })
   },
 
   watch: {
-    showTaskAddModel (newValue) {
+    showTaskAddModal (newValue) {
       if (!newValue) return
       if (this.currentFolder.Id) {
         this.belongFolder = this.currentFolder.Id
@@ -84,11 +84,11 @@ export default {
         })
         this.updateState({
           tasks: [...this.tasks, newTask],
-          showTaskAddModel: false
+          showTaskAddModal: false
         })
-        this.$message.success('添加成功')
+        this.$message.success(this.$t('message.createSuccessfully'))
       } catch (err) {
-        this.$message.error('添加失败')
+        this.$message.error(this.$t('message.createFailed'))
       }
     }
   }

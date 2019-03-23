@@ -18,14 +18,14 @@ div.task-detail-main(
       @click="changeTaskImportance"
     )
   el-alert(
-    title="可在输入框使用 Enter 确认提交"
+    :title="$t('message.enterToSubmit')"
     type="info"
     show-icon
     :closable="false"
   )
   div.form__row-section.u-mt12
     div.form__row.u-bb
-      label 提醒时间
+      label {{$t('task.remindTime')}}
       div.content(@click.stop="showRemindPicker")
         el-date-picker(
           ref="remindPicker"
@@ -36,7 +36,7 @@ div.task-detail-main(
         span {{remindDateText}}
         i.iconfont.icon-right.u-ml5
     div.form__row
-      label 截止日期
+      label {{$t('task.dueTime')}}
       div.content(@click.stop="showStopPicker")
         el-date-picker(
           ref="stopPicker"
@@ -49,15 +49,15 @@ div.task-detail-main(
     //- div.form__row(@click="$emit('update:step', 1)")
     //-   label 重复
     //-   i.iconfont.icon-right.u-ml5
-  div.form__row-section
-    div.form__row(@click="selectFile")
-      label 添加文件
-      input.u-transparent(type="file" ref="file" )
+  //- div.form__row-section
+  //-   div.form__row(@click="selectFile")
+  //-     label 添加文件
+  //-     input.u-transparent(type="file" ref="file" )
   div.form__row-section
     div.form__row
       textarea(
         v-model="note"
-        placeholder="添加备注"
+        :placeholder="$t('base.note')"
         @blur="noteSubmit"
         @keyup.enter="noteSubmit"
       )
@@ -66,7 +66,7 @@ div.task-detail-main(
       type="danger"
       @click="deleteTask"
       round
-    ) 删除
+    ) {{$t('base.delete')}}
 </template>
 
 <script>
@@ -104,10 +104,10 @@ export default {
       return this.currentTask.Importance === 'High' ? 'icon-star' : 'icon-star-o'
     },
     remindDateText () {
-      return this.dateTime ? dater(this.dateTime).format('MM月DD日 HH点mm分 提醒我') : '选择'
+      return this.dateTime ? dater(this.dateTime).format('MM-DD HH:mm') : this.$t('base.select')
     },
     stopDateText () {
-      return this.stopDate ? dater(this.stopDate).format('MM月DD日 到期') : '选择'
+      return this.stopDate ? dater(this.stopDate).format('MM-DD') : this.$t('base.select')
     }
   },
 
@@ -213,11 +213,11 @@ export default {
         const result = ipcRenderer.sendSync('delete-task', this.currentTask)
         if (result) {
           await this.deleteTask()
-          this.$message.success('删除成功')
+          this.$message.success(this.$t('message.deleteSuccessfully'))
         }
       } catch (err) {
         console.log(err)
-        this.$message.error('删除失败')
+        this.$message.error(this.$t('message.deleteFailed'))
       }
     }
   }

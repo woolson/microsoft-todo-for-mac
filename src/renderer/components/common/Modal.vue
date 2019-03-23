@@ -1,9 +1,9 @@
 <!-- 弹窗组件 -->
 
 <template lang="pug">
-div.model(
-  ref="model"
-  :class="'model--' + position"
+div.modal(
+  ref="modal"
+  :class="'modal--' + position"
   v-show="showRoot"
 )
   div.model__main.u-slide(
@@ -25,7 +25,7 @@ div.model(
 import { has } from '@/common/utils'
 
 export default {
-  name: 'Model',
+  name: 'Modal',
 
   props: {
     // 是否显示弹窗
@@ -95,8 +95,8 @@ export default {
       if (newValue) {
         this.showRoot = true
         const lastIndex = this.getLastIndex()
-        if (+this.$refs.model.style.zIndex < lastIndex) {
-          this.$refs.model.style.zIndex = lastIndex + 1
+        if (+this.$refs.modal.style.zIndex < lastIndex) {
+          this.$refs.modal.style.zIndex = lastIndex + 1
         }
       } else {
         setTimeout(() => {
@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.model
+.modal
   height 100vh
   width 100vw
   display flex
@@ -140,28 +140,28 @@ export default {
   overflow hidden
   box-shadow 0 0 15px rgba(black, .2)
 
-.model--right
+.modal--right
   flex-direction row-reverse
-.model--top
+.modal--top
   flex-direction column
-.model--bottom
+.modal--bottom
   flex-direction column-reverse
 
-.model--left
-.model--right
+.modal--left
+.modal--right
   .model__main
     height 100vh
     width 50vw
     max-width 400px
     min-width 350px
 
-.model--top
-.model--bottom
+.modal--top
+.modal--bottom
   .model__main
     height 50vh
     width 100vw
 
-.model--center
+.modal--center
   .model__main
     height 50vh
     width 60vw

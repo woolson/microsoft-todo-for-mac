@@ -10,10 +10,10 @@ export default function () {
       // ESC
       case 27:
         commit('UPDATE_STATE', {
-          showTaskDetailModel: false,
-          showTaskAddModel: false,
-          showTaskFolderAddModel: false,
-          showSettingsModel: false
+          showTaskDetailModal: false,
+          showTaskAddModal: false,
+          showTaskFolderAddModal: false,
+          showSettingsModal: false
         })
         break
       // 上一个清单
@@ -29,19 +29,19 @@ export default function () {
   // 新建任务夹
   ipcRenderer.on('new-folder', () => {
     commit('UPDATE_STATE', {
-      showTaskFolderAddModel: true
+      showTaskFolderAddModal: true
     })
   })
   // 新建任务
   ipcRenderer.on('new-task', () => {
     commit('UPDATE_STATE', {
-      showTaskAddModel: true
+      showTaskAddModal: true
     })
   })
   // 显示偏好设置
   ipcRenderer.on('preferences', () => {
     commit('UPDATE_STATE', {
-      showSettingsModel: true
+      showSettingsModal: true
     })
   })
 

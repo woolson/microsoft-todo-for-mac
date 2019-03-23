@@ -2,7 +2,7 @@
 div.task-item.u-bb(
   ref="root"
   :class="{active: currentTask.Id === data.Id}"
-  @click="updateState({currentTask: data, showTaskDetailModel: true})"
+  @click="updateState({currentTask: data, showTaskDetailModal: true})"
 )
   i.iconfont(
     :class="checkClass"

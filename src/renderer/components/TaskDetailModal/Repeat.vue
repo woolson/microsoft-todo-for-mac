@@ -1,10 +1,10 @@
 <template lang="pug">
 div.task-detail-repeat
   div.task-detail-repeat__header.u-bb
-    span.u-pointer(@click="$emit('update:step', 0)") 返回
+    span.u-pointer(@click="$emit('update:step', 0)") {{$t('base.cancel')}}
   div.form__row-section
     div.form__row.u-bb
-      label.u-mr20 重复
+      label.u-mr20 {{$t('base.repeat')}}
       el-select.u-flex-1(v-model="level")
         el-option(
           v-for="item in levelOptions"
@@ -14,7 +14,7 @@ div.task-detail-repeat
         )
   div.form__row-section(v-show="level === 'Custom'")
     div.form__row.u-bb
-      label.u-mr20 周期
+      label.u-mr20 {{$t('base.period')}}
       el-input(
         v-model="repeatNumber"
         type="number"
@@ -39,7 +39,7 @@ div.task-detail-repeat
     type="primary"
     round
     @click="submit"
-  ) 确定
+  ) {{$t('base.submit')}}
 </template>
 
 <script>
@@ -53,27 +53,27 @@ export default {
       repeatNumber: null,
       customWeek: [],
       levelOptions: [
-        { value: 'Daily', label: '每天' },
-        { value: 'WeekDays', label: '工作日' },
-        { value: 'Weekly', label: '每周' },
-        { value: 'AbsoluteMonthly', label: '每月' },
-        { value: 'AbsoluteYearly', label: '每年' },
-        { value: 'Custom', label: '自定义' }
+        { value: 'Daily', label: this.$t('base.daily') },
+        { value: 'WeekDays', label: this.$t('base.weekDays') },
+        { value: 'Weekly', label: this.$t('base.weekly') },
+        { value: 'AbsoluteMonthly', label: this.$t('base.monthly') },
+        { value: 'AbsoluteYearly', label: this.$t('base.yearly') },
+        { value: 'Custom', label: this.$t('base.custom') }
       ],
       repeatLevelOptions: [
-        { value: 'day', label: '天' },
-        { value: 'week', label: '周' },
-        { value: 'month', label: '月' },
-        { value: 'year', label: '年' }
+        { value: 'day', label: this.$t('base.day') },
+        { value: 'week', label: this.$t('base.week') },
+        { value: 'month', label: this.$t('base.month') },
+        { value: 'year', label: this.$t('base.year') }
       ],
       weeks: [
-        { value: 'Monday', label: '一' },
-        { value: 'Tuesday', label: '二' },
-        { value: 'Wednesday', label: '三' },
-        { value: 'Thursday', label: '四' },
-        { value: 'Friday', label: '五' },
-        { value: 'Saturday', label: '六' },
-        { value: 'Sunday', label: '日' }
+        { value: 'Monday', label: this.$t('base.monday') },
+        { value: 'Tuesday', label: this.$t('base.tuesday') },
+        { value: 'Wednesday', label: this.$t('base.wednesday') },
+        { value: 'Thursday', label: this.$t('base.thurday') },
+        { value: 'Friday', label: this.$t('base.firday') },
+        { value: 'Saturday', label: this.$t('base.saturday') },
+        { value: 'Sunday', label: this.$t('base.sunday') }
       ]
     }
   },
