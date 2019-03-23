@@ -53,27 +53,27 @@ export default {
       repeatNumber: null,
       customWeek: [],
       levelOptions: [
-        { value: 'Daily', label: this.$t('base.daily') },
-        { value: 'WeekDays', label: this.$t('base.weekDays') },
-        { value: 'Weekly', label: this.$t('base.weekly') },
-        { value: 'AbsoluteMonthly', label: this.$t('base.monthly') },
-        { value: 'AbsoluteYearly', label: this.$t('base.yearly') },
-        { value: 'Custom', label: this.$t('base.custom') }
+        { value: 'Daily', label: this.$t('date.daily') },
+        { value: 'WeekDays', label: this.$t('date.weekDays') },
+        { value: 'Weekly', label: this.$t('date.weekly') },
+        { value: 'AbsoluteMonthly', label: this.$t('date.monthly') },
+        { value: 'AbsoluteYearly', label: this.$t('date.yearly') },
+        { value: 'Custom', label: this.$t('date.custom') }
       ],
       repeatLevelOptions: [
-        { value: 'day', label: this.$t('base.day') },
-        { value: 'week', label: this.$t('base.week') },
-        { value: 'month', label: this.$t('base.month') },
-        { value: 'year', label: this.$t('base.year') }
+        { value: 'day', label: this.$t('date.day') },
+        { value: 'week', label: this.$t('date.week') },
+        { value: 'month', label: this.$t('date.month') },
+        { value: 'year', label: this.$t('date.year') }
       ],
       weeks: [
-        { value: 'Monday', label: this.$t('base.monday') },
-        { value: 'Tuesday', label: this.$t('base.tuesday') },
-        { value: 'Wednesday', label: this.$t('base.wednesday') },
-        { value: 'Thursday', label: this.$t('base.thurday') },
-        { value: 'Friday', label: this.$t('base.firday') },
-        { value: 'Saturday', label: this.$t('base.saturday') },
-        { value: 'Sunday', label: this.$t('base.sunday') }
+        { value: 'Monday', label: this.$t('date.monday') },
+        { value: 'Tuesday', label: this.$t('date.tuesday') },
+        { value: 'Wednesday', label: this.$t('date.wednesday') },
+        { value: 'Thursday', label: this.$t('date.thurday') },
+        { value: 'Friday', label: this.$t('date.firday') },
+        { value: 'Saturday', label: this.$t('date.saturday') },
+        { value: 'Sunday', label: this.$t('date.sunday') }
       ]
     }
   },

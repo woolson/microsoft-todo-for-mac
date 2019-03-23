@@ -8,12 +8,13 @@ Modal.add-task-folder(
     el-button(
       slot="right"
       @click="submit"
-      round
-    ) {{$t('base.submit')}}
+      circle
+      icon="el-icon-check"
+    )
   el-alert(
     :title="$t('message.enterToSubmit')"
     type="info"
-    show-icon
+    center
     :closable="false"
   )
   div.add-task-folder__content

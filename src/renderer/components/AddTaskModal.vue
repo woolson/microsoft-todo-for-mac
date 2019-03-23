@@ -7,13 +7,14 @@ Modal.add-task(
     span {{$t('task.create')}}
     el-button(
       slot="right"
-      round
       @click="submit"
-    ) {{$t('base.submit')}}
+      circle
+      icon="el-icon-check"
+    )
   el-alert(
     :title="$t('message.enterToSubmit')"
     type="info"
-    show-icon
+    center
     :closable="false"
   )
   div.add-task__content

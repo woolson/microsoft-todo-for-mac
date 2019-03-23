@@ -50,9 +50,14 @@ export default {
   mounted () {
     this.init()
     initShortCut()
+    // Update data when window focus
     window.onfocus = () => {
       this.init(false)
     }
+    // Update data every 30 minute
+    setInterval(() => {
+      this.init(false)
+    }, 1000 * 60 * 30)
   },
 
   watch: {

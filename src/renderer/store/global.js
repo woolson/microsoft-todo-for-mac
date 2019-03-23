@@ -46,7 +46,7 @@ const state = {
 
 const getters = {
   // Get folders by setting of planned & importance
-  folders ({taskFolders, showPlannedFolder, showImportanceFolder}) {
+  folders ({tasks, taskFolders, showPlannedFolder, showImportanceFolder}) {
     const folders = [...taskFolders]
     if (showPlannedFolder || showImportanceFolder) {
       folders.unshift({ Key: 'Spacer' })

@@ -104,6 +104,7 @@ export default function () {
 function nextFolder (dir) {
   const { currentFolder } = store.state
   const folders = store.getters.folders.filter(o => o.Key !== 'Spacer')
+  if (!folders.length) return
   const index = folders.findIndex(o => {
     return (o.Key === currentFolder.Key && o.Key) || (o.Id === currentFolder.Id && o.Id)
   })
@@ -124,6 +125,7 @@ function nextFolder (dir) {
 export function nextTask (dir, tasks) {
   const { currentTask, showSearch } = store.state
   const taskList = showSearch ? tasks : store.getters.tasks
+  if (!taskList.length) return
   const index = taskList.findIndex(o => o.Id === currentTask.Id)
   const nextIndex = index + dir
 

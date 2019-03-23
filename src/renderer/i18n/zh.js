@@ -1,6 +1,7 @@
 export default {
   base: {
     async: '同步',
+    at: '于',
     cancel: '取消',
     completed: '已完成',
     create: '新建',
@@ -18,7 +19,8 @@ export default {
     me: '我',
     name: '名称',
     note: '备注',
-    planned: '已排期',
+    period: '周期',
+    planned: '已计划日程',
     remind: '提醒',
     rename: '重命名',
     repeat: '重复',
@@ -69,7 +71,9 @@ export default {
     updateSuccessfully: '@:base.update@:base.successfully'
   },
   task: {
+    completeAt: '@:base.completed @:base.at',
     create: '@:base.create@:base.task',
+    createAt: '@:base.create@:base.at',
     delete: '@:base.delete@:base.task',
     dueTime: '@:base.due@:base.time',
     name: '@:base.task@:base.name',

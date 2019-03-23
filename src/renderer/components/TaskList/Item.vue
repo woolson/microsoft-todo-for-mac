@@ -4,16 +4,25 @@ div.task-item.u-bb(
   :class="{active: currentTask.Id === data.Id}"
   @click="updateState({currentTask: data, showTaskDetailModal: true})"
 )
-  i.iconfont(
+  i.iconfont.u-mr15(
     :class="checkClass"
     @click.stop="changeTaskStatus"
   )
   div.task-item__content
     h1(:style="titleStyle") {{data.Subject}}
-    i.iconfont(
-      :class="starClass"
-      @click.stop="changeTaskImportance"
-    )
+    div.task-item__info(v-show="data.IsReminderOn || data.Body.Content")
+      i.iconfont.icon-bell(
+        v-show="data.IsReminderOn"
+        :title="$t('base.remind')"
+      )
+      i.iconfont.icon-note(
+        v-show="data.Body.Content"
+        :title="$t('base.note')"
+      )
+  i.iconfont.u-ml10(
+    :class="starClass"
+    @click.stop="changeTaskImportance"
+  )
 </template>
 
 <script>
@@ -95,18 +104,25 @@ export default {
   display flex
   align-items center
   background $background-color
-  padding 15px
+  padding 12px 15px
   background-size 0px 100%
   position relative
   transition all .2s
   cursor pointer
   user-select none
   box-sizing border-box
+  > div
+    flex 1
   > i
-    font-size 18px
-    margin-right 10px
+    &.icon-check
+    &.icon-check-o
+      font-size 20px
     &.icon-check
       color $green
+    &.icon-star
+      color $yellow
+    &:hover
+      animation bounceIn .75s
   &:first-child
     border-top-left-radius 5px
     border-top-right-radius 5px
@@ -119,20 +135,31 @@ export default {
     *
       color white !important
     background linear-gradient(45deg, $blue, $purple)
+    .task-item__info
+      background rgba(black, .1)
   &:hover:not(.active)
     background rgba($blue, .15)
 
 .task-item__content
   h1
     font-size 14px
+    line-height 1
     font-weight normal
     margin 0
     color $text
-  i
-    position absolute
-    right 15px
-    top 15px
-    &.icon-star
-      color $yellow
-</style>
 
+.task-item__info
+  width 100%
+  margin-top 5px
+  background rgba(white, .4)
+  padding 2px 10px
+  border-radius 3px
+  box-sizing border-box
+  i
+    margin-top 5px
+    margin-right 10px
+    font-size 12px
+    color $text
+    &.icon-bell
+      font-size 13px
+</style>

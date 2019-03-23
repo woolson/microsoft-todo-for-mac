@@ -5,6 +5,7 @@ div.task-folder-item(
 )
   i.iconfont(:class="folderIcon")
   span.u-ml5 {{data.Name}}
+  span.number.u-mlauto {{data.number}}
 </template>
 
 <script>
@@ -82,4 +83,6 @@ export default {
     background rgba(black, .1)
   &:hover
     text-shadow 0 0 5px rgba(black, .5)
+  .number
+    opacity .8
 </style>

@@ -20,7 +20,7 @@ div.task-detail-main(
   el-alert(
     :title="$t('message.enterToSubmit')"
     type="info"
-    show-icon
+    center
     :closable="false"
   )
   div.form__row-section.u-mt12
@@ -61,12 +61,14 @@ div.task-detail-main(
         @blur="noteSubmit"
         @keyup.enter="noteSubmit"
       )
-  div.form__row-section.u-mtauto
-    el-button.u-w100_(
+  div.task-detail-main__bottom
+    span {{taskDateInfo}}
+    el-button(
       type="danger"
       @click="deleteTask"
+      icon="el-icon-delete"
       round
-    ) {{$t('base.delete')}}
+    )
 </template>
 
 <script>
@@ -108,6 +110,14 @@ export default {
     },
     stopDateText () {
       return this.stopDate ? dater(this.stopDate).format('MM-DD') : this.$t('base.select')
+    },
+    taskDateInfo () {
+      const { CreatedDateTime, CompletedDateTime, Status } = this.currentTask
+      if (Status === 'Completed') {
+        return `${this.$t('task.completeAt')} ${dater(CompletedDateTime.DateTime).format('YYYY-MM-DD HH:mm:SS')}`
+      } else {
+        return `${this.$t('task.createAt')} ${dater(CreatedDateTime).format('YYYY-MM-DD HH:mm:SS')}`
+      }
     }
   },
 
@@ -269,4 +279,20 @@ textarea
     padding 0
     width 0 !important
     height 0 !important
+
+.task-detail-main__bottom
+  display flex
+  padding 15px 12px
+  margin-top auto
+  align-items stretch
+  justify-content space-between
+  span
+    flex 1
+    margin-right 20px
+    background $background-color
+    line-height 32px
+    border-radius 5px
+    padding 0 15px
+    color $text-gray
+    user-select none
 </style>

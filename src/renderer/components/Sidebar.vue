@@ -10,7 +10,7 @@ div.sidebar
       i.task-add.iconfont.icon-add(
         @click="updateState({showTaskFolderAddModal: true})"
       )
-  template(v-for="item in folders")
+  template(v-for="item in compFolders")
     div.sidebar__separate(v-if="item.Key === 'Spacer'")
     TaskFolderItem(:data="item" v-else)
   div.sidebar__setting(@click="updateState({showSettingsModal: true})")
@@ -29,12 +29,25 @@ export default {
 
   computed: {
     ...mapState([
+      'tasks',
       'taskFolders',
       'currentFolder',
       'showPlannedFolder',
       'showImportanceFolder'
     ]),
-    ...mapGetters(['folders'])
+    ...mapGetters(['folders']),
+    compFolders () {
+      const folders = JSON.parse(JSON.stringify(this.folders))
+      const processTasks = this.tasks.filter(o => o.Status !== 'Completed')
+      folders.forEach(item => {
+        if (item.Key) {
+          item.number = processTasks.filter(o => o[item.Key] === item.Value).length
+        } else {
+          item.number = processTasks.filter(o => o.ParentFolderId === item.Id).length
+        }
+      })
+      return folders
+    }
   },
 
   methods: {

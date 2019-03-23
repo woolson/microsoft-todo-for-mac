@@ -46,7 +46,7 @@ function createWindow () {
   mainWindow.loadURL(winURL)
   // mainWindow.webContents.openDevTools()
 
-  // 创建窗口后加载事件
+  // add event
   initMessager(mainWindow)
 
   mainWindow.on('closed', () => {

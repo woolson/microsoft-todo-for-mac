@@ -10,6 +10,7 @@ import './common/directive'
 import './assets/font/iconfont.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/base.css'
+// import 'animate.css'
 
 // Global Vue components register
 const components = require.context('./components/common', false, /\.vue$/)

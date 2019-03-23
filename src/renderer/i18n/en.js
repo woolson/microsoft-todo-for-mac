@@ -1,6 +1,7 @@
 export default {
   base: {
     async: 'Async',
+    at: 'At',
     cancel: 'Cancel',
     completed: 'Completed',
     create: 'Create',
@@ -18,6 +19,7 @@ export default {
     me: 'Me',
     name: 'Name',
     note: 'Note',
+    period: 'Period',
     planned: 'Planned',
     remind: 'Remind',
     rename: 'Rename',
@@ -69,7 +71,9 @@ export default {
     updateSuccessfully: '@:base.update @:base.successfully'
   },
   task: {
+    completeAt: '@:base.completed @:base.at',
     create: '@:base.create @:base.task',
+    createAt: '@:base.create @:base.at',
     delete: '@:base.delete @:base.task',
     dueTime: '@:base.due @:base.time',
     name: '@:base.task @:base.name',
