@@ -1,10 +1,11 @@
 import store from '../store/index'
+import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
 
 export default function () {
   const { dispatch, commit } = store
-  // ESC 关闭弹窗
+  // ESC dismiss modal
   window.addEventListener('keydown', evt => {
     switch (evt.keyCode) {
       // ESC
@@ -16,41 +17,41 @@ export default function () {
           showSettingsModal: false
         })
         break
-      // 上一个清单
+      // Previous folder or task
       case 38:
         evt.metaKey ? nextFolder(-1) : nextTask(-1)
         break
-      // 下一个清单
+      // Next folder or task
       case 40:
         evt.metaKey ? nextFolder(1) : nextTask(1)
         break
     }
   })
-  // 新建任务夹
+  // Shortcut for create folder
   ipcRenderer.on('new-folder', () => {
     commit('UPDATE_STATE', {
       showTaskFolderAddModal: true
     })
   })
-  // 新建任务
+  // Shortcut for create task
   ipcRenderer.on('new-task', () => {
     commit('UPDATE_STATE', {
       showTaskAddModal: true
     })
   })
-  // 显示偏好设置
+  // Show settings
   ipcRenderer.on('preferences', () => {
     commit('UPDATE_STATE', {
       showSettingsModal: true
     })
   })
 
-  // 搜索
+  // Global task search
   ipcRenderer.on('search', () => {
     commit('UPDATE_STATE', { showSearch: true })
   })
 
-  // 完成任务
+  // Toggle task completed
   ipcRenderer.on('complete-task', async () => {
     try {
       const { currentTask } = store.state.global
@@ -58,13 +59,13 @@ export default function () {
         Id: currentTask.Id,
         Status: currentTask.Status === 'Completed' ? 'NotStarted' : 'Completed'
       })
-      Message.success('更新成功')
+      Message.success(i18n.t('message.updateSuccessfully'))
     } catch (err) {
       console.log(err)
-      Message.error('更新失败')
+      Message.error(i18n.t('message.updateFailed'))
     }
   })
-  // 重要任务
+  // Toggle task importance
   ipcRenderer.on('importance-task', async () => {
     try {
       const { currentTask } = store.state.global
@@ -72,33 +73,34 @@ export default function () {
         Id: currentTask.Id,
         Importance: currentTask.Importance === 'High' ? 'Normal' : 'High'
       })
-      Message.success('更新成功')
+      Message.success(i18n.t('message.updateSuccessfully'))
     } catch (err) {
       console.log(err)
-      Message.error('更新失败')
+      Message.error(i18n.t('message.updateFailed'))
     }
   })
-  // 删除任务
+  // Delete task
   ipcRenderer.on('delete-task', async () => {
     try {
       const { currentTask } = store.state.global
       const result = ipcRenderer.sendSync('delete-task', currentTask)
       if (result) {
         await dispatch('DELETE_TASK')
-        Message.success('删除成功')
+        Message.success(i18n.t('message.deleteSuccessfully'))
       }
     } catch (err) {
       console.log(err)
-      Message.error('删除失败')
+      Message.error(i18n.t('message.deleteFailed'))
     }
   })
+  // Toggle complete
   ipcRenderer.on('toggle-complete', async () => {
     const { showCompleteTask } = store.state.global
     commit('UPDATE_STATE', {showCompleteTask: !showCompleteTask})
   })
 }
 
-// 调整当前清单
+// Move current folder
 function nextFolder (dir) {
   const { currentFolder } = store.state.global
   const folders = store.getters.folders.filter(o => o.Key !== 'Spacer')
@@ -118,7 +120,7 @@ function nextFolder (dir) {
   }
 }
 
-// 调整当前任务
+// Move current task
 export function nextTask (dir, tasks) {
   const { currentTask, showSearch } = store.state.global
   const taskList = showSearch ? tasks : store.getters.tasks

@@ -6,6 +6,7 @@ import zh from '../../../i18n/zh'
 Vue.use(VueI18n)
 
 export default new VueI18n({
+  messages: { zh, en },
   locale: 'en',
-  messages: { zh, en }
+  fallbackLocale: 'en'
 })

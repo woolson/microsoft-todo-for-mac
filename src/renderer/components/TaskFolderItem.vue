@@ -19,8 +19,8 @@ const FOLDER_ICON = {
   'Importance': 'icon-star',
   'importance': 'icon-star',
   '计划日程': 'icon-calendar-o',
-  'Schedule': 'icon-calendar-o',
-  'schedule': 'icon-calendar-o'
+  'Planned': 'icon-calendar-o',
+  'planned': 'icon-calendar-o'
 }
 
 export default {

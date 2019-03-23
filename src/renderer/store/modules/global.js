@@ -3,41 +3,44 @@ import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 
 const token = new Storage('TOKEN')
+const sysLang = window.navigator.language === 'zh-CN' ? 'zh' : 'en'
+const language = new Storage('LANGUAGE').get(null) || sysLang
 const PAGE_SIZE = 100
 // const BASE_URL = 'https://graph.microsoft.com/beta'
 
 const state = {
-  userPhoto: null,
-  hasLogin: true,
-  // get token from localstorage
-  token: token.get({}),
-  taskFolders: [],
   currentFolder: {},
-  // sort tasks
-  sort: false,
-  tasks: [],
   currentTask: {},
-  // display global task search
-  showSearch: false,
+  hasLogin: true,
+  language,
   showCompleteTask: true,
-  showTaskDetailModal: false,
-  showTaskAddModal: false,
-  showTaskFolderAddModal: false,
-  showSettingsModal: false,
   // display importance folder on sidebar
   showImportanceFolder: true,
   // display schedule folder on sidebar
-  showScheduleFolder: true
+  showPlannedFolder: true,
+  // display global task search
+  showSearch: false,
+  showSettingsModal: false,
+  showTaskAddModal: false,
+  showTaskDetailModal: false,
+  showTaskFolderAddModal: false,
+  // sort tasks
+  sort: false,
+  taskFolders: [],
+  tasks: [],
+  // get token from localstorage
+  token: token.get({}),
+  userPhoto: null
 }
 
 const getters = {
   // Get folders by setting of planned & importance
-  folders ({taskFolders, showScheduleFolder, showImportanceFolder}) {
+  folders ({taskFolders, showPlannedFolder, showImportanceFolder}) {
     const folders = [...taskFolders]
-    if (showScheduleFolder || showImportanceFolder) {
+    if (showPlannedFolder || showImportanceFolder) {
       folders.unshift({ Key: 'Spacer' })
     }
-    if (showScheduleFolder) {
+    if (showPlannedFolder) {
       folders.unshift({ Name: i18n.t('base.planned'), Key: 'IsReminderOn', Value: true })
     }
     if (showImportanceFolder) {

@@ -87,9 +87,9 @@ export default {
             showTaskFolderAddModal: false
           })
         }
-        this.$message.success(`${this.operateType}成功`)
+        this.$message.success(this.$t('message.commonSuccessfully', [this.operateType]))
       } catch (err) {
-        this.$message.error(`${this.operateType}失败`)
+        this.$message.error(this.$t('message.commonFailed', [this.operateType]))
       }
     }
   }

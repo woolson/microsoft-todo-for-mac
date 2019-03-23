@@ -11,7 +11,7 @@ import './assets/font/iconfont.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/base.css'
 
-// 全局注册组件
+// Global Vue components register
 const components = require.context('./components/common', false, /\.vue$/)
 
 components.keys().forEach(path => {
@@ -24,13 +24,19 @@ if (!process.env.IS_WEB) {
 }
 Vue.config.productionTip = false
 Vue.use(ElementUI, { size: 'small' })
+
+// Global JS colors
 Vue.prototype.$color = {
   blue: '#1c9fff',
   purple: '#765ee7',
   red: '#FA6260',
   yellow: '#FBBB4D',
-  green: '#3DC550'
+  green: '#3DC550',
+  gray: '#909399'
 }
+
+// Set app language
+i18n.locale = store.state.global.language
 
 /* eslint-disable no-new */
 window.vm = new Vue({

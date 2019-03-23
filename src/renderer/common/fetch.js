@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import store from '../store/index'
+import i18n from '../common/i18n'
 import axios from 'axios'
 import { Loading, Message } from 'element-ui'
 import { BASE_URL } from '@/common/static'
@@ -60,7 +61,7 @@ export const common = (type, url, data, options = {}) => {
   if (options.showLoading) {
     loading = Loading.service({
       lock: true,
-      text: '加载中',
+      text: i18n.t('base.loading'),
       background: 'rgba(0, 0, 0, 0.7)'
     })
   }

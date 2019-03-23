@@ -31,7 +31,7 @@ export default {
     ...mapState({
       taskFolders: ({global}) => global.taskFolders,
       currentFolder: ({global}) => global.currentFolder,
-      showScheduleFolder: ({global}) => global.showScheduleFolder,
+      showPlannedFolder: ({global}) => global.showPlannedFolder,
       showImportanceFolder: ({global}) => global.showImportanceFolder
     }),
     ...mapGetters(['folders'])

@@ -9,7 +9,7 @@ Modal.settings(
     div.form__row-section
       div.form__row
         label {{$t('base.async')}}
-        el-button(round @click="syncData") {{$t('base.async')}}
+        el-button.u-w80(round @click="syncData") {{$t('base.async')}}
     div.form__row-section
       div.form__row.u-bb
         label {{$t('task.showImportance')}}
@@ -24,8 +24,8 @@ Modal.settings(
         el-switch(
           :active-color="$color.green"
           :inactive-color="$color.red"
-          :value="showScheduleFolder"
-          @change="updateState({showScheduleFolder: !showScheduleFolder})"
+          :value="showPlannedFolder"
+          @change="updateState({showPlannedFolder: !showPlannedFolder})"
         )
       div.form__row
         label {{$t('task.showCompleted')}}
@@ -35,6 +35,16 @@ Modal.settings(
           :value="showCompleteTask"
           @change="updateState({showCompleteTask: !showCompleteTask})"
         )
+    div.form__row-section
+      div.form__row.u-bb
+        label {{$t('base.language')}}
+        el-radio-group(
+          v-model="currentLang"
+          @change="languageChange"
+          size="mini"
+        )
+          el-radio-button(name="language" label="中")
+          el-radio-button(name="language" label="EN")
     el-button.u-ml12.u-mr12.u-mtauto(
       round
       type="danger"
@@ -47,13 +57,21 @@ import { mapState, mapMutations, mapActions } from 'vuex'
 import { Storage } from '@/common/utils'
 
 const token = new Storage('TOKEN')
+const language = new Storage('LANGUAGE')
 
 export default {
+  data () {
+    return {
+      currentLang: this.language === 'en' ? 'EN' : '中'
+    }
+  },
+
   computed: {
     ...mapState({
+      language: ({global}) => global.language,
       showSettingsModal: ({global}) => global.showSettingsModal,
       showCompleteTask: ({global}) => global.showCompleteTask,
-      showScheduleFolder: ({global}) => global.showScheduleFolder,
+      showPlannedFolder: ({global}) => global.showPlannedFolder,
       showImportanceFolder: ({global}) => global.showImportanceFolder
     })
   },
@@ -80,6 +98,12 @@ export default {
     logout () {
       token.remove()
       this.updateState({showSettingsModal: false, hasLogin: false})
+    },
+    languageChange (value) {
+      const lang = value === 'EN' ? 'en' : 'zh'
+      language.set(lang)
+      this.$i18n.locale = lang
+      this.updateState({language: lang})
     }
   }
 }
