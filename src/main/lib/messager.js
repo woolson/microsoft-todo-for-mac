@@ -1,5 +1,7 @@
 import { dialog, ipcMain } from 'electron'
 import setTouchBar from './touchbar'
+import setMenu from './menu'
+import language from './language'
 import store from './store'
 
 export default function (mainWindow) {
@@ -9,20 +11,22 @@ export default function (mainWindow) {
   })
   // Delete folder
   ipcMain.on('delete-folder', (event, arg) => {
+    const LANG = language[store.get('language')]
     dialog.showMessageBox(mainWindow, {
       type: 'question',
-      buttons: ['取消', '确认'],
-      message: `注意`,
-      detail: `确认删除清单 ${arg.Name} ？`
+      buttons: [LANG.cancel, LANG.submit],
+      message: LANG.notice,
+      detail: `${LANG.confirmDeleteFolder} ${arg.Name} ？`
     }, res => (event.returnValue = res))
   })
   // Delete task
   ipcMain.on('delete-task', (event, arg) => {
+    const LANG = language[store.get('language')]
     dialog.showMessageBox(mainWindow, {
       type: 'question',
-      buttons: ['取消', '确认'],
-      message: `注意`,
-      detail: `确认删除任务 ${arg.Subject} ？`
+      buttons: [LANG.cancel, LANG.submit],
+      message: LANG.notice,
+      detail: `${LANG.confirmDeleteTask} ${arg.Subject} ？`
     }, res => (event.returnValue = res))
   })
   // Fetch setting content
@@ -32,6 +36,10 @@ export default function (mainWindow) {
   // Update setting content
   ipcMain.on('update-setting', (event, arg) => {
     store.set(arg)
+    if (arg['language']) {
+      setMenu(mainWindow)
+      setTouchBar(mainWindow)
+    }
     event.returnValue = true
   })
 }

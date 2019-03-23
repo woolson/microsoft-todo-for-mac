@@ -54,7 +54,7 @@ export default function () {
   // Toggle task completed
   ipcRenderer.on('complete-task', async () => {
     try {
-      const { currentTask } = store.state.global
+      const { currentTask } = store.state
       await dispatch('UPDATE_TASK', {
         Id: currentTask.Id,
         Status: currentTask.Status === 'Completed' ? 'NotStarted' : 'Completed'
@@ -68,7 +68,7 @@ export default function () {
   // Toggle task importance
   ipcRenderer.on('importance-task', async () => {
     try {
-      const { currentTask } = store.state.global
+      const { currentTask } = store.state
       await dispatch('UPDATE_TASK', {
         Id: currentTask.Id,
         Importance: currentTask.Importance === 'High' ? 'Normal' : 'High'
@@ -82,7 +82,7 @@ export default function () {
   // Delete task
   ipcRenderer.on('delete-task', async () => {
     try {
-      const { currentTask } = store.state.global
+      const { currentTask } = store.state
       const result = ipcRenderer.sendSync('delete-task', currentTask)
       if (result) {
         await dispatch('DELETE_TASK')
@@ -95,14 +95,14 @@ export default function () {
   })
   // Toggle complete
   ipcRenderer.on('toggle-complete', async () => {
-    const { showCompleteTask } = store.state.global
+    const { showCompleteTask } = store.state
     commit('UPDATE_STATE', {showCompleteTask: !showCompleteTask})
   })
 }
 
 // Move current folder
 function nextFolder (dir) {
-  const { currentFolder } = store.state.global
+  const { currentFolder } = store.state
   const folders = store.getters.folders.filter(o => o.Key !== 'Spacer')
   const index = folders.findIndex(o => {
     return (o.Key === currentFolder.Key && o.Key) || (o.Id === currentFolder.Id && o.Id)
@@ -122,7 +122,7 @@ function nextFolder (dir) {
 
 // Move current task
 export function nextTask (dir, tasks) {
-  const { currentTask, showSearch } = store.state.global
+  const { currentTask, showSearch } = store.state
   const taskList = showSearch ? tasks : store.getters.tasks
   const index = taskList.findIndex(o => o.Id === currentTask.Id)
   const nextIndex = index + dir

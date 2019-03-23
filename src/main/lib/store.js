@@ -1,3 +1,4 @@
+import { app } from 'electron'
 import path from 'path'
 import { readFileSync, writeFileSync } from 'fs'
 
@@ -10,7 +11,10 @@ export class Store {
   get (key) {
     let result
     try {
-      result = JSON.parse(readFileSync(this.filePath))
+      result = {
+        ...this.options.default,
+        ...JSON.parse(readFileSync(this.filePath) || '{}')
+      }
     } catch (err) {
       result = {}
     }
@@ -24,5 +28,8 @@ export class Store {
 }
 
 export default new Store({
-  file: './settings.json'
+  file: './settings.json',
+  default: {
+    language: app.getLocale() === 'zh-CN' ? 'zh' : 'en'
+  }
 })

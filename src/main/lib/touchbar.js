@@ -1,28 +1,33 @@
-import { TouchBar, app } from 'electron'
-// import { isEmpty } from '@/common/utils'
+import { TouchBar } from 'electron'
+import store from './store'
+import language from './language'
 
 const { TouchBarButton, TouchBarSpacer } = TouchBar
+let cacheOptions = {}
 
-export default function setTouchBar (mainWindow, options = {}) {
-  const isZh = app.getLocale() === 'zh-CN'
+export default function setTouchBar (mainWindow, options) {
+  if (options === void 0) {
+    options = cacheOptions
+  }
+  const LANG = language[store.get('language')]
+
+  cacheOptions = options
   const newFolder = new TouchBarButton({
-    label: isZh ? '新建清单' : 'New Folder',
-    // backgroundColor: '#1c9fff',
+    label: LANG.createFolder,
     click () {
       mainWindow.webContents.send('new-folder')
     }
   })
   const newTask = new TouchBarButton({
-    label: isZh ? '新建任务' : 'New Task',
-    // backgroundColor: '#765ee7',
+    label: LANG.createTask,
     click () {
       mainWindow.webContents.send('new-task')
     }
   })
   const showComplete = new TouchBarButton({
     label: options.showCompleteTask
-      ? isZh ? '隐藏已完成' : 'Hide Complete'
-      : isZh ? '显示已完成' : 'Show Complete',
+      ? LANG.hideComplete
+      : LANG.showComplete,
     backgroundColor: '#1c9fff',
     click () {
       setTouchBar(mainWindow, {
@@ -34,8 +39,8 @@ export default function setTouchBar (mainWindow, options = {}) {
   })
   const complete = new TouchBarButton({
     label: options.Status !== 'Completed'
-      ? isZh ? '任务完成' : 'Completed'
-      : isZh ? '任务开始' : 'Start',
+      ? LANG.taskComplete
+      : LANG.taskStart,
     backgroundColor: '#3DC550',
     click () {
       mainWindow.webContents.send('complete-task')
@@ -43,15 +48,15 @@ export default function setTouchBar (mainWindow, options = {}) {
   })
   const importance = new TouchBarButton({
     label: options.Importance === 'High'
-      ? isZh ? '设为普通' : 'Normal'
-      : isZh ? '设为重要' : 'Importance',
+      ? LANG.taskNormal
+      : LANG.taskImportance,
     backgroundColor: '#FBBB4D',
     click () {
       mainWindow.webContents.send('importance-task')
     }
   })
   const deleteTask = new TouchBarButton({
-    label: isZh ? '删除任务' : 'Delete Task',
+    label: LANG.deleteTask,
     backgroundColor: '#FA6260',
     click () {
       mainWindow.webContents.send('delete-task', options)
@@ -66,10 +71,10 @@ export default function setTouchBar (mainWindow, options = {}) {
 
   if (options.Id) {
     touchbar.push(...[
-      new TouchBarSpacer({ size: 'large' }),
+      new TouchBarSpacer({ size: 'flexible' }),
       complete,
       importance,
-      new TouchBarSpacer({ size: 'large' }),
+      new TouchBarSpacer({ size: 'flexible' }),
       deleteTask
     ])
   }

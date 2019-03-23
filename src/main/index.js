@@ -4,12 +4,17 @@ import { app, BrowserWindow } from 'electron'
 import initMessager from './lib/messager'
 import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
+import storeSetting from './lib/store'
+
+const setting = storeSetting.get()
+const sysLang = app.getLocale() === 'zh-CN' ? 'zh' : 'en'
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
 
 let mainWindow
+
 const winURL = process.env.NODE_ENV === 'development'
   ? `http://localhost:9080`
   : `file://${__dirname}/index.html`
@@ -35,7 +40,7 @@ function createWindow () {
     }
   })
   // 菜单栏
-  setMenu(mainWindow)
+  setMenu(mainWindow, setting.language || sysLang)
   setTouchBar(mainWindow)
 
   mainWindow.loadURL(winURL)
