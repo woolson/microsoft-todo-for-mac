@@ -35,16 +35,16 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      token: ({global}) => global.token,
-      language: ({global}) => global.language,
-      hasLogin: ({global}) => global.hasLogin,
-      currentTask: ({global}) => global.currentTask,
-      currentFolder: ({global}) => global.currentFolder,
-      showCompleteTask: ({global}) => global.showCompleteTask,
-      showPlannedFolder: ({global}) => global.showPlannedFolder,
-      showImportanceFolder: ({global}) => global.showImportanceFolder
-    })
+    ...mapState([
+      'token',
+      'language',
+      'hasLogin',
+      'currentTask',
+      'currentFolder',
+      'showCompleteTask',
+      'showPlannedFolder',
+      'showImportanceFolder'
+    ])
   },
 
   mounted () {

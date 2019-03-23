@@ -79,9 +79,9 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      currentTask: ({global}) => global.currentTask
-    })
+    ...mapState([
+      'currentTask'
+    ])
   },
 
   watch: {

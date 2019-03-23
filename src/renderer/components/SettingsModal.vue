@@ -67,13 +67,13 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      language: ({global}) => global.language,
-      showSettingsModal: ({global}) => global.showSettingsModal,
-      showCompleteTask: ({global}) => global.showCompleteTask,
-      showPlannedFolder: ({global}) => global.showPlannedFolder,
-      showImportanceFolder: ({global}) => global.showImportanceFolder
-    })
+    ...mapState([
+      'language',
+      'showSettingsModal',
+      'showCompleteTask',
+      'showPlannedFolder',
+      'showImportanceFolder'
+    ])
   },
 
   watch: {

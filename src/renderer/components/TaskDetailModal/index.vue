@@ -26,9 +26,9 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      showTaskDetailModal: ({global}) => global.showTaskDetailModal
-    })
+    ...mapState([
+      'showTaskDetailModal'
+    ])
   },
 
   methods: {

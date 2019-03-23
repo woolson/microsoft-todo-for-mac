@@ -36,7 +36,7 @@ Vue.prototype.$color = {
 }
 
 // Set app language
-i18n.locale = store.state.global.language
+i18n.locale = store.state.language
 
 /* eslint-disable no-new */
 window.vm = new Vue({

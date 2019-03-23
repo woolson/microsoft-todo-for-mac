@@ -52,12 +52,12 @@ export default {
   }),
 
   computed: {
-    ...mapState({
-      tasks: ({global}) => global.tasks,
-      taskFolders: ({global}) => global.taskFolders,
-      currentFolder: ({global}) => global.currentFolder,
-      showTaskAddModal: ({global}) => global.showTaskAddModal
-    })
+    ...mapState([
+      'tasks',
+      'taskFolders',
+      'currentFolder',
+      'showTaskAddModal'
+    ])
   },
 
   watch: {

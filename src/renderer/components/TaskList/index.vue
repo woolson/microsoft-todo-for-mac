@@ -95,15 +95,15 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      taskFolders: ({global}) => global.taskFolders,
-      currentTask: ({global}) => global.currentTask,
-      currentFolder: ({global}) => global.currentFolder,
-      sort: ({global}) => global.sort,
-      allTasks: ({global}) => global.tasks,
-      showSearch: ({global}) => global.showSearch,
-      showCompleteTask: ({global}) => global.showCompleteTask
-    }),
+    ...mapState([
+      'taskFolders',
+      'currentTask',
+      'currentFolder',
+      'sort',
+      'allTasks',
+      'showSearch',
+      'showCompleteTask'
+    ]),
     ...mapGetters(['tasks']),
     searchTasks () {
       if (!this.searchStr) return []

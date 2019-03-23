@@ -86,10 +86,10 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      tasks: ({global}) => global.tasks,
-      currentTask: ({global}) => global.currentTask
-    }),
+    ...mapState([
+      'tasks',
+      'currentTask'
+    ]),
     titleStyle () {
       const { Status } = this.currentTask
       return {

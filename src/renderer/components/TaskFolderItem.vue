@@ -32,9 +32,9 @@ export default {
   },
 
   computed: {
-    ...mapState({
-      currentFolder: ({global}) => global.currentFolder
-    }),
+    ...mapState([
+      'currentFolder'
+    ]),
     folderIcon () {
       return FOLDER_ICON[this.data.Name] || 'icon-list'
     },

@@ -41,11 +41,11 @@ export default {
   }),
 
   computed: {
-    ...mapState({
-      taskFolders: ({global}) => global.taskFolders,
-      currentFolder: ({global}) => global.currentFolder,
-      showTaskFolderAddModal: ({global}) => global.showTaskFolderAddModal
-    }),
+    ...mapState([
+      'taskFolders',
+      'currentFolder',
+      'showTaskFolderAddModal'
+    ]),
     operateType () {
       return this.currentFolder.Type ? this.$t('base.edit') : this.$t('base.create')
     }
