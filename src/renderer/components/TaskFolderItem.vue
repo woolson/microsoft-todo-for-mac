@@ -1,5 +1,6 @@
 <template lang="pug">
 div.task-folder-item(
+  ref="root"
   :class="activeClass"
   @click="updateState({currentFolder: data})"
 )
@@ -45,6 +46,20 @@ export default {
       } else {
         return { active: this.currentFolder.Key === this.data.Key }
       }
+    }
+  },
+
+  watch: {
+    currentFolder: {
+      handler () {
+        const { data, currentFolder } = this
+        const caseId = (data.Id === currentFolder.Id && data.Id)
+        const caseKey = (data.Key === currentFolder.Key && data.Key)
+        if (caseId || caseKey) {
+          this.$refs.root.scrollIntoViewIfNeeded()
+        }
+      },
+      deep: true
     }
   },
 

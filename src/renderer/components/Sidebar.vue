@@ -10,9 +10,10 @@ div.sidebar
       i.task-add.iconfont.icon-add(
         @click="updateState({showTaskFolderAddModal: true})"
       )
-  template(v-for="item in compFolders")
-    div.sidebar__separate(v-if="item.Key === 'Spacer'")
-    TaskFolderItem(:data="item" v-else)
+  div.sidebar__folders
+    template(v-for="item in compFolders")
+      div.sidebar__separate(v-if="item.Key === 'Spacer'")
+      TaskFolderItem(:data="item" v-else)
   div.sidebar__setting(@click="updateState({showSettingsModal: true})")
     i.iconfont.icon-setting
     span.u-ml5 {{$t('base.setting')}}
@@ -62,7 +63,7 @@ export default {
 .sidebar
   height 100vh
   width 160px
-  padding 0 10px
+  // padding 0 10px
   box-sizing border-box
   box-shadow inset 0 0 5px rgba(black, .15)
   background linear-gradient(45deg, $purple, $blue)
@@ -89,6 +90,15 @@ export default {
   i
     font-size 24px
 
+.sidebar__folders
+  flex 1
+  overflow auto
+  margin 10px 0
+  > div
+    margin 0 5px
+  &::-webkit-scrollbar
+    width 0 !important
+
 .sidebar__separate
   margin 5px 0
   border-top 1px solid rgba(black, .1)
@@ -96,6 +106,7 @@ export default {
 .sidebar__setting
   display flex
   align-items center
+  margin 0 5px
   margin-top auto
   height 36px
   line-height 36px

@@ -124,7 +124,7 @@ export default {
 html
 body
   *
-    font-family Operator Mono, Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
+    font-family Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
 
 #app
   width 100vw
