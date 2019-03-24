@@ -52,9 +52,7 @@ export default {
     this.init()
     initShortCut()
     // Update data when window focus
-    // window.onfocus = () => {
-    //   this.init(false)
-    // }
+    window.onfocus = () => this.init(false)
     // Update data every 30 minute
     // setInterval(() => {
     //   this.init(false)
