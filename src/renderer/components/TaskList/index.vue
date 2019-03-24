@@ -27,7 +27,7 @@ div.task-list
       trigger="hover"
     )
       div.task-list__options
-        div.u-bb
+        div(:class="{'u-bb': dontDelete}")
           span.u-mrauto {{$t('task.showCompleted')}}
           el-switch(
             :active-color="$color.green"
@@ -36,11 +36,11 @@ div.task-list
             @change="updateState({showCompleteTask: !showCompleteTask})"
           )
         p.rename.u-bb(
-          v-show="currentFolder.Id && !has(['任务', 'Task', 'task'], currentFolder.Name)"
+          v-show="dontDelete"
           @click="renameTaskFolder"
         ) {{$t('base.rename')}}
         p.delete(
-          v-show="currentFolder.Id && !has(['任务', 'Task', 'task'], currentFolder.Name)"
+          v-show="dontDelete"
           @click="deleteTaskFolder"
         ) {{$t('base.delete')}}
       div.task-list__title(slot="reference")
@@ -110,6 +110,10 @@ export default {
       return this.allTasks.filter(o => {
         return has(o.Subject.toLowerCase(), this.searchStr.toLowerCase())
       })
+    },
+    dontDelete () {
+      const { Id, Name } = this.currentFolder
+      return Id && !has(['任务', 'Task', 'task'], Name)
     }
   },
 
@@ -182,6 +186,8 @@ export default {
   flex-direction column
   height 100vh
   position relative
+  background white
+  transition background .2s
   .header
     position absolute
     top 0
@@ -194,6 +200,7 @@ export default {
 .task-list__content
   padding 15px
   padding-top 65px
+  transition background .2s
   flex 1
   overflow auto
   &::-webkit-scrollbar
@@ -228,12 +235,12 @@ export default {
     &.rename
       color $green
       &:hover
-        background $green
+        background $green !important
     &.delete
       color $red
       border-radius 0 0 5px 5px
       &:hover
-        background $red
+        background $red !important
     &:hover
       color white
 

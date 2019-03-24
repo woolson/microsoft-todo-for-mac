@@ -38,13 +38,16 @@ export default {
 
   computed: {
     ...mapState([
+      'theme',
       'currentTask'
     ]),
     titleStyle () {
       const { Status } = this.data
       return {
         textDecoration: Status === 'Completed' ? 'line-through' : 'none',
-        color: Status === 'Completed' ? '#AAAAAA' : ''
+        color: Status === 'Completed'
+          ? this.theme === 'dark' ? '#666666 !important' : '#AAAAAA !important'
+          : ''
       }
     },
     checkClass () {
@@ -104,7 +107,7 @@ export default {
   display flex
   align-items center
   background $background-color
-  padding 12px 15px
+  padding 11px 15px
   background-size 0px 100%
   position relative
   transition all .2s
@@ -149,14 +152,16 @@ export default {
     color $text
 
 .task-item__info
-  width 100%
-  margin-top 5px
+  // width 100%
+  display inline-block
+  width auto
+  margin-top 6px
   background rgba(white, .4)
-  padding 2px 10px
-  border-radius 3px
+  padding 3px 8px
+  padding-right 0px
+  border-radius 4px
   box-sizing border-box
   i
-    margin-top 5px
     margin-right 10px
     font-size 12px
     color $text

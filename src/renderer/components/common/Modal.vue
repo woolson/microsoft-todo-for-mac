@@ -6,14 +6,14 @@ div.modal(
   :class="'modal--' + position"
   v-show="showRoot"
 )
-  div.model__main.u-slide(
+  div.modal__main.u-slide(
     v-toggle-class="value"
     :toggle-class="getViewClass"
     :style="getViewStyle"
     :class="mainClass"
   )
     slot
-  div.model__mask.u-fade(
+  div.modal__mask.u-fade(
     v-if="needMask"
     v-toggle-class="value"
     :toggle-class="['in', 'out']"
@@ -131,7 +131,7 @@ export default {
   top 0
   z-index 999
 
-.model__main
+.modal__main
   display flex
   flex-direction column
   background white
@@ -139,6 +139,7 @@ export default {
   z-index 99
   overflow hidden
   box-shadow 0 0 15px rgba(black, .2)
+  transition background .2s
 
 .modal--right
   flex-direction row-reverse
@@ -149,7 +150,7 @@ export default {
 
 .modal--left
 .modal--right
-  .model__main
+  .modal__main
     height 100vh
     width 50vw
     max-width 400px
@@ -157,12 +158,12 @@ export default {
 
 .modal--top
 .modal--bottom
-  .model__main
+  .modal__main
     height 50vh
     width 100vw
 
 .modal--center
-  .model__main
+  .modal__main
     height 50vh
     width 60vw
     left 50%
@@ -170,7 +171,7 @@ export default {
     transform translate(-50%,-50%)
     border-radius 1rem
 
-.model__mask
+.modal__mask
   height 100vh
   width 100vw
   top 0

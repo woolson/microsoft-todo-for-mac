@@ -1,6 +1,7 @@
 <template lang="pug">
 div.task-detail-main(
   v-loading.lock="loading"
+  element-loading-background="rgba(0, 0, 0, 0.7)"
 )
   div.task-detail__header
     i.iconfont.u-mr10(

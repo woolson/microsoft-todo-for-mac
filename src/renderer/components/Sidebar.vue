@@ -63,12 +63,12 @@ export default {
 .sidebar
   height 100vh
   width 160px
-  // padding 0 10px
   box-sizing border-box
   box-shadow inset 0 0 5px rgba(black, .15)
-  background linear-gradient(45deg, $purple, $blue)
+  background $sidebar-light
   display flex
   flex-direction column
+  transition background .2s
 
 .sidebar__header
   height 50px
@@ -100,7 +100,7 @@ export default {
     width 0 !important
 
 .sidebar__separate
-  margin 5px 0
+  margin 5px !important
   border-top 1px solid rgba(black, .1)
 
 .sidebar__setting

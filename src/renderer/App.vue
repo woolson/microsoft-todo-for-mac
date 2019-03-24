@@ -37,6 +37,7 @@ export default {
   computed: {
     ...mapState([
       'token',
+      'theme',
       'language',
       'hasLogin',
       'currentTask',
@@ -51,13 +52,13 @@ export default {
     this.init()
     initShortCut()
     // Update data when window focus
-    window.onfocus = () => {
-      this.init(false)
-    }
+    // window.onfocus = () => {
+    //   this.init(false)
+    // }
     // Update data every 30 minute
-    setInterval(() => {
-      this.init(false)
-    }, 1000 * 60 * 30)
+    // setInterval(() => {
+    //   this.init(false)
+    // }, 1000 * 60 * 30)
   },
 
   watch: {
@@ -75,6 +76,13 @@ export default {
         this.updateState({currentTask: {}})
       },
       deep: true
+    },
+    theme: {
+      handler (newValue) {
+        document.body.className = `theme-${newValue}`
+        ipcRenderer.sendSync('update-setting', {theme: newValue})
+      },
+      immediate: true
     },
     language (newValue) {
       ipcRenderer.sendSync('update-setting', {language: newValue})
@@ -121,6 +129,8 @@ export default {
 </script>
 
 <style lang="stylus">
+@import "./style/theme-dark.styl"
+
 html
 body
   *

@@ -32,7 +32,9 @@ export default {
     successfully: 'Successfully',
     task: 'Task',
     time: 'Time',
-    update: 'Update'
+    update: 'Update',
+    theme: 'Theme',
+    auto: 'Auto'
   },
   date: {
     custom: 'Custom',
@@ -81,5 +83,10 @@ export default {
     showCompleted: '@:base.show @:base.completed',
     showImportance: '@:base.show @:base.importance',
     showPlanned: '@:base.show @:base.planned'
+  },
+  setting: {
+    lightTheme: 'Light',
+    darkTheme: 'Dark',
+    selectTheme: '@:base.select @:base.theme'
   }
 }

@@ -6,9 +6,8 @@ import { PAGE_SIZE } from '@/common/static'
 
 // Get store settings
 const storeSetting = ipcRenderer.sendSync('fetch-setting')
-
+// Get user token from localStorage
 const token = new Storage('TOKEN')
-const sysLang = window.navigator.language === 'zh-CN' ? 'zh' : 'en'
 
 // Get setting from store
 function getValue (key, defaultValue) {
@@ -23,7 +22,8 @@ const state = {
   currentFolder: {},
   currentTask: {},
   hasLogin: true,
-  language: getValue('language', sysLang),
+  theme: getValue('theme'),
+  language: getValue('language'),
   showCompleteTask: getValue('showCompleteTask', true),
   // display importance folder on sidebar
   showImportanceFolder: getValue('showImportanceFolder', true),

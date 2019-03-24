@@ -32,7 +32,9 @@ export default {
     successfully: '成功',
     task: '任务',
     time: '时间',
-    update: '更新'
+    update: '更新',
+    theme: '主题',
+    auto: '自动'
   },
   date: {
     custom: '自定义',
@@ -71,7 +73,7 @@ export default {
     updateSuccessfully: '@:base.update@:base.successfully'
   },
   task: {
-    completeAt: '@:base.completed @:base.at',
+    completeAt: '@:base.completed@:base.at',
     create: '@:base.create@:base.task',
     createAt: '@:base.create@:base.at',
     delete: '@:base.delete@:base.task',
@@ -81,5 +83,10 @@ export default {
     showCompleted: '@:base.show@:base.completed',
     showImportance: '@:base.show@:base.importance',
     showPlanned: '@:base.show@:base.planned'
+  },
+  setting: {
+    lightTheme: '浅色',
+    darkTheme: '深色',
+    selectTheme: '@:base.select@:base.theme'
   }
 }

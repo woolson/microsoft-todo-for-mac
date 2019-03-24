@@ -46,6 +46,16 @@ Modal.settings(
         )
           el-radio-button(name="language" label="中")
           el-radio-button(name="language" label="EN")
+      div.form__row.u-bb
+        label {{$t('setting.selectTheme')}}
+        el-select.settings__theme(
+          :value="theme"
+          :collapse-tags="true"
+          @change="updateState({theme: $event})"
+        )
+          el-option(:label="$t('base.auto')" value="auto")
+          el-option(:label="$t('setting.lightTheme')" value="light")
+          el-option(:label="$t('setting.darkTheme')" value="dark")
     el-button.u-ml12.u-mr12.u-mtauto(
       round
       type="danger"
@@ -68,6 +78,7 @@ export default {
 
   computed: {
     ...mapState([
+      'theme',
       'language',
       'showSettingsModal',
       'showCompleteTask',
@@ -124,5 +135,13 @@ export default {
   display flex
   flex-direction column
   align-items stretch
+
+.settings__theme
+  width 80px
+  >>> .el-input
+  >>> .el-input__inner
+    background transparent
+    border none
+    text-align right
 </style>
 

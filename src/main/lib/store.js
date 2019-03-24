@@ -30,6 +30,9 @@ export class Store {
 export default new Store({
   file: './settings.json',
   default: {
-    language: app.getLocale() === 'zh-CN' ? 'zh' : 'en'
+    // Use system language for default
+    language: app.getLocale() === 'zh-CN' ? 'zh' : 'en',
+    // Use auto for default theme
+    theme: 'auto'
   }
 })

@@ -2,12 +2,19 @@ import store from '../store/index'
 import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
+import { isEmpty } from './utils'
 
 export default function () {
-  const { dispatch, commit } = store
+  const { dispatch, commit, state } = store
   // ESC dismiss modal
   window.addEventListener('keydown', evt => {
     switch (evt.keyCode) {
+      // Enter display detail
+      case 13:
+        if (!isEmpty(state.currentTask)) {
+          commit('UPDATE_STATE', { showTaskDetailModal: true })
+        }
+        break
       // ESC
       case 27:
         commit('UPDATE_STATE', {
