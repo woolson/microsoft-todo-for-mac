@@ -79,9 +79,9 @@ export default {
           Id: this.data.Id,
           Status: this.data.Status === 'Completed' ? 'NotStarted' : 'Completed'
         })
-        this.$message.success('更新成功')
+        this.$message.success(this.$t('message.updateSuccessfully'))
       } catch (err) {
-        this.$message.error('更新失败')
+        this.$message.error(this.$t('message.updateFailed'))
       }
     },
     async changeTaskImportance () {
@@ -90,9 +90,9 @@ export default {
           Id: this.data.Id,
           Importance: this.data.Importance === 'High' ? 'Normal' : 'High'
         })
-        this.$message.success('更新成功')
+        this.$message.success(this.$t('message.updateSuccessfully'))
       } catch (err) {
-        this.$message.error('更新失败')
+        this.$message.error(this.$t('message.updateFailed'))
       }
     }
   }

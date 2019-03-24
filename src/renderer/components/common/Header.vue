@@ -20,7 +20,7 @@ export default {
   display flex
   align-items center
   padding 12px 15px
-  box-shadow 0 0 5px rgba(black, .1)
+  // box-shadow 0 0 5px rgba(black, .1)
   user-select none
   height 50px
   box-sizing border-box

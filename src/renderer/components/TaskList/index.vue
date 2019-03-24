@@ -181,25 +181,23 @@ export default {
   display flex
   flex-direction column
   height 100vh
-
-.task-list__header
-  flex-shrink 0
-  display flex
-  align-items center
-  // margin-bottom 10px
-  box-shadow 0 0 5px rgba(black, .1)
-  padding 10px 15px
-  user-select none
-  -webkit-app-region drag
-  h1
-    margin 0
-    font-size 16px
-    color $text
+  position relative
+  .header
+    position absolute
+    top 0
+    right 0
+    z-index 9
+    width 100%
+    background rgba(white, 0.7)
+    backdrop-filter blur(15px)
 
 .task-list__content
   padding 15px
+  padding-top 65px
   flex 1
   overflow auto
+  &::-webkit-scrollbar
+    width 0 !important
 
 .task-list__empty
   flex 1

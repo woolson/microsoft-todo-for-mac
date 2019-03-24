@@ -36,7 +36,8 @@ function createWindow () {
     resizable: true,
     webPreferences: {
       devTools: true,
-      webSecurity: false
+      webSecurity: false,
+      experimentalFeatures: true
     }
   })
   // 菜单栏

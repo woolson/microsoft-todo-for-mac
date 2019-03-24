@@ -176,5 +176,5 @@ export default {
   top 0
   left 0
   position fixed
-  background rgba(0, 0, 0, .45)
+  background rgba(0, 0, 0, .6)
 </style>
