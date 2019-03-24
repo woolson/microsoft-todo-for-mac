@@ -27,25 +27,25 @@ div.task-detail-main(
   div.form__row-section.u-mt12
     div.form__row.u-bb
       label {{$t('task.remindTime')}}
-      div.content(@click.stop="showRemindPicker")
+      div.u-center-end
         el-date-picker(
           ref="remindPicker"
           v-model="dateTime"
           type="datetime"
+          :placeholder="$t('base.select')"
           @change="remindSubmit"
         )
-        span {{remindDateText}}
         i.iconfont.icon-right.u-ml5
     div.form__row
       label {{$t('task.dueTime')}}
-      div.content(@click.stop="showStopPicker")
+      div.u-center-end
         el-date-picker(
           ref="stopPicker"
           v-model="stopDate"
           type="date"
+          :placeholder="$t('base.select')"
           @change="stopDateSubmit"
         )
-        span {{stopDateText}}
         i.iconfont.icon-right.u-ml5
     //- div.form__row(@click="$emit('update:step', 1)")
     //-   label 重复
@@ -272,14 +272,8 @@ textarea
   color $text
   background transparent
 
-.el-date-editor
-  width 0px
-  // height 0px
-  opacity 0
-  >>> input
-    padding 0
-    width 0 !important
-    height 0 !important
+.el-input__prefix
+  top -2px
 
 .task-detail-main__bottom
   display flex
