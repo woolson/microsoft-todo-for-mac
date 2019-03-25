@@ -72,7 +72,8 @@ export default {
     deleteSuccessfully: '@:base.delete@:base.successfully',
     enterToSubmit: '按 Enter 键以进行提交',
     updateFailed: '@:base.update@:base.failed',
-    updateSuccessfully: '@:base.update@:base.successfully'
+    updateSuccessfully: '@:base.update@:base.successfully',
+    confirmToDelete: '确认删除'
   },
   task: {
     completeAt: '@:base.completed@:base.at',

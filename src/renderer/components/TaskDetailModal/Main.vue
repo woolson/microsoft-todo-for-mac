@@ -32,7 +32,7 @@ div.task-detail-main(
           ref="remindPicker"
           v-model="dateTime"
           type="datetime"
-          format="MM-DD HH:mm"
+          format="MM-dd HH:mm"
           :placeholder="$t('base.select')"
           @change="remindSubmit"
         )
@@ -44,7 +44,7 @@ div.task-detail-main(
           ref="stopPicker"
           v-model="stopDate"
           type="date"
-          format="MM-DD"
+          format="MM-dd"
           :placeholder="$t('base.select')"
           @change="stopDateSubmit"
         )
@@ -52,10 +52,23 @@ div.task-detail-main(
     //- div.form__row(@click="$emit('update:step', 1)")
     //-   label 重复
     //-   i.iconfont.icon-right.u-ml5
-  //- div.form__row-section
-  //-   div.form__row(@click="selectFile")
-  //-     label 添加文件
-  //-     input.u-transparent(type="file" ref="file" )
+  div.form__row-section
+    div.form__row.u-bb(
+      v-for="item,index in attachments"
+      :key="item.Name"
+    )
+      label {{item.Name}}
+      i.iconfont.icon-close.u-s14(
+        @click="removeAttachment(item, index)"
+      )
+    div.form__row
+      label 添加文件
+      input.u-transparent.u-w0(
+        ref="file"
+        type="file"
+        @change="selectFile"
+      )
+      el-button(@click="showSelect") 点击上传
   div.form__row-section
     div.form__row
       textarea(
@@ -76,7 +89,7 @@ div.task-detail-main(
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
-import { dater } from '@/common/utils'
+import { dater, fileToBase64 } from '@/common/utils'
 import { ipcRenderer } from 'electron'
 
 export default {
@@ -86,7 +99,8 @@ export default {
       dateTime: '',
       stopDate: '',
       note: '',
-      loading: false
+      loading: false,
+      attachments: []
     }
   },
 
@@ -127,7 +141,7 @@ export default {
   watch: {
     currentTask: {
       handler (newValue) {
-        const { ReminderDateTime, DueDateTime, Body, Subject } = newValue
+        const { ReminderDateTime, DueDateTime, Body, Subject, HasAttachments } = newValue
         if (ReminderDateTime) {
           this.dateTime = dater(ReminderDateTime.DateTime).format('x')
         } else this.dateTime = ''
@@ -137,6 +151,7 @@ export default {
 
         this.name = Subject
         this.note = Body && Body.Content
+        if (HasAttachments) this.fetchAttachments()
       },
       deep: true
     }
@@ -172,6 +187,15 @@ export default {
       if (pickerVisible) hidePicker()
       else showPicker()
     },
+    async fetchAttachments () {
+      const { value } = await this.$get(`/me/tasks/${this.currentTask.Id}/attachments`)
+      this.attachments = value
+    },
+    async removeAttachment (item, index) {
+      await this.$confirm(`${this.$t('message.confirmToDelete')} ${item.Name}`)
+      await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}/attachments/${item.Id}`)
+      this.attachments.splice(index, 1)
+    },
     async remindSubmit (value) {
       this.loading = true
       await this.updateTask({
@@ -195,8 +219,19 @@ export default {
       })
       this.loading = false
     },
-    selectFile () {
+    showSelect () {
       this.$refs.file.click()
+    },
+    async selectFile (evt) {
+      console.dir(evt.target)
+      const file = evt.target.files[0]
+      const base64 = await fileToBase64(file)
+      const result = await this.$post(`/me/tasks/${this.currentTask.Id}/attachments`, {
+        '@odata.type': '#Microsoft.OutlookServices.FileAttachment',
+        Name: file.name,
+        ContentBytes: base64.split('base64,')[1]
+      })
+      this.attachments.push(result)
     },
     async noteSubmit () {
       const Body = this.currentTask.Body || {}

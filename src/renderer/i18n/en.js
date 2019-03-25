@@ -72,7 +72,8 @@ export default {
     deleteSuccessfully: '@:base.delete @:base.successfully',
     enterToSubmit: 'Press Enter to Submit.',
     updateFailed: '@:base.update @:base.failed',
-    updateSuccessfully: '@:base.update @:base.successfully'
+    updateSuccessfully: '@:base.update @:base.successfully',
+    confirmToDelete: 'Confirm to delete'
   },
   task: {
     completeAt: '@:base.completed @:base.at',

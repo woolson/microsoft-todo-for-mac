@@ -161,6 +161,7 @@ export default {
   padding-right 0px
   border-radius 4px
   box-sizing border-box
+  transition all .2s
   i
     margin-right 10px
     font-size 12px

@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import { Storage } from '@/common/utils'
+import { Storage, isEmpty } from '@/common/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 import { PAGE_SIZE } from '@/common/static'
@@ -91,10 +91,14 @@ const actions = {
     console.log(value)
   },
   // Get all task folders
-  async GET_TASK_FOLDERS ({commit}) {
+  async GET_TASK_FOLDERS ({state, commit}) {
+    const newState = {}
     const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`, null, {showLoading: false})
-    const currentFolder = value.find(o => o.IsDefaultFolder)
-    commit('UPDATE_STATE', {taskFolders: value, currentFolder})
+    newState.taskFolders = value
+    if (isEmpty(state.currentFolder)) {
+      newState.currentFolder = value.find(o => o.IsDefaultFolder)
+    }
+    commit('UPDATE_STATE', newState)
   },
   // Delete folder
   async DELETE_FOLDER ({state, commit}) {
