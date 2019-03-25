@@ -1,13 +1,13 @@
 <template lang="pug">
-webview(
-  ref="webview"
-  v-loading="wvLoading"
-  :src="loginUrl"
-)
+Modal.login-modal(v-model="shouldLogin")
+  webview(
+    ref="webview"
+    :src="loginUrl"
+  )
 </template>
 
 <script>
-import { mapMutations, mapActions } from 'vuex'
+import { mapMutations, mapActions, mapState } from 'vuex'
 import { has, parseURL, objToForm, dater, Storage } from '@/common/utils'
 import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '@/common/static'
 
@@ -21,8 +21,15 @@ export default {
     }
   },
 
-  mounted () {
-    this.login()
+  computed: {
+    ...mapState(['shouldLogin'])
+  },
+
+  watch: {
+    shouldLogin (newValue) {
+      if (newValue) this.login()
+      else this.loginUrl = null
+    }
   },
 
   methods: {
@@ -71,7 +78,7 @@ export default {
         })
         res.expires_time = dater().format('X') + res.expires_in
         token.set(res)
-        this.updateState({token: res, hasLogin: true})
+        this.updateState({token: res, shouldLogin: false})
         const loading = this.$loading({
           lock: true,
           text: '加载中',
@@ -87,12 +94,11 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-webview
-  position fixed
-  top 0
-  left 0
-  width 100vw
-  height 100vh
-  z-index 99
-</style>
+.login-modal
+  >>> .modal__main
+    width 450px !important
 
+webview
+  width 100%
+  height 100vh
+</style>

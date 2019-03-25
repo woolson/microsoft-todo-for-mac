@@ -124,7 +124,10 @@ export default {
     },
     logout () {
       token.remove()
-      this.updateState({showSettingsModal: false, hasLogin: false})
+      this.updateState({
+        showSettingsModal: false,
+        shouldLogin: true
+      })
     },
     languageChange (value) {
       const lang = value === 'EN' ? 'en' : 'zh'

@@ -1,8 +1,8 @@
 <template lang="pug">
 div#app
-  WebView(v-if="!hasLogin")
   Sidebar
   TaskList
+  LoginModal
   TaskDetailModal
   AddFolderModal
   AddTaskModal
@@ -12,7 +12,7 @@ div#app
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import initShortCut from './common/event'
-import WebView from '@/components/WebView'
+import LoginModal from '@/components/LoginModal'
 import Sidebar from '@/components/Sidebar'
 import TaskList from '@/components/TaskList/'
 import TaskDetailModal from '@/components/TaskDetailModal'
@@ -25,9 +25,9 @@ export default {
   name: 'ms-todo',
 
   components: {
-    WebView,
     Sidebar,
     TaskList,
+    LoginModal,
     TaskDetailModal,
     AddFolderModal,
     AddTaskModal,
@@ -39,7 +39,6 @@ export default {
       'token',
       'theme',
       'language',
-      'hasLogin',
       'currentTask',
       'currentFolder',
       'showCompleteTask',
@@ -62,6 +61,11 @@ export default {
     // setInterval(() => {
     //   this.init(false)
     // }, 1000 * 60 * 30)
+  },
+
+  beforeDestroy () {
+    // Remove all listener before destroy
+    ipcRenderer.removeAllListeners()
   },
 
   watch: {

@@ -16,7 +16,7 @@ function checkAuth (options) {
   return new Promise((resolve, reject) => {
     const isLogin = has(options.url, '/oauth2/v2.0/token')
     if (isEmpty(tokenInfo) && !isLogin) {
-      store.commit('UPDATE_STATE', {hasLogin: false})
+      store.commit('UPDATE_STATE', {shouldLogin: true})
       loading && loading.close()
       reject(new Error('expired'))
     } else if (tokenInfo.expires_time < dater().format('X') && !isLogin) {
@@ -105,7 +105,7 @@ axios.interceptors.response.use(function (response) {
   loading && loading.close()
   Message.error(error.message)
   if (error.response.status === 401) {
-    store.commit('UPDATE_STATE', {hasLogin: false})
+    store.commit('UPDATE_STATE', {shouldLogin: true})
   }
   return Promise.reject(error)
 })

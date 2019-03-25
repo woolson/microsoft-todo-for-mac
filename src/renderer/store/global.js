@@ -21,7 +21,7 @@ function getValue (key, defaultValue) {
 const state = {
   currentFolder: {},
   currentTask: {},
-  hasLogin: true,
+  shouldLogin: false,
   theme: getValue('theme'),
   language: getValue('language'),
   showCompleteTask: getValue('showCompleteTask', true),
