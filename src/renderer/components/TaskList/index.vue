@@ -196,6 +196,7 @@ export default {
     width 100%
     background rgba(white, 0.7)
     backdrop-filter blur(15px)
+    -webkit-app-region drag
 
 .task-list__content
   padding 15px
@@ -246,7 +247,7 @@ export default {
 
 .task-list__title
   outline none
-  display flex
+  display inline-flex
   align-items center
   justify-content center
 </style>

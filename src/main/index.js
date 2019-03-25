@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, systemPreferences } from 'electron'
 import initMessager from './lib/messager'
 import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
@@ -24,7 +24,7 @@ function createWindow () {
    * Initial window options
    */
   mainWindow = new BrowserWindow({
-    width: 1200,
+    width: 600,
     height: 600,
     minWidth: 500,
     minHeight: 400,
@@ -36,20 +36,28 @@ function createWindow () {
     backgroundColor: setting.theme === 'dark' ? '#202124' : 'white',
     resizable: true,
     webPreferences: {
-      devTools: true,
       webSecurity: false,
       experimentalFeatures: true
     }
   })
-  // 菜单栏
+  // Menu bar
   setMenu(mainWindow, setting.language || sysLang)
+  // Touch bar
   setTouchBar(mainWindow)
-
+  // Load page
   mainWindow.loadURL(winURL)
-  // mainWindow.webContents.openDevTools()
-
   // add event
   initMessager(mainWindow)
+  // Listen preference for theme
+  systemPreferences.subscribeNotification(
+    'AppleInterfaceThemeChangedNotification',
+    () => {
+      if (storeSetting.get('theme') === 'auto') {
+        const isDark = systemPreferences.isDarkMode()
+        mainWindow.webContents.send('theme-change', isDark)
+      }
+    }
+  )
 
   mainWindow.on('closed', () => {
     mainWindow = null

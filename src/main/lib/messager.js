@@ -1,4 +1,4 @@
-import { dialog, ipcMain } from 'electron'
+import { dialog, ipcMain, systemPreferences } from 'electron'
 import setTouchBar from './touchbar'
 import setMenu from './menu'
 import language from './language'
@@ -41,5 +41,9 @@ export default function (mainWindow) {
       setTouchBar(mainWindow)
     }
     event.returnValue = true
+  })
+  // Get system theme
+  ipcMain.on('get-theme', (event, arg) => {
+    event.returnValue = systemPreferences.isDarkMode()
   })
 }

@@ -51,6 +51,11 @@ export default {
   mounted () {
     this.init()
     initShortCut()
+    // Set theme if theme setting is auto
+    if (this.theme === 'auto') {
+      const isDark = ipcRenderer.sendSync('get-theme')
+      document.body.className = `theme-${isDark ? 'dark' : 'light'}`
+    }
     // Update data when window focus
     window.onfocus = () => this.init(false)
     // Update data every 30 minute

@@ -64,6 +64,7 @@ Modal.settings(
 </template>
 
 <script>
+import { ipcRenderer } from 'electron'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { Storage } from '@/common/utils'
 
@@ -93,6 +94,12 @@ export default {
         this.currentLang = newValue === 'zh' ? '中' : 'EN'
       },
       immediate: true
+    },
+    theme (newValue) {
+      if (newValue === 'auto') {
+        const isDark = ipcRenderer.sendSync('get-theme')
+        document.body.className = `theme-${isDark ? 'dark' : 'light'}`
+      }
     }
   },
 
