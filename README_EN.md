@@ -22,6 +22,11 @@ Feature
     - List ✔︎
     - Create ✔︎
     - Edit ✔︎
+      - Remind ✔︎
+      - Due ✔︎
+      - Repeat ✘（接口数据不准确）
+      - Attachment ✔︎
+      - Note ✔︎
     - Delete ✔︎
   - Preferences
     - Smart Folder ✔︎
