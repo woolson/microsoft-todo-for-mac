@@ -92,6 +92,6 @@ export default {
     selectTheme: '@:base.select@:base.theme',
     quiteInstall: '退出并安装',
     checkFailed: '@:base.check@:base.failed',
-    newVersion: '新版本'
+    checkVersion: '查看版本'
   }
 }

@@ -32,6 +32,7 @@ div.task-detail-main(
           ref="remindPicker"
           v-model="dateTime"
           type="datetime"
+          format="MM-DD HH:mm"
           :placeholder="$t('base.select')"
           @change="remindSubmit"
         )
@@ -43,6 +44,7 @@ div.task-detail-main(
           ref="stopPicker"
           v-model="stopDate"
           type="date"
+          format="MM-DD"
           :placeholder="$t('base.select')"
           @change="stopDateSubmit"
         )
@@ -125,8 +127,8 @@ export default {
   watch: {
     currentTask: {
       handler (newValue) {
-        const { ReminderDateTime, DueDateTime, IsReminderOn, Body, Subject } = newValue
-        if (ReminderDateTime && IsReminderOn) {
+        const { ReminderDateTime, DueDateTime, Body, Subject } = newValue
+        if (ReminderDateTime) {
           this.dateTime = dater(ReminderDateTime.DateTime).format('x')
         } else this.dateTime = ''
         if (DueDateTime) {

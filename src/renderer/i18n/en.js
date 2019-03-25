@@ -92,6 +92,6 @@ export default {
     selectTheme: '@:base.select @:base.theme',
     quiteInstall: 'Quite & Install',
     checkFailed: '@:base.check@:base.failed',
-    newVersion: 'New'
+    checkVersion: 'Version'
   }
 }

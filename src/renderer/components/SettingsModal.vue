@@ -59,17 +59,10 @@ Modal.settings(
     div.form__row-section
       div.form__row.u-bb
         label {{$t('base.update')}}
-        div(v-if="!newVersion")
-          span.u-mr20 𝗩{{packageInfo.version}}
-          el-button(
-            round
-            @click="checkUpdate"
-          ) {{$t('base.check')}}
-        div(v-else)
-          el-button.u-w100(
-            round
-            @click="openNewVersion"
-          ) {{$t('setting.newVersion')}}
+        el-button.u-w100(
+          round
+          @click="openNewVersion"
+        ) {{$t('setting.checkVersion')}}
     el-button.u-ml12.u-mr12.u-mtauto(
       round
       type="danger"
@@ -138,14 +131,6 @@ export default {
       this.getTaskFolders()
       this.getTasks()
       loading.close()
-    },
-    async checkUpdate () {
-      const url = 'https://woolson.github.io/weibo-img/package.json'
-      const lastPackage = await this.$get(url, null, {
-        quite: true,
-        showLoading: false
-      })
-      this.newVersion = lastPackage.version !== this.packageInfo.version
     },
     openNewVersion () {
       shell.openExternal('https://github.com/woolson/microsoft-todo-mac/releases')
