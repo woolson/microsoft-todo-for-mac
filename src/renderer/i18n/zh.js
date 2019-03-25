@@ -3,6 +3,7 @@ export default {
     async: '同步',
     at: '于',
     cancel: '取消',
+    check: '检查',
     completed: '已完成',
     create: '新建',
     delete: '删除',
@@ -34,7 +35,8 @@ export default {
     time: '时间',
     update: '更新',
     theme: '主题',
-    auto: '自动'
+    auto: '自动',
+    downloading: 'Downloading'
   },
   date: {
     custom: '自定义',
@@ -87,6 +89,9 @@ export default {
   setting: {
     lightTheme: '浅色',
     darkTheme: '深色',
-    selectTheme: '@:base.select@:base.theme'
+    selectTheme: '@:base.select@:base.theme',
+    quiteInstall: '退出并安装',
+    checkFailed: '@:base.check@:base.failed',
+    newVersion: '新版本'
   }
 }

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "woolson <woolson.lee@gmail.com>",
   "description": "An app for easier cut/compress/upload images",
-  "license": null,
+  "license": "MIT",
   "main": "./dist/electron/main.js",
   "download": "https://woolson.coding.me/image-bed-app",
   "scripts": {
@@ -97,6 +97,7 @@
     "electron-builder": "^20.39.0",
     "electron-debug": "^1.4.0",
     "electron-devtools-installer": "^2.2.0",
+    "electron-updater": "^4.0.6",
     "element-ui": "^2.6.1",
     "eslint": "^4.4.1",
     "eslint-config-standard": "^10.2.1",

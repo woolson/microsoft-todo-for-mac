@@ -9,7 +9,7 @@ Modal.settings(
     div.form__row-section
       div.form__row
         label {{$t('base.async')}}
-        el-button.u-w80(round @click="syncData") {{$t('base.async')}}
+        el-button.u-w100(round @click="syncData") {{$t('base.async')}}
     div.form__row-section
       div.form__row.u-bb
         label {{$t('task.showImportance')}}
@@ -56,6 +56,20 @@ Modal.settings(
           el-option(:label="$t('base.auto')" value="auto")
           el-option(:label="$t('setting.lightTheme')" value="light")
           el-option(:label="$t('setting.darkTheme')" value="dark")
+    div.form__row-section
+      div.form__row.u-bb
+        label {{$t('base.update')}}
+        div(v-if="!newVersion")
+          span.u-mr20 𝗩{{packageInfo.version}}
+          el-button(
+            round
+            @click="checkUpdate"
+          ) {{$t('base.check')}}
+        div(v-else)
+          el-button.u-w100(
+            round
+            @click="openNewVersion"
+          ) {{$t('setting.newVersion')}}
     el-button.u-ml12.u-mr12.u-mtauto(
       round
       type="danger"
@@ -64,16 +78,19 @@ Modal.settings(
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, shell } from 'electron'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { Storage } from '@/common/utils'
+import packageInfo from '../../../package.json'
 
 const token = new Storage('TOKEN')
 
 export default {
   data () {
     return {
-      currentLang: null
+      packageInfo,
+      currentLang: null,
+      newVersion: false
     }
   },
 
@@ -122,17 +139,28 @@ export default {
       this.getTasks()
       loading.close()
     },
+    async checkUpdate () {
+      const url = 'https://woolson.github.io/weibo-img/package.json'
+      const lastPackage = await this.$get(url, null, {
+        quite: true,
+        showLoading: false
+      })
+      this.newVersion = lastPackage.version !== this.packageInfo.version
+    },
+    openNewVersion () {
+      shell.openExternal('https://github.com/woolson/microsoft-todo-mac/releases')
+    },
+    languageChange (value) {
+      const lang = value === 'EN' ? 'en' : 'zh'
+      this.$i18n.locale = lang
+      this.updateState({language: lang})
+    },
     logout () {
       token.remove()
       this.updateState({
         showSettingsModal: false,
         shouldLogin: true
       })
-    },
-    languageChange (value) {
-      const lang = value === 'EN' ? 'en' : 'zh'
-      this.$i18n.locale = lang
-      this.updateState({language: lang})
     }
   }
 }
@@ -154,4 +182,3 @@ export default {
     border none
     text-align right
 </style>
-

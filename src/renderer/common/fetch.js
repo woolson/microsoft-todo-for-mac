@@ -54,7 +54,8 @@ export const common = (type, url, data, options = {}) => {
     url = request.url
     data = request.data
     options = Object.assign({
-      showLoading: true
+      showLoading: true,
+      quite: false
     }, request.options || {})
   }
 
@@ -103,7 +104,9 @@ axios.interceptors.response.use(function (response) {
   return response.data || {}
 }, function (error) {
   loading && loading.close()
-  Message.error(error.message)
+  if (!error.config.quite) {
+    Message.error(error.message)
+  }
   if (error.response.status === 401) {
     store.commit('UPDATE_STATE', {shouldLogin: true})
   }

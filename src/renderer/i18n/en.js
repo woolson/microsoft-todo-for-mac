@@ -3,6 +3,7 @@ export default {
     async: 'Async',
     at: 'At',
     cancel: 'Cancel',
+    check: 'Check',
     completed: 'Completed',
     create: 'Create',
     delete: 'Delete',
@@ -34,7 +35,8 @@ export default {
     time: 'Time',
     update: 'Update',
     theme: 'Theme',
-    auto: 'Auto'
+    auto: 'Auto',
+    downloading: 'Downloading'
   },
   date: {
     custom: 'Custom',
@@ -87,6 +89,9 @@ export default {
   setting: {
     lightTheme: 'Light',
     darkTheme: 'Dark',
-    selectTheme: '@:base.select @:base.theme'
+    selectTheme: '@:base.select @:base.theme',
+    quiteInstall: 'Quite & Install',
+    checkFailed: '@:base.check@:base.failed',
+    newVersion: 'New'
   }
 }
