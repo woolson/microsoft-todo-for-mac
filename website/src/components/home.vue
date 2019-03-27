@@ -1,42 +1,39 @@
 <template lang="pug">
 div.home
   header
-    img(src="@/assets/logo.svg")
+    img(src="@/assets/icon.svg")
     div
-      h1 图吧-Image Bed
-      p 集图片裁剪、压缩、上传于一身，让你获取图片链接更方便
+      h1 Microsoft ToDo
+      p Microsoft ToDo client for macOS, based on Electron & Vue.
       div
-        a(href="https://github.com/woolson/weibo-img/releases/download/v1.2.1/Image.Bed-1.2.1.dmg") 下载macOS版(1.2.1)
-        //- a(href="http://public.woolson.cn/file/%E5%9B%BE%E5%90%A7-1.0.0.exe") Window
-  section.home__thanks
-    p 需要登录微博才能使用
-    p
-      span 感谢新浪微博提供的功能和部分代码参考
-      a(href="https://github.com/fate-lovely/pic-on-weibo" target="_blank") pic-on-weibo
+        a(href="https://github.com/woolson/microsoft-todo-mac") MacOS
+        a(href="https://itunes.apple.com/cn/app/microsoft-to-do/id1212616790?mt=8") iPhone
+        a(href="https://www.microsoft.com/zh-cn/p/microsoft-to-do/9nblggh5r558?rtc=1") Window
+        a(href="https://play.google.com/store/apps/details?id=com.microsoft.todos") Android
+  section.home__feature
+    div
+      div.title Features
+      ul
+        li(v-for="item in features" :key="item.label")
+          img(:src="item.src")
+          span {{item.label}}
   section.home__intro
-    el-carousel(indicator-position="outside" height="740px")
+    el-carousel(indicator-position="outside" height="600px")
       el-carousel-item(v-for="item in etcs" :key="item")
         img(:src="item")
   footer
     div
       ul
-        li 联系我
+        li Contact
         li
-          a(href="https://woolson.cn/blog/") 博客
+          a(href="https://woolson.cn/blog/") Blog
       ul
-        li 相关技术
-        li
-          a(
-            target="_blank"
-            href="https://simulatedgreg.gitbooks.io/electron-vue/content/cn/"
-          ) vue-electron
+        li Tech
         li
           a(
             target="_blank"
             href="https://electronjs.org/docs"
           ) electron
-        li
-          a(href="https://cn.vuejs.org/") vue
       ul
         li © 2018 woolson. All rights reserved
 </template>
@@ -47,11 +44,21 @@ export default {
 
   data () {
     return {
+      features: [
+        {label: 'macOS', src: require('@/assets/macos.svg')},
+        {label: 'TouchBar', src: require('@/assets/touch.svg')},
+        {label: 'Shortcut', src: require('@/assets/shortcut.svg')},
+        {label: 'Dark Mode', src: require('@/assets/theme.svg')},
+        {label: 'Language', src: require('@/assets/language.svg')}
+      ],
       etcs: [
-        require('@/assets/etc-4.png'),
-        require('@/assets/etc-5.png'),
-        require('@/assets/etc-6.png'),
-        require('@/assets/etc-7.png'),
+        // require('@/assets/etc-01.png'),
+        // require('@/assets/etc-02.png'),
+        require('@/assets/etc-10.png'),
+        require('@/assets/etc-11.png'),
+        require('@/assets/etc-08.png'),
+        require('@/assets/etc-09.png'),
+        require('@/assets/etc-07.png')
       ]
     }
   }
@@ -60,21 +67,20 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus" scoped>
+@import "../styles/variables.styl"
 .home
   header
     height 50vh
-    background linear-gradient(0deg, $background, lighten($background, 13), $background)
+    background linear-gradient(45deg, #1C9FFF, #765EE7)
     display flex
     justify-content center
     align-items center
+    color white
     img
       margin-right 50px
       height 200px
       box-shadow 0 0 40px rgba(black, .25)
       border-radius 40px
-    h1
-      font-size 40px
-      margin-top 0
     a
       display inline-block
       margin-top 5px
@@ -86,25 +92,16 @@ export default {
       cursor pointer
       outline none
       border 1px solid $gray
-      color $font
+      color white
       text-decoration none
+      background rgba(black, .3)
       &:hover
-        // background linear-gradient(45deg, #1C9FFF, #765EE7)
-        background linear-gradient(45deg, $blue, $green)
-        border-color transparent
+        background linear-gradient(45deg, #1C9FFF, #765EE7)
         color white
-  section.home__thanks
-    padding 20px 0
-    p
-      font-size 24px
-      text-align center
-      &:first-child
-        font-weight bold
-        text-decoration underline
   section.home__intro
     margin-bottom 50px
     img
-      height 750px
+      height 850px
     .el-carousel__item
       text-align center
   footer
@@ -133,4 +130,28 @@ export default {
           font-weight bold
       &:last-child
         margin-left auto
+  .home__feature
+    padding 30px 0
+    background linear-gradient(180deg, $background, lighten($background, 13))
+    > div
+      margin 0 auto
+      width 950px
+    .title
+      text-align center
+      color #4A9DF7
+      font-size 40px
+      text-align center
+      margin-bottom 30px
+    ul
+      padding 0
+      display flex
+      justify-content space-around
+      li
+        display flex
+        flex-direction column
+        img
+          height 80px
+        span
+          text-align center
+          margin-top 10px
 </style>

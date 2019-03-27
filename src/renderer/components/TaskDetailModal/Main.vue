@@ -64,13 +64,13 @@ div.task-detail-main(
         @click="removeAttachment(item, index)"
       )
     div.form__row
-      label 添加文件
+      label {{$t('task.addFile')}}
       input.u-transparent.u-w0(
         ref="file"
         type="file"
         @change="selectFile"
       )
-      el-button(@click="showSelect") 点击上传
+      el-button(@click="showSelect") {{$t('base.upload')}}
   div.form__row-section
     div.form__row
       textarea(

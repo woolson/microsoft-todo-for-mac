@@ -50,3 +50,10 @@ Feature
 - Dark Mode (Suport macOS Mojave preference, and you can change theme manually in early macOS) ✔︎
 - Online upgrade ✔︎
 - Notification ✔︎
+
+## ScreenShot
+
+![home](./website/src/assets/etc-10.png)
+![setting](./website/src/assets/etc-11.png)
+![dark-home](./website/src/assets/etc-08.png)
+![dark-setting](./website/src/assets/etc-09.png)

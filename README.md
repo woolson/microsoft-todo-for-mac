@@ -7,7 +7,7 @@
 - 基于 [Electron](https://electronjs.org/) & [Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/)
 - 微软 [Outlook Task API](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)
 
-Feature/TODO
+## 特性/TODO
 
 - Microsoft To-Do macOS客户端 ✔︎
 - 原生APP的体验 ✔︎
@@ -50,3 +50,10 @@ Feature/TODO
 - 暗黑模式（支持macOS 10.14 Mojave的系统设置，其他系统版本可手动设置）✔︎
 - 在线升级 ✔︎
 - 提示信息 ✔︎
+
+## 截图
+
+![home](./website/src/assets/etc-10.png)
+![setting](./website/src/assets/etc-11.png)
+![dark-home](./website/src/assets/etc-08.png)
+![dark-setting](./website/src/assets/etc-09.png)

@@ -1,5 +1,5 @@
 {
-  "name": "ms-todo",
+  "name": "microsoft-todo",
   "version": "2.0.0",
   "author": "woolson <woolson.lee@gmail.com>",
   "description": "An app for easier cut/compress/upload images",
@@ -37,7 +37,7 @@
     ]
   },
   "build": {
-    "productName": "MS ToDo",
+    "productName": "Microsoft ToDo",
     "appId": "org.simulatedgreg.electron-vue",
     "directories": {
       "output": "build"
@@ -62,12 +62,6 @@
     },
     "mac": {
       "icon": "build/icons/icon.icns"
-    },
-    "win": {
-      "icon": "build/icons/icon.ico"
-    },
-    "linux": {
-      "icon": "build/icons"
     }
   },
   "dependencies": {

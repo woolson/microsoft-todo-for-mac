@@ -36,7 +36,8 @@ export default {
     task: 'Task',
     theme: 'Theme',
     time: 'Time',
-    update: 'Update'
+    update: 'Update',
+    upload: 'Upload'
   },
   date: {
     custom: 'Custom',
@@ -84,6 +85,7 @@ export default {
     selectTheme: '@:base.select @:base.theme'
   },
   task: {
+    addFile: 'Attachment',
     completeAt: '@:base.completed @:base.at',
     create: '@:base.create @:base.task',
     createAt: '@:base.create @:base.at',

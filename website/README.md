@@ -1,6 +1,6 @@
-# weibo-img
+# website
 
-> weibo-img-page
+> A Vue.js project
 
 ## Build Setup
 

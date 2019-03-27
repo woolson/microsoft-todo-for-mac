@@ -1,17 +1,23 @@
 <template lang="pug">
 div(id="app")
-  router-view
+  Home
 </template>
 
 <script>
+import Home from './components/home.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+
+  components: {
+    Home
+  }
 }
 </script>
 
 <style lang="stylus">
 #app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
+  font-family PingFangSC, Helvetica, Arial, sans-serif
   -webkit-font-smoothing antialiased
   -moz-osx-font-smoothing grayscale
   color $font

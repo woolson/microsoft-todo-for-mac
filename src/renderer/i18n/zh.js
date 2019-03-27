@@ -36,7 +36,8 @@ export default {
     task: '任务',
     theme: '主题',
     time: '时间',
-    update: '更新'
+    update: '更新',
+    upload: '上传'
   },
   date: {
     custom: '自定义',
@@ -84,6 +85,7 @@ export default {
     selectTheme: '@:base.select@:base.theme'
   },
   task: {
+    addFile: '添加附件',
     completeAt: '@:base.completed@:base.at',
     create: '@:base.create@:base.task',
     createAt: '@:base.create@:base.at',
