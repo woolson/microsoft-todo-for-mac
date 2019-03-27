@@ -56,7 +56,9 @@ export default {
       document.body.className = `theme-${isDark ? 'dark' : 'light'}`
     }
     // Update data when window focus
-    window.onfocus = () => this.init(false)
+    if (process.env.NODE_ENV !== 'development') {
+      window.onfocus = () => this.init(false)
+    }
     // Update data every 30 minute
     // setInterval(() => {
     //   this.init(false)

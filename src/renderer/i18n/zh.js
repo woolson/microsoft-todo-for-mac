@@ -2,11 +2,13 @@ export default {
   base: {
     async: '同步',
     at: '于',
+    auto: '自动',
     cancel: '取消',
     check: '检查',
     completed: '已完成',
     create: '新建',
     delete: '删除',
+    downloading: 'Downloading',
     due: '截止',
     edit: '编辑',
     empty: '空',
@@ -32,11 +34,9 @@ export default {
     submit: '确认',
     successfully: '成功',
     task: '任务',
-    time: '时间',
-    update: '更新',
     theme: '主题',
-    auto: '自动',
-    downloading: 'Downloading'
+    time: '时间',
+    update: '更新'
   },
   date: {
     custom: '自定义',
@@ -66,14 +66,22 @@ export default {
   message: {
     commonFailed: '{0}@:base.failed',
     commonSuccessfully: '{0}@:base.successfully',
+    confirmToDelete: '确认删除',
     createFailed: '@:base.create@:base.failed',
     createSuccessfully: '@:base.create@:base.successfully',
     deleteFailed: '@:base.delete@:base.failed',
     deleteSuccessfully: '@:base.delete@:base.successfully',
     enterToSubmit: '按 Enter 键以进行提交',
     updateFailed: '@:base.update@:base.failed',
-    updateSuccessfully: '@:base.update@:base.successfully',
-    confirmToDelete: '确认删除'
+    updateSuccessfully: '@:base.update@:base.successfully'
+  },
+  setting: {
+    checkFailed: '@:base.check@:base.failed',
+    checkVersion: '查看版本',
+    darkTheme: '深色',
+    lightTheme: '浅色',
+    quiteInstall: '退出并安装',
+    selectTheme: '@:base.select@:base.theme'
   },
   task: {
     completeAt: '@:base.completed@:base.at',
@@ -86,13 +94,5 @@ export default {
     showCompleted: '@:base.show@:base.completed',
     showImportance: '@:base.show@:base.importance',
     showPlanned: '@:base.show@:base.planned'
-  },
-  setting: {
-    lightTheme: '浅色',
-    darkTheme: '深色',
-    selectTheme: '@:base.select@:base.theme',
-    quiteInstall: '退出并安装',
-    checkFailed: '@:base.check@:base.failed',
-    checkVersion: '查看版本'
   }
 }

@@ -56,13 +56,6 @@ Modal.settings(
           el-option(:label="$t('base.auto')" value="auto")
           el-option(:label="$t('setting.lightTheme')" value="light")
           el-option(:label="$t('setting.darkTheme')" value="dark")
-    div.form__row-section
-      div.form__row.u-bb
-        label {{$t('base.update')}}
-        el-button.u-w100(
-          round
-          @click="openNewVersion"
-        ) {{$t('setting.checkVersion')}}
     el-button.u-ml12.u-mr12.u-mtauto(
       round
       type="danger"
@@ -71,17 +64,15 @@ Modal.settings(
 </template>
 
 <script>
-import { ipcRenderer, shell } from 'electron'
+import { ipcRenderer } from 'electron'
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { Storage } from '@/common/utils'
-import packageInfo from '../../../package.json'
 
 const token = new Storage('TOKEN')
 
 export default {
   data () {
     return {
-      packageInfo,
       currentLang: null,
       newVersion: false
     }
@@ -131,9 +122,6 @@ export default {
       this.getTaskFolders()
       this.getTasks()
       loading.close()
-    },
-    openNewVersion () {
-      shell.openExternal('https://github.com/woolson/microsoft-todo-mac/releases')
     },
     languageChange (value) {
       const lang = value === 'EN' ? 'en' : 'zh'

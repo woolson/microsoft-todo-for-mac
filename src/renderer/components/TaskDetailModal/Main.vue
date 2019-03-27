@@ -3,8 +3,9 @@ div.task-detail-main(
   v-loading.lock="loading"
   element-loading-background="rgba(0, 0, 0, 0.7)"
 )
-  div.task-detail__header
+  Header.task-detail__header
     i.iconfont.u-mr10(
+      slot="left"
       :class="checkClass"
       @click="changeTaskStatus"
     )
@@ -15,6 +16,7 @@ div.task-detail-main(
       @keyup.enter.native="subjectSubmit"
     )
     i.iconfont.u-ml10(
+      slot="right"
       :class="starClass"
       @click="changeTaskImportance"
     )
@@ -279,7 +281,7 @@ export default {
   flex-direction column
 
 .task-detail__header
-  padding 15px
+  padding 5px 15px
   display flex
   align-items center
   box-shadow 0 0 5px rgba(black, .1)

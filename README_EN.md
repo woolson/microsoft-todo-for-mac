@@ -24,7 +24,7 @@ Feature
     - Edit ✔︎
       - Remind ✔︎
       - Due ✔︎
-      - Repeat ✘（接口数据不准确）
+      - Repeat ✘（Api data error）
       - Attachment ✔︎
       - Note ✔︎
     - Delete ✔︎

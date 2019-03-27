@@ -2,11 +2,13 @@ export default {
   base: {
     async: 'Async',
     at: 'At',
+    auto: 'Auto',
     cancel: 'Cancel',
     check: 'Check',
     completed: 'Completed',
     create: 'Create',
     delete: 'Delete',
+    downloading: 'Downloading',
     due: 'Due',
     edit: 'Edit',
     empty: 'Empty',
@@ -32,11 +34,9 @@ export default {
     submit: 'Submit',
     successfully: 'Successfully',
     task: 'Task',
-    time: 'Time',
-    update: 'Update',
     theme: 'Theme',
-    auto: 'Auto',
-    downloading: 'Downloading'
+    time: 'Time',
+    update: 'Update'
   },
   date: {
     custom: 'Custom',
@@ -66,14 +66,22 @@ export default {
   message: {
     commonFailed: '{0} @:base.failed',
     commonSuccessfully: '{0} @:base.successfully',
+    confirmToDelete: 'Confirm to delete',
     createFailed: '@:base.create @:base.failed',
     createSuccessfully: '@:base.create @:base.successfully',
     deleteFailed: '@:base.delete @:base.failed',
     deleteSuccessfully: '@:base.delete @:base.successfully',
     enterToSubmit: 'Press Enter to Submit.',
     updateFailed: '@:base.update @:base.failed',
-    updateSuccessfully: '@:base.update @:base.successfully',
-    confirmToDelete: 'Confirm to delete'
+    updateSuccessfully: '@:base.update @:base.successfully'
+  },
+  setting: {
+    checkFailed: '@:base.check@:base.failed',
+    checkVersion: 'Version',
+    darkTheme: 'Dark',
+    lightTheme: 'Light',
+    quiteInstall: 'Quite & Install',
+    selectTheme: '@:base.select @:base.theme'
   },
   task: {
     completeAt: '@:base.completed @:base.at',
@@ -86,13 +94,5 @@ export default {
     showCompleted: '@:base.show @:base.completed',
     showImportance: '@:base.show @:base.importance',
     showPlanned: '@:base.show @:base.planned'
-  },
-  setting: {
-    lightTheme: 'Light',
-    darkTheme: 'Dark',
-    selectTheme: '@:base.select @:base.theme',
-    quiteInstall: 'Quite & Install',
-    checkFailed: '@:base.check@:base.failed',
-    checkVersion: 'Version'
   }
 }

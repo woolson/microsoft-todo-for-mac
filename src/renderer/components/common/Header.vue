@@ -19,7 +19,7 @@ export default {
 .header
   display flex
   align-items center
-  padding 12px 15px
+  padding 5px 15px
   // box-shadow 0 0 5px rgba(black, .1)
   user-select none
   height 50px
@@ -39,6 +39,7 @@ export default {
 
 .header__content
   flex 2
+  flex-grow 10
   font-size 18px
   flex-shrink 0
   text-align center

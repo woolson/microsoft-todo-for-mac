@@ -7,7 +7,6 @@ import setMenu from './lib/menu'
 import storeSetting from './lib/store'
 
 const setting = storeSetting.get()
-const sysLang = app.getLocale() === 'zh-CN' ? 'zh' : 'en'
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
@@ -40,8 +39,14 @@ function createWindow () {
       experimentalFeatures: true
     }
   })
+  // Check for updater
+  require('update-electron-app')({
+    repo: 'woolson/microsoft-todo-mac',
+    updateInterval: '5 minutes',
+    logger: require('electron-log')
+  })
   // Menu bar
-  setMenu(mainWindow, setting.language || sysLang)
+  setMenu(mainWindow, setting.language)
   // Touch bar
   setTouchBar(mainWindow)
   // Load page
