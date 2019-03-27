@@ -12,6 +12,7 @@ div#app
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import initShortCut from './common/event'
+import Notification from './common/notification'
 import LoginModal from '@/components/LoginModal'
 import Sidebar from '@/components/Sidebar'
 import TaskList from '@/components/TaskList/'
@@ -20,6 +21,8 @@ import AddFolderModal from '@/components/AddFolderModal'
 import AddTaskModal from '@/components/AddTaskModal'
 import SettingsModal from '@/components/SettingsModal'
 import { ipcRenderer } from 'electron'
+
+const notify = new Notification()
 
 export default {
   name: 'ms-todo',
@@ -38,6 +41,7 @@ export default {
     ...mapState([
       'token',
       'theme',
+      'tasks',
       'language',
       'currentTask',
       'currentFolder',
@@ -68,9 +72,17 @@ export default {
   beforeDestroy () {
     // Remove all listener before destroy
     ipcRenderer.removeAllListeners()
+    // Remove all notification timer
+    notify.clear()
   },
 
   watch: {
+    tasks: {
+      handler (newValue) {
+        notify.create(newValue)
+      },
+      deep: true
+    },
     currentTask: {
       handler (newValue) {
         ipcRenderer.send('update-touchbar', {

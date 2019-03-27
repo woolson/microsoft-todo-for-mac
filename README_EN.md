@@ -48,5 +48,5 @@ Feature
   - Delete Task (show on task choose) ✔︎
 - EN/中文 support ✔︎
 - Dark Mode (Suport macOS Mojave preference, and you can change theme manually in early macOS) ✔︎
-- Online upgrade ✘
-- Event Alert: Sync event to macOS calendar
+- Online upgrade ✔︎
+- Notification ✔︎
