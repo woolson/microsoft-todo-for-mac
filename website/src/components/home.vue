@@ -3,40 +3,32 @@ div.home
   header
     img(src="@/assets/icon.svg")
     div
-      h1 Microsoft To-Do
-      p 微软出品 — 简洁清爽的TODO清单免费软件
+      h1 Microsoft ToDo
+      p Microsoft ToDo client for macOS, based on Electron & Vue.
       div
-        a(href="https://github.com/woolson/microsoft-todo-for-mac/releases/download/v1.5.1/Microsoft.To-do-1.5.1.dmg") MacOS
+        a(href="https://github.com/woolson/microsoft-todo-mac") MacOS
         a(href="https://itunes.apple.com/cn/app/microsoft-to-do/id1212616790?mt=8") iPhone
         a(href="https://www.microsoft.com/zh-cn/p/microsoft-to-do/9nblggh5r558?rtc=1") Window
         a(href="https://play.google.com/store/apps/details?id=com.microsoft.todos") Android
   section.home__feature
     div
-      div.title
-        h3 特性
-        sub （修改和增加）
+      div.title Features
       ul
-        li
-          img(src="@/assets/macos.svg")
-          span macOS
-        li
-          img(src="@/assets/shortcut.svg")
-          span 快捷键
-        li
-          img(src="@/assets/theme.svg")
-          span 暗黑主题
+        li(v-for="item in features" :key="item.label")
+          img(:src="item.src")
+          span {{item.label}}
   section.home__intro
-    el-carousel(indicator-position="outside" height="500px")
+    el-carousel(indicator-position="outside" height="600px")
       el-carousel-item(v-for="item in etcs" :key="item")
         img(:src="item")
   footer
     div
       ul
-        li 联系我
+        li Contact
         li
-          a(href="https://woolson.cn/blog/") 博客
+          a(href="https://woolson.cn/blog/") Blog
       ul
-        li 相关技术
+        li Tech
         li
           a(
             target="_blank"
@@ -52,11 +44,21 @@ export default {
 
   data () {
     return {
+      features: [
+        {label: 'macOS', src: require('@/assets/macos.svg')},
+        {label: 'TouchBar', src: require('@/assets/touch.svg')},
+        {label: 'Shortcut', src: require('@/assets/shortcut.svg')},
+        {label: 'Dark Mode', src: require('@/assets/theme.svg')},
+        {label: 'Language', src: require('@/assets/language.svg')}
+      ],
       etcs: [
         // require('@/assets/etc-01.png'),
         // require('@/assets/etc-02.png'),
-        require('@/assets/etc-05.png'),
-        require('@/assets/etc-06.png')
+        require('@/assets/etc-10.png'),
+        require('@/assets/etc-11.png'),
+        require('@/assets/etc-08.png'),
+        require('@/assets/etc-09.png'),
+        require('@/assets/etc-07.png')
       ]
     }
   }
@@ -69,7 +71,6 @@ export default {
 .home
   header
     height 50vh
-    /* background linear-gradient(0deg, $background, lighten($background, 13), $background) */
     background linear-gradient(45deg, #1C9FFF, #765EE7)
     display flex
     justify-content center
@@ -80,9 +81,6 @@ export default {
       height 200px
       box-shadow 0 0 40px rgba(black, .25)
       border-radius 40px
-    h1
-      font-size 40px
-      margin-top 0
     a
       display inline-block
       margin-top 5px
@@ -103,7 +101,7 @@ export default {
   section.home__intro
     margin-bottom 50px
     img
-      height 750px
+      height 850px
     .el-carousel__item
       text-align center
   footer
@@ -133,19 +131,17 @@ export default {
       &:last-child
         margin-left auto
   .home__feature
-    padding 40px 0
+    padding 30px 0
     background linear-gradient(180deg, $background, lighten($background, 13))
     > div
       margin 0 auto
       width 950px
     .title
       text-align center
-    h3
       color #4A9DF7
       font-size 40px
       text-align center
-      margin-top 0
-      margin-bottom 0
+      margin-bottom 30px
     ul
       padding 0
       display flex

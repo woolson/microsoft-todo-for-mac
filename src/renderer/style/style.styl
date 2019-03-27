@@ -1,0 +1,115 @@
+::selection
+  background $blue
+  color white
+
+html
+  font-size 50px
+  font-family Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif
+
+body
+  padding 0
+  margin 0
+  background white
+  min-width 300px
+  font-size .24rem
+
+.el-notification
+  display flex
+  align-items center
+  width 180px
+  padding .2rem
+  // top 10px !important
+  right 10px !important
+  border none
+  border-radius .1rem
+  h2
+    font-size .26rem
+    color $background
+  i
+    height auto
+    font-size .34rem
+
+.el-notification__closeBtn
+  top 11px
+
+.el-message-box
+  border none
+
+.el-message--success
+.el-message--error
+  margin-left 80px
+  p,
+  i
+    color white !important
+
+.el-message--success
+  background $green
+  border-color $green
+
+.el-message--error
+  background $red
+  border-color $red
+
+.el-button--success:not(.is-plain)
+  background $green
+  border-color $green
+
+.el-popover
+  padding 0
+
+.el-message-box
+  padding-bottom 15px
+
+.el-message-box__header
+  padding-top 15px !important
+
+.el-message-box__btns
+  button
+    width 120px
+
+.el-alert
+  padding 5px 16px
+  border-radius 0
+
+.el-alert__title
+.el-alert__icon
+  font-size 12px
+  user-select none
+
+.el-input__inner
+  padding-right 5px
+
+.el-date-editor.el-input
+  width auto
+
+.form__row-section
+  padding 0 12px
+  margin-bottom 10px
+
+.form__row
+  display flex
+  align-items center
+  justify-content space-between
+  min-height 40px
+  padding 12px
+  box-sizing border-box
+  color $text
+  font-size 14px
+  user-select none
+  background $background-color
+  transition background .2s
+  > label
+    margin-right 10px
+    white-space nowrap
+    // width 60px
+    flex-shrink 0
+  &:first-child
+    border-top-left-radius 5px
+    border-top-right-radius 5px
+  &:last-child
+    border-bottom-left-radius 5px
+    border-bottom-right-radius 5px
+    &:after
+      display none
+  &:hover:not(.disabled)
+    background rgba($blue, .08)
