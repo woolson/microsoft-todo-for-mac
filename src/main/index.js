@@ -5,6 +5,9 @@ import initMessager from './lib/messager'
 import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
 import storeSetting from './lib/store'
+import fundebug from 'fundebug-nodejs'
+
+fundebug.apikey = 'd7014f96a99bf969b1a571343679a75b4ac453f4c5cd1496fa63782b2ee3ea6b'
 
 const setting = storeSetting.get()
 
@@ -46,7 +49,7 @@ function createWindow () {
     logger: require('electron-log')
   })
   // Menu bar
-  setMenu(mainWindow, setting.language)
+  setMenu(mainWindow)
   // Touch bar
   setTouchBar(mainWindow)
   // Load page

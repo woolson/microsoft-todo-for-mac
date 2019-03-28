@@ -1,11 +1,16 @@
 import { app } from 'electron'
 import path from 'path'
-import { readFileSync, writeFileSync } from 'fs'
+import fundebug from 'fundebug-nodejs'
+import { readFileSync, writeFileSync, existsSync } from 'fs'
 
 export class Store {
   constructor (options) {
     this.options = options
-    this.filePath = path.join(__dirname, options.file)
+    this.filePath = path.join(app.getPath('userData'), options.file)
+    // Create file if setting.json does not exist
+    if (!existsSync(this.filePath)) {
+      writeFileSync(this.filePath, JSON.stringify(options.default))
+    }
   }
 
   get (key) {
@@ -16,6 +21,7 @@ export class Store {
         ...JSON.parse(readFileSync(this.filePath) || '{}')
       }
     } catch (err) {
+      fundebug.notifyError(err)
       result = {}
     }
     return key ? result[key] : result
@@ -32,7 +38,7 @@ export default new Store({
   default: {
     // Use system language for default
     language: app.getLocale() === 'zh-CN' ? 'zh' : 'en',
-    // Use auto for default theme
+    // Use auto for default thema
     theme: 'auto'
   }
 })

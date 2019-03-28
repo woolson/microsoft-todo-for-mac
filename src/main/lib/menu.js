@@ -4,7 +4,7 @@ import store from './store'
 const { Menu, shell } = require('electron')
 
 export default function setMenu (mainWindow) {
-  const LANG = language[store.get('language')]
+  const LANG = language[store.get('language')] || {}
   let template = [
     {
       label: 'Application',
