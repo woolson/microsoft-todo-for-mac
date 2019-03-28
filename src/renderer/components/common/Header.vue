@@ -30,9 +30,11 @@ export default {
   flex 1
   display flex
   align-items center
+  white-space nowrap
 
 .header__left
   justify-content flex-start
+  white-space nowrap
 
 .header__right
   justify-content flex-end
