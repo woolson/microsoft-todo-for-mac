@@ -1,4 +1,10 @@
-# MS ToDo
+<div align="center">
+  <a src="https://woolson.github.io/microsoft-todo-for-mac/" target="_blank">
+    <img src="build/icons/icon.png" width="240" />
+  </a>
+</div>
+
+<h1 align="center">Microsoft ToDo</h1>
 
 Welcome to star if you like it, Thanks!!!
 
