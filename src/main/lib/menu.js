@@ -72,19 +72,19 @@ export default function setMenu (mainWindow) {
       ]
     },
     {
-      label: LANG.about,
+      label: LANG.link,
       submenu: [
         {
           label: LANG.projectHome,
-          click: () => shell.openExternal('https://woolson.github.io/ms-todo/')
+          click: () => shell.openExternal('https://woolson.github.io/microsoft-todo-mac/')
         },
         {
           label: LANG.openSource,
-          click: () => shell.openExternal('https://github.com/woolson/ms-todo')
+          click: () => shell.openExternal('https://github.com/woolson/microsoft-todo-mac')
         },
         {
           label: LANG.issus,
-          click: () => shell.openExternal('https://github.com/woolson/ms-todo/issues')
+          click: () => shell.openExternal('https://github.com/woolson/microsoft-todo-mac/issues')
         }
       ]
     }
