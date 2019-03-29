@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, BrowserWindow, systemPreferences } from 'electron'
+import { app, BrowserWindow, systemPreferences, ipcMain } from 'electron'
 import initMessager from './lib/messager'
 import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
@@ -69,6 +69,8 @@ function createWindow () {
 
   mainWindow.on('closed', () => {
     mainWindow = null
+    ipcMain.removeAllListeners()
+    // ipcRenderer.removeAllListeners()
   })
 
   mainWindow.once('ready-to-show', () => {

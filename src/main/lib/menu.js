@@ -30,9 +30,12 @@ export default function setMenu (mainWindow) {
           accelerator: 'Command+F',
           click: () => mainWindow.webContents.send('search')
         },
-        { label: LANG.close, role: 'close' },
         { label: LANG.mini, role: 'minimize' },
-        { label: LANG.hide, role: 'hide' }
+        {
+          label: LANG.hide,
+          accelerator: 'Command+W',
+          role: 'hide'
+        }
       ]
     },
     {
