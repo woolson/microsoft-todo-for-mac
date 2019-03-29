@@ -6,7 +6,7 @@ div.task-list
       v-model="searchStr"
       @keydown.27.native="cancelSearch"
     )
-    el-button(
+    el-button.u-ml20(
       slot="right"
       @click="cancelSearch"
       round
@@ -100,10 +100,12 @@ export default {
       'currentTask',
       'currentFolder',
       'sort',
-      'allTasks',
       'showSearch',
       'showCompleteTask'
     ]),
+    ...mapState({
+      allTasks: 'tasks'
+    }),
     ...mapGetters(['tasks']),
     searchTasks () {
       if (!this.searchStr) return []

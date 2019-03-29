@@ -22,6 +22,7 @@ export default {
     me: '我',
     name: '名称',
     note: '备注',
+    notice: '注意',
     period: '周期',
     planned: '已计划日程',
     remind: '提醒',

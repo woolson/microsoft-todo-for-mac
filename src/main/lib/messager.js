@@ -46,17 +46,4 @@ export default function (mainWindow) {
   ipcMain.on('get-theme', (event, arg) => {
     event.returnValue = systemPreferences.isDarkMode()
   })
-  // Notification
-  // ipcMain.on('task-notification', (event, arg) => {
-  //   console.log('task', arg)
-  //   const { Subject, Body } = arg
-  //   const notify = new Notification({
-  //     title: Subject,
-  //     body: Body.Content,
-  //     actions: [
-  //       NotificationAction({text: '完成'})
-  //     ]
-  //   })
-  //   notify.show()
-  // })
 }

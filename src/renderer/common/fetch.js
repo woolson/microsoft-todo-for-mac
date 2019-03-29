@@ -39,7 +39,6 @@ export const post = (url, data, options) => {
 }
 
 export const get = (url, data, options) => {
-  // console.log(url)
   return common('GET', url, data, options)
 }
 
@@ -53,11 +52,13 @@ export const common = (type, url, data, options = {}) => {
     const request = url
     url = request.url
     data = request.data
-    options = Object.assign({
-      showLoading: true,
-      quite: false
-    }, request.options || {})
+    options = request.options || {}
   }
+
+  options = Object.assign({
+    showLoading: true,
+    quite: false
+  }, options)
 
   if (options.showLoading) {
     loading = Loading.service({

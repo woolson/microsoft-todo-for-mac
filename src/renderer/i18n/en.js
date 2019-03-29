@@ -22,6 +22,7 @@ export default {
     me: 'Me',
     name: 'Name',
     note: 'Note',
+    notice: 'Notice',
     period: 'Period',
     planned: 'Planned',
     remind: 'Remind',

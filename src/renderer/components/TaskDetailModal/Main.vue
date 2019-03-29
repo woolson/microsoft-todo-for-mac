@@ -83,7 +83,7 @@ div.task-detail-main(
     span {{taskDateInfo}}
     el-button(
       type="danger"
-      @click="deleteTask"
+      @click="onDelete"
       icon="el-icon-delete"
       round
     )
@@ -92,7 +92,7 @@ div.task-detail-main(
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
 import { dater, fileToBase64 } from '@/common/utils'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, remote } from 'electron'
 
 export default {
   data () {
@@ -157,6 +157,10 @@ export default {
       },
       deep: true
     }
+  },
+
+  mounted () {
+    ipcRenderer.on('delete-task', () => this.onDelete())
   },
 
   methods: {
@@ -258,10 +262,10 @@ export default {
       })
       this.loading = false
     },
-    async delete () {
+    async onDelete () {
       try {
-        const result = ipcRenderer.sendSync('delete-task', this.currentTask)
-        if (result) {
+        const result = await this.showNativeMessage(this.currentTask)
+        if (!result) {
           await this.deleteTask()
           this.$message.success(this.$t('message.deleteSuccessfully'))
         }
@@ -269,6 +273,18 @@ export default {
         console.log(err)
         this.$message.error(this.$t('message.deleteFailed'))
       }
+    },
+    showNativeMessage (arg) {
+      return new Promise((resolve, reject) => {
+        remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+          type: 'question',
+          icon: remote.nativeImage.createFromDataURL(require('@/assets/image/warning.png')),
+          buttons: [this.$t('base.submit'), this.$t('base.cancel')],
+          defaultId: 0,
+          message: this.$t('base.notice'),
+          detail: `${this.$t('message.confirmToDelete')} ${arg.Subject} ？`
+        }, resolve)
+      })
     }
   }
 }

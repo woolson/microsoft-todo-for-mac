@@ -122,8 +122,10 @@ export default {
       font-size 20px
     &.icon-check
       color $green
+      animation bounceIn .75s
     &.icon-star
       color $yellow
+      animation bounceIn .75s
     &:hover
       animation bounceIn .75s
   &:first-child

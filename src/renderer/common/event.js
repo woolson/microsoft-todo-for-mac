@@ -86,20 +86,6 @@ export default function () {
       Message.error(i18n.t('message.updateFailed'))
     }
   })
-  // Delete task
-  ipcRenderer.on('delete-task', async () => {
-    try {
-      const { currentTask } = store.state
-      const result = ipcRenderer.sendSync('delete-task', currentTask)
-      if (result) {
-        await dispatch('DELETE_TASK')
-        Message.success(i18n.t('message.deleteSuccessfully'))
-      }
-    } catch (err) {
-      console.log(err)
-      Message.error(i18n.t('message.deleteFailed'))
-    }
-  })
   // Toggle complete
   ipcRenderer.on('toggle-complete', async () => {
     const { showCompleteTask } = store.state
