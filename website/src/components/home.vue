@@ -3,10 +3,18 @@ div.home
   header
     img(src="@/assets/icon.svg")
     div
-      h1 Microsoft ToDo
-      p Microsoft ToDo client for macOS, based on Electron & Vue.
+      h1
+        span Microsoft ToDo
+        iframe(
+          src="https://ghbtns.com/github-btn.html?user=woolson&repo=microsoft-todo-mac&type=star&count=true"
+          frameborder="0"
+          scrolling="0"
+          width="160px"
+          height="30px"
+        )
+      p Microsoft ToDo client for macOS, based on Microsoft API, Electron & Vue.
       div
-        a(href="https://github.com/woolson/microsoft-todo-mac") MacOS
+        a(href="https://github.com/woolson/microsoft-todo-mac/releases") MacOS
         a(href="https://itunes.apple.com/cn/app/microsoft-to-do/id1212616790?mt=8") iPhone
         a(href="https://www.microsoft.com/zh-cn/p/microsoft-to-do/9nblggh5r558?rtc=1") Window
         a(href="https://play.google.com/store/apps/details?id=com.microsoft.todos") Android
@@ -76,6 +84,9 @@ export default {
     justify-content center
     align-items center
     color white
+    h1
+      iframe
+        margin-left 20px
     img
       margin-right 50px
       height 200px

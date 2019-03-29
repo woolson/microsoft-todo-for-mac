@@ -59,6 +59,9 @@ Feature
 
 ## ScreenShot
 
+> First image is from [https://dribbble.com/shots/3054412-Macbook-Pro-with-touchbar](https://dribbble.com/shots/3054412-Macbook-Pro-with-touchbar) designed by [Myro Fanta](https://dribbble.com/Fantic)
+
+![touchbar](./website/src/assets/etc-07.png)
 ![home](./website/src/assets/etc-10.png)
 ![setting](./website/src/assets/etc-11.png)
 ![dark-home](./website/src/assets/etc-08.png)
