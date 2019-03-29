@@ -66,6 +66,7 @@ export default function setMenu (mainWindow) {
     },
     {
       label: LANG.development,
+      visible: process.env.NODE_ENV === 'development',
       submenu: [
         { label: LANG.devTool, role: 'toggledevtools' }
       ]
