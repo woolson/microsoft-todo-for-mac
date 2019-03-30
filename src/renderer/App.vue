@@ -57,7 +57,7 @@ export default {
     // Set theme if theme setting is auto
     if (this.theme === 'auto') {
       const isDark = ipcRenderer.sendSync('get-theme')
-      document.body.className = `theme-${isDark ? 'dark' : 'light'}`
+      document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
     }
     // Update data when window focus
     if (process.env.NODE_ENV !== 'development') {
@@ -100,7 +100,7 @@ export default {
     },
     theme: {
       handler (newValue) {
-        document.body.className = `theme-${newValue}`
+        document.body.setAttribute('data-theme', `theme-${newValue}`)
         ipcRenderer.sendSync('update-setting', {theme: newValue})
       },
       immediate: true
@@ -150,8 +150,6 @@ export default {
 </script>
 
 <style lang="stylus">
-@import "./style/theme-dark.styl"
-
 html
 body
   *

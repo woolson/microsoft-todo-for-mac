@@ -7,7 +7,7 @@ common-border(deg)
   height 1px
   z-index 0
   transition all .2s
-  background $border
+  background var(--border)
   transform scaleY(0.5)
   transform-origin 50%100%
 
@@ -206,3 +206,35 @@ for $size in 10 11 12 13 14 15 20
 
 .u-bounce
   animation bounceIn .75s
+
+.u-form__row-section
+  padding 0 12px
+  margin-bottom 10px
+
+.u-form__row
+  display flex
+  align-items center
+  justify-content space-between
+  min-height 40px
+  padding 12px
+  box-sizing border-box
+  color var(--text-main)
+  font-size 14px
+  user-select none
+  background var(--background-section)
+  transition background .2s
+  > label
+    margin-right 10px
+    white-space nowrap
+    color var(--text-sub)
+    flex-shrink 0
+  &:first-child
+    border-top-left-radius 5px
+    border-top-right-radius 5px
+  &:last-child
+    border-bottom-left-radius 5px
+    border-bottom-right-radius 5px
+    &:after
+      display none
+  &:hover:not(.disabled)
+    background var(--background-section-hover)

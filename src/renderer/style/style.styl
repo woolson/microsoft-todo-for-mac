@@ -1,3 +1,39 @@
+:root
+  // Background
+  --background-sidebar $sidebar-light
+  --background white
+  --background-content white
+  --background-section #F8F8FA
+  --background-section-hover rgba($blue, .15)
+  // Text
+  --text-main $text
+  --text-sub $text
+  // Border
+  --border $border
+  // Task-Folder
+  --folder-background rgba(black, .1)
+  // Task
+  --task-background-active linear-gradient(45deg, $blue, $purple)
+  --task-info-background rgba(white, .4)
+
+[data-theme="theme-dark"]
+  // Background
+  --background-sidebar $sidebar-dark
+  --background $background-dark
+  --background-content $background-dark-content
+  --background-section $background-dark-section
+  --background-section-hover rgba(black, .25)
+  // Text
+  --text-main white
+  --text-sub $text-light
+  // Border
+  --border #222
+  // Task-Folder
+  --folder-background $blue
+  // Task
+  --task-background-active $background-dark
+  --task-info-background darken($background-dark-section, 1.5)
+
 ::selection
   background $blue
   color white
@@ -13,6 +49,7 @@ body
   min-width 300px
   font-size .24rem
 
+// ===== element-ui =====
 .el-notification
   display flex
   align-items center
@@ -82,34 +119,49 @@ body
 .el-date-editor.el-input
   width auto
 
-.form__row-section
-  padding 0 12px
-  margin-bottom 10px
+.el-select-dropdown__item.hover
+.el-button--default
+.el-input input
+  background var(--background) !important
 
-.form__row
-  display flex
-  align-items center
-  justify-content space-between
-  min-height 40px
-  padding 12px
-  box-sizing border-box
-  color $text
-  font-size 14px
-  user-select none
-  background $background-color
-  transition background .2s
-  > label
-    margin-right 10px
-    white-space nowrap
-    // width 60px
-    flex-shrink 0
-  &:first-child
-    border-top-left-radius 5px
-    border-top-right-radius 5px
-  &:last-child
-    border-bottom-left-radius 5px
-    border-bottom-right-radius 5px
-    &:after
-      display none
-  &:hover:not(.disabled)
-    background rgba($blue, .08)
+.el-input__inner
+.el-select-dropdown
+.el-alert--info
+.el-input__inner
+.el-picker-panel
+.el-picker-panel__footer
+.el-message-box
+  background var(--background-section)
+
+.el-popover
+.el-select-dropdown
+  background var(--background-content)
+
+.el-popover
+.el-button--default
+.el-date-picker__time-header
+.el-picker-panel
+.el-picker-panel__footer
+.el-date-table th
+  border-color var(--border)
+
+.el-input__inner
+.el-select-dropdown
+  border-color var(--background-section)
+
+.el-select-dropdown__item
+.el-input__inner
+.el-date-table__row .available
+.el-picker-panel__icon-btn
+  color var(--text-main) !important
+
+.el-input__inner::-webkit-input-placeholder
+.el-date-table__row .prev-month
+.el-date-table__row .next-month
+  color var(--text-sub)
+
+.popper__arrow
+.popper__arrow:after
+  border-bottom-color var(--background) !important
+.popper__arrow:after
+  border-bottom-color var(--background-content) !important

@@ -6,12 +6,12 @@ Modal.settings(
   Header
     span {{$t('base.setting')}}
   div.settings__content
-    div.form__row-section
-      div.form__row
+    div.u-form__row-section
+      div.u-form__row
         label {{$t('base.async')}}
         el-button.u-w100(round @click="syncData") {{$t('base.async')}}
-    div.form__row-section
-      div.form__row.u-bb
+    div.u-form__row-section
+      div.u-form__row.u-bb
         label {{$t('task.showImportance')}}
         el-switch(
           :active-color="$color.green"
@@ -19,7 +19,7 @@ Modal.settings(
           :value="showImportanceFolder"
           @change="updateState({showImportanceFolder: !showImportanceFolder})"
         )
-      div.form__row.u-bb
+      div.u-form__row.u-bb
         label {{$t('task.showPlanned')}}
         el-switch(
           :active-color="$color.green"
@@ -27,7 +27,7 @@ Modal.settings(
           :value="showPlannedFolder"
           @change="updateState({showPlannedFolder: !showPlannedFolder})"
         )
-      div.form__row
+      div.u-form__row
         label {{$t('task.showCompleted')}}
         el-switch(
           :active-color="$color.green"
@@ -35,8 +35,8 @@ Modal.settings(
           :value="showCompleteTask"
           @change="updateState({showCompleteTask: !showCompleteTask})"
         )
-    div.form__row-section
-      div.form__row.u-bb
+    div.u-form__row-section
+      div.u-form__row.u-bb
         label {{$t('base.language')}}
         el-radio-group(
           v-model="currentLang"
@@ -46,7 +46,7 @@ Modal.settings(
         )
           el-radio-button(name="language" label="中")
           el-radio-button(name="language" label="EN")
-      div.form__row.u-bb
+      div.u-form__row.u-bb
         label {{$t('setting.selectTheme')}}
         el-select.settings__theme(
           :value="theme"
@@ -99,7 +99,7 @@ export default {
     theme (newValue) {
       if (newValue === 'auto') {
         const isDark = ipcRenderer.sendSync('get-theme')
-        document.body.className = `theme-${isDark ? 'dark' : 'light'}`
+        document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
       }
     }
   },

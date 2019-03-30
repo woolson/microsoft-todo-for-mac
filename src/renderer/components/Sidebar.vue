@@ -65,7 +65,7 @@ export default {
   width 160px
   box-sizing border-box
   box-shadow inset 0 0 5px rgba(black, .15)
-  background $sidebar-light
+  background var(--background-sidebar)
   display flex
   flex-direction column
   transition background .2s

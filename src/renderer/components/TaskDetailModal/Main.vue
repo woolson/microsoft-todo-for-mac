@@ -26,8 +26,8 @@ div.task-detail-main(
     center
     :closable="false"
   )
-  div.form__row-section.u-mt12
-    div.form__row.u-bb
+  div.u-form__row-section.u-mt12
+    div.u-form__row.u-bb
       label {{$t('task.remindTime')}}
       div.u-center-end
         el-date-picker(
@@ -39,7 +39,7 @@ div.task-detail-main(
           @change="remindSubmit"
         )
         i.iconfont.icon-right.u-ml5
-    div.form__row
+    div.u-form__row
       label {{$t('task.dueTime')}}
       div.u-center-end
         el-date-picker(
@@ -51,11 +51,11 @@ div.task-detail-main(
           @change="stopDateSubmit"
         )
         i.iconfont.icon-right.u-ml5
-    //- div.form__row(@click="$emit('update:step', 1)")
+    //- div.u-form__row(@click="$emit('update:step', 1)")
     //-   label 重复
     //-   i.iconfont.icon-right.u-ml5
-  div.form__row-section
-    div.form__row.u-bb(
+  div.u-form__row-section
+    div.u-form__row.u-bb(
       v-for="item,index in attachments"
       :key="item.Name"
     )
@@ -63,7 +63,7 @@ div.task-detail-main(
       i.iconfont.icon-close.u-s14(
         @click="removeAttachment(item, index)"
       )
-    div.form__row
+    div.u-form__row
       label {{$t('task.addFile')}}
       input.u-transparent.u-w0(
         ref="file"
@@ -71,8 +71,8 @@ div.task-detail-main(
         @change="selectFile"
       )
       el-button(@click="showSelect") {{$t('base.upload')}}
-  div.form__row-section
-    div.form__row
+  div.u-form__row-section
+    div.u-form__row
       textarea(
         v-model="note"
         :placeholder="$t('base.note')"
@@ -324,7 +324,7 @@ textarea
   resize none
   outline none
   font-size 14px
-  color $text
+  color var(--text-main)
   background transparent
 
 .el-input__prefix
@@ -339,10 +339,10 @@ textarea
   span
     flex 1
     margin-right 20px
-    background $background-color
+    background var(--background-section)
     line-height 32px
     border-radius 5px
     padding 0 15px
-    color $text-gray
+    color var(--text-sub)
     user-select none
 </style>

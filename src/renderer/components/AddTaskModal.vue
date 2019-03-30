@@ -18,8 +18,8 @@ Modal.add-task(
     :closable="false"
   )
   div.add-task__content
-    div.form__row-section
-      div.form__row
+    div.u-form__row-section
+      div.u-form__row
         label.u-w50 {{$t('base.folder')}}
         el-select.u-flex-1(v-model="belongFolder")
           el-option(
@@ -28,8 +28,8 @@ Modal.add-task(
             :value="item.Id"
             :label="item.Name"
           )
-    div.form__row-section
-      div.form__row
+    div.u-form__row-section
+      div.u-form__row
         label.u-w50 {{$t('base.name')}}
         el-input(
           ref="input"

@@ -34,7 +34,7 @@ function createWindow () {
     frame: false,
     show: false,
     titleBarStyle: 'hidden',
-    // transparent: true,
+    transparent: true,
     backgroundColor: setting.theme === 'dark' ? '#202124' : 'white',
     resizable: true,
     webPreferences: {

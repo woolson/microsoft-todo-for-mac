@@ -45,7 +45,7 @@ export default {
   font-size 18px
   flex-shrink 0
   text-align center
-  color $text
+  color var(--text-main)
   outline none
 </style>
 

@@ -106,7 +106,7 @@ export default {
 .task-item
   display flex
   align-items center
-  background $background-color
+  background var(--background-section)
   padding 11px 15px
   background-size 0px 100%
   position relative
@@ -114,6 +114,7 @@ export default {
   cursor pointer
   user-select none
   box-sizing border-box
+  color var(--text-main)
   > div
     flex 1
   > i
@@ -138,12 +139,12 @@ export default {
       display none
   &.active
     *
-      color white !important
-    background linear-gradient(45deg, $blue, $purple)
+      color var(--text-main) !important
+    background var(--task-background-active)
     .task-item__info
-      background rgba(black, .1)
+      background var(--task-info-background)
   &:hover:not(.active)
-    background rgba($blue, .15)
+    background var(--background-section-hover)
 
 .task-item__content
   h1
@@ -151,14 +152,14 @@ export default {
     line-height 1
     font-weight normal
     margin 0
-    color $text
+    color var(--text-main)
 
 .task-item__info
   // width 100%
   display inline-block
   width auto
   margin-top 6px
-  background rgba(white, .4)
+  background var(--task-info-background)
   padding 3px 8px
   padding-right 0px
   border-radius 4px
@@ -167,7 +168,7 @@ export default {
   i
     margin-right 10px
     font-size 12px
-    color $text
+    color var(--text-main)
     &.icon-bell
       font-size 13px
 </style>

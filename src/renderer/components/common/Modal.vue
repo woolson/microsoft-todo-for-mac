@@ -134,7 +134,7 @@ export default {
 .modal__main
   display flex
   flex-direction column
-  background white
+  background var(--background-content)
   position relative
   z-index 99
   overflow hidden

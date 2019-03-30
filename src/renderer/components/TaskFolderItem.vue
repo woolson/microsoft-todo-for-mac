@@ -94,8 +94,7 @@ export default {
     &.icon-calendar-o
       font-size 16px
   &.active
-    box-shadow inset 0 0 12px rgba(black, .05)
-    background rgba(black, .1)
+    background var(--folder-background)
   &:hover
     text-shadow 0 0 5px rgba(black, .5)
   .number

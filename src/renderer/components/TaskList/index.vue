@@ -188,7 +188,7 @@ export default {
   flex-direction column
   height 100vh
   position relative
-  background white
+  background var(--background-content)
   transition background .2s
   .header
     position absolute
@@ -196,8 +196,8 @@ export default {
     right 0
     z-index 9
     width 100%
-    background rgba(white, 0.7)
-    backdrop-filter blur(15px)
+    color var(--text-sub)
+    background var(--background-content)
     -webkit-app-region drag
 
 .task-list__content
@@ -225,6 +225,7 @@ export default {
     font-size 14px
 
 .task-list__options
+  color var(--text-main)
   > div
     display flex
     padding 10px 12px
@@ -234,7 +235,7 @@ export default {
     padding 10px 12px
     margin 0
     transition all .2s
-    background white
+    background var(--background-content)
     &.rename
       color $green
       &:hover

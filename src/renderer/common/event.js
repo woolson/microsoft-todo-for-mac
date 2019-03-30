@@ -93,7 +93,7 @@ export default function () {
   })
   // Toggle theme
   ipcRenderer.on('theme-change', (event, isDark) => {
-    document.body.className = `theme-${isDark ? 'dark' : 'light'}`
+    document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
   })
 }
 

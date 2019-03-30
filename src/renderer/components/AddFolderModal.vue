@@ -19,7 +19,7 @@ Modal.add-task-folder(
   )
   div.add-task-folder__content
     div.form__main
-      div.form__row
+      div.u-form__row
         label {{$t('base.name')}}
         el-input(
           ref="input"

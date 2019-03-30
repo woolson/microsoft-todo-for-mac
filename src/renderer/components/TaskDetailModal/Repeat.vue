@@ -2,8 +2,8 @@
 div.task-detail-repeat
   div.task-detail-repeat__header.u-bb
     span.u-pointer(@click="$emit('update:step', 0)") {{$t('base.cancel')}}
-  div.form__row-section
-    div.form__row.u-bb
+  div.u-form__row-section
+    div.u-form__row.u-bb
       label.u-mr20 {{$t('base.repeat')}}
       el-select.u-flex-1(v-model="level")
         el-option(
@@ -12,8 +12,8 @@ div.task-detail-repeat
           :label="item.label"
           :value="item.value"
         )
-  div.form__row-section(v-show="level === 'Custom'")
-    div.form__row.u-bb
+  div.u-form__row-section(v-show="level === 'Custom'")
+    div.u-form__row.u-bb
       label.u-mr20 {{$t('base.period')}}
       el-input(
         v-model="repeatNumber"
@@ -27,7 +27,7 @@ div.task-detail-repeat
           :label="item.label"
           :value="item.value"
         )
-    div.form__row(v-show="repeatLevel === 'week'")
+    div.u-form__row(v-show="repeatLevel === 'week'")
       el-checkbox-group.u-mlauto.u-mrauto(v-model="customWeek")
         el-checkbox-button(
           v-for="item in weeks"
