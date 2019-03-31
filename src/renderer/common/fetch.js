@@ -81,7 +81,7 @@ export const common = (type, url, data, options = {}) => {
     // 是否需要提示
     headers: {
       Authorization: `Bearer ${tokenInfo.access_token}`,
-      Prefer: 'outlook.timezone="Asia/Shanghai"',
+      Prefer: `outlook.timezone="${Intl.DateTimeFormat().resolvedOptions().timeZone}"`,
       'content-type': 'application/json;charset=utf-8'
     }
   }, options)
