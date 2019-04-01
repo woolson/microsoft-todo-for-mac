@@ -16,7 +16,7 @@
 
 Welcome to star if you like it, Thanks!!!
 
-[ZH Docs](/READMEmd)
+[ZH Docs](/README_ZH.md)
 
 - Based on [Electron](https://electronjs.org/) & [Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/)
 - Microsoft [Outlook Task API](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)
