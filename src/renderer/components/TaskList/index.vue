@@ -253,4 +253,9 @@ export default {
   display inline-flex
   align-items center
   justify-content center
+  > span:nth-child(2)
+    max-width 150px
+    white-space nowrap
+    overflow hidden
+    text-overflow ellipsis
 </style>

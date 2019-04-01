@@ -42,6 +42,8 @@ export default {
 .header__content
   flex 2
   flex-grow 10
+  display flex
+  justify-content center
   font-size 18px
   flex-shrink 0
   text-align center
