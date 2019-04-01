@@ -28,6 +28,20 @@ div.task-detail-main(
   )
   div.u-form__row-section.u-mt12
     div.u-form__row.u-bb
+      label {{$t('base.folder')}}
+      div.u-center-end
+        el-select.u-flex-1(
+          v-model="parentId"
+          @change="changeParent"
+        )
+          el-option(
+            v-for="item in taskFolders"
+            :key="item.Id"
+            :value="item.Id"
+            :label="item.Name"
+          )
+        i.iconfont.icon-right.u-ml5
+    div.u-form__row.u-bb
       label {{$t('task.remindTime')}}
       div.u-center-end
         el-date-picker(
@@ -97,6 +111,7 @@ import { ipcRenderer, remote } from 'electron'
 export default {
   data () {
     return {
+      parentId: '',
       name: '',
       dateTime: '',
       stopDate: '',
@@ -109,7 +124,8 @@ export default {
   computed: {
     ...mapState([
       'tasks',
-      'currentTask'
+      'currentTask',
+      'taskFolders'
     ]),
     titleStyle () {
       const { Status } = this.currentTask
@@ -143,7 +159,14 @@ export default {
   watch: {
     currentTask: {
       handler (newValue) {
-        const { ReminderDateTime, DueDateTime, Body, Subject, HasAttachments } = newValue
+        const {
+          Body,
+          DueDateTime,
+          HasAttachments,
+          ParentFolderId,
+          ReminderDateTime,
+          Subject
+        } = newValue
         if (ReminderDateTime) {
           this.dateTime = dater(ReminderDateTime.DateTime).format('x')
         } else this.dateTime = ''
@@ -151,6 +174,7 @@ export default {
           this.stopDate = dater(DueDateTime.DateTime).format('x')
         } else this.stopDate = ''
 
+        this.parentId = ParentFolderId
         this.name = Subject
         this.note = Body && Body.Content
         if (HasAttachments) this.fetchAttachments()
@@ -171,6 +195,12 @@ export default {
     ...mapMutations({
       updateState: 'UPDATE_STATE'
     }),
+    changeParent (newParent) {
+      this.updateTask({
+        Id: this.currentTask.Id,
+        ParentFolderId: newParent
+      })
+    },
     changeTaskStatus () {
       this.updateTask({
         Id: this.currentTask.Id,
