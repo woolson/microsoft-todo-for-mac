@@ -37,7 +37,7 @@ export default new Store({
   file: './settings.json',
   default: {
     // Use system language for default
-    language: app.getLocale() === 'zh-CN' ? 'zh' : 'en',
+    language: process.env.LANG === 'zh_CN.UTF-8' ? 'zh' : 'en',
     // Use auto for default thema
     theme: 'auto'
   }
