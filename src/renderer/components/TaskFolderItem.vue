@@ -5,7 +5,12 @@ div.task-folder-item(
   @click="updateState({currentFolder: data})"
 )
   i.iconfont(:class="folderIcon")
-  span.u-ml5 {{data.Name}}
+  el-tooltip.u-ml5(
+    effect="dark"
+    :content="data.Name"
+    placement="right"
+  )
+    span.task-folder-item__name {{data.Name}}
   span.number.u-mlauto {{data.number}}
 </template>
 
@@ -99,4 +104,10 @@ export default {
     text-shadow 0 0 5px rgba(black, .5)
   .number
     opacity .8
+
+.task-folder-item__name
+  width 95px
+  white-space nowrap
+  overflow hidden
+  text-overflow ellipsis
 </style>
