@@ -18,7 +18,7 @@
 
 喜欢就点个赞吧，谢谢！！！
 
-[EN Docs](README_EN.md)
+[EN Docs](./README.md)
 
 - 基于 [Electron](https://electronjs.org/) & [Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/)
 - 微软 [Outlook Task API](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)
