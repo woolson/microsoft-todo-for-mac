@@ -1,9 +1,17 @@
 <template lang="pug">
 Modal.login-modal(v-model="shouldLogin")
-  webview(
-    ref="webview"
-    :src="loginUrl"
-  )
+  webview(ref="webview" :src="loginUrl")
+  Header
+    template
+      el-button(
+        circle
+        icon="el-icon-arrow-left"
+        @click="webviewBack"
+      )
+      el-button.u-ml100(
+        circle
+        icon="el-icon-arrow-right"
+      )
 </template>
 
 <script>
@@ -12,6 +20,7 @@ import { has, parseURL, objToForm, dater, Storage } from '@/common/utils'
 import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '@/common/static'
 
 const token = new Storage('TOKEN')
+const LOGIN_ORIGIN = 'https://login.microsoftonline.com/common/oauth2/v2.0'
 
 export default {
   data () {
@@ -49,7 +58,7 @@ export default {
         scope: AUTH_SCOPE,
         state: 12345
       }
-      this.loginUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?${objToForm(query)}`
+      this.loginUrl = `${LOGIN_ORIGIN}/authorize?${objToForm(query)}`
       this.$nextTick(() => {
         this.$refs.webview.addEventListener('did-start-loading', () => {
           this.wvLoading = true
@@ -61,7 +70,7 @@ export default {
       const href = this.$refs.webview.getURL()
       const urlQuery = parseURL(href)
       if (has(href, ['http://localhost/myapp', 'code'], { strict: true })) {
-        const url = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
+        const url = `${LOGIN_ORIGIN}/token`
         const queryObj = {
           client_id: CLIENT_ID,
           scope: AUTH_SCOPE,
@@ -88,6 +97,16 @@ export default {
         await this.getTasks()
         loading.close()
       }
+    },
+    webviewBack () {
+      if (this.$refs.webview.canGoBack()) {
+        this.$refs.webview.goBack()
+      }
+    },
+    webviewForword () {
+      if (this.$refs.webview.canGoForward()) {
+        this.$refs.webview.goForward()
+      }
     }
   }
 }
@@ -95,10 +114,13 @@ export default {
 
 <style lang="stylus" scoped>
 .login-modal
+  height 100vh
+  display flex
+  flex-direction column
   >>> .modal__main
     width 450px !important
 
 webview
+  flex 1
   width 100%
-  height 100vh
 </style>
