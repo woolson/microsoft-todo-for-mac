@@ -37,7 +37,7 @@
   },
   "build": {
     "productName": "Microsoft ToDo",
-    "appId": "org.simulatedgreg.electron-vue",
+    "appId": "com.woolson.todo",
     "directories": {
       "output": "build"
     },
