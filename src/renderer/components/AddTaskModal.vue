@@ -35,7 +35,7 @@ Modal.add-task(
           ref="input"
           v-model="name"
           :placeholder="$t('task.name')"
-          @keyup.enter.native="submit"
+          @keyup.enter.native.stop="submit"
           clearable
           autofocus
         )
@@ -63,7 +63,10 @@ export default {
 
   watch: {
     showTaskAddModal (newValue) {
-      if (!newValue) return
+      if (!newValue) {
+        this.name = ''
+        return
+      }
       if (this.currentFolder.Id) {
         this.belongFolder = this.currentFolder.Id
       } else {

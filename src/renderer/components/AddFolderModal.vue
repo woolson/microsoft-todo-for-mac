@@ -59,7 +59,7 @@ export default {
         if (this.currentFolder.Type) {
           this.name = this.currentFolder.Name
         }
-      }
+      } else this.name = ''
     }
   },
 

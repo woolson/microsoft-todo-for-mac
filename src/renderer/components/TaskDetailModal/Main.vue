@@ -1,8 +1,5 @@
 <template lang="pug">
-div.task-detail-main(
-  v-loading.lock="loading"
-  element-loading-background="rgba(0, 0, 0, 0.7)"
-)
+div.task-detail-main
   Header.task-detail__header
     i.iconfont.u-mr10(
       slot="left"
@@ -116,7 +113,6 @@ export default {
       dateTime: '',
       stopDate: '',
       note: '',
-      loading: false,
       attachments: []
     }
   },
@@ -233,7 +229,6 @@ export default {
       this.attachments.splice(index, 1)
     },
     async remindSubmit (value) {
-      this.loading = true
       await this.updateTask({
         Id: this.currentTask.Id,
         IsReminderOn: true,
@@ -242,10 +237,8 @@ export default {
           TimeZone: 'Asia/Shanghai'
         }
       })
-      this.loading = false
     },
     async stopDateSubmit (value) {
-      this.loading = true
       await this.updateTask({
         Id: this.currentTask.Id,
         DueDateTime: {
@@ -253,7 +246,6 @@ export default {
           TimeZone: 'Asia/Shanghai'
         }
       })
-      this.loading = false
     },
     showSelect () {
       this.$refs.file.click()
@@ -273,7 +265,6 @@ export default {
       const Body = this.currentTask.Body || {}
       if (this.note === Body.Content) return
 
-      this.loading = true
       await this.updateTask({
         Id: this.currentTask.Id,
         Body: {
@@ -281,16 +272,13 @@ export default {
           Content: this.note
         }
       })
-      this.loading = false
     },
     async subjectSubmit () {
       if (!this.name || this.name === this.currentTask.Subject) return
-      this.loading = true
       await this.updateTask({
         Id: this.currentTask.Id,
         Subject: this.name
       })
-      this.loading = false
     },
     async onDelete () {
       try {

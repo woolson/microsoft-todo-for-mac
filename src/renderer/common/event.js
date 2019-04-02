@@ -11,7 +11,7 @@ export default function () {
     switch (evt.keyCode) {
       // Enter display detail
       case 13:
-        if (!isEmpty(state.currentTask)) {
+        if (!isEmpty(state.currentTask) && !state.showTaskAddModal && !state.showTaskFolderAddModal) {
           commit('UPDATE_STATE', { showTaskDetailModal: true })
         }
         break
