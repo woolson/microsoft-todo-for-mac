@@ -9,6 +9,7 @@ div.task-folder-item(
     effect="dark"
     :content="data.Name"
     placement="right"
+    :open-delay="500"
   )
     span.task-folder-item__name {{data.Name}}
   span.number.u-mlauto {{data.number}}
