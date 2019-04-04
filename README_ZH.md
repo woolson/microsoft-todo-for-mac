@@ -14,7 +14,7 @@
 </a>
 </div>
 
-> 背景：想找个云端多设备支持（mac/ios）的todo软件，iOS的AppStore上发现微软出品的To-Do不错，但是没有macOS端（微软可能是故意的🤪）
+> 背景：想找个云端多设备支持（mac/ios）的todo软件。iOS的AppStore上发现微软出品的ToDo不错，但是没有macOS端，所以自己动手做了一个。
 
 喜欢就点个赞吧，谢谢！！！
 
