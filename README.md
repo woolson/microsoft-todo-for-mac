@@ -1,3 +1,9 @@
+<font color="red" size="24">
+  因代码签名问题，旧版无法启动正常使用，请下载 New-Microsoft-ToDo.dmg或.zip重新安装。谢谢。<br/>
+  App crashed at app start up because of code sign invalid. Thank you.
+</font>
+## [New Release-2.0.2](https://github.com/woolson/microsoft-todo-mac/releases/tag/v2.0.2)
+
 <div align="center">
   <a src="https://woolson.github.io/microsoft-todo-for-mac/" target="_blank">
     <img src="build/icons/icon.png" width="240" />
