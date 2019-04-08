@@ -10,7 +10,7 @@
 <a href="https://woolson.github.io/npmer-page/">
 <img src="https://woolson.gitee.io/npmer-badge/dark%20mode-555555-supported-44cc11-gear-ffffff-square-flat-plain.svg" />
 <img src="https://woolson.gitee.io/npmer-badge/touchbar-555555-supported-46bc99-check-ffffff-square-flat-plain.svg" />
-<img src="https://woolson.gitee.io/npmer-badge/version-555555-2.0.1-7289da-square-flat-plain.svg" />
+<img src="https://woolson.gitee.io/npmer-badge/version-555555-2.0.2-7289da-square-flat-plain.svg" />
 </a>
 </div>
 
