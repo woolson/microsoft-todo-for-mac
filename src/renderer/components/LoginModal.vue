@@ -1,17 +1,22 @@
 <template lang="pug">
 Modal.login-modal(v-model="shouldLogin")
-  webview(ref="webview" :src="loginUrl")
-  Header
-    template
-      el-button(
-        circle
-        icon="el-icon-arrow-left"
-        @click="webviewBack"
-      )
-      el-button.u-ml100(
-        circle
-        icon="el-icon-arrow-right"
-      )
+  div.login-modal__content(
+    v-loading="wvLoading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+    element-loading-text="加载中"
+  )
+    webview(ref="webview" :src="loginUrl")
+    Header
+      template
+        el-button(
+          circle
+          icon="el-icon-arrow-left"
+          @click="webviewBack"
+        )
+        el-button.u-ml100(
+          circle
+          icon="el-icon-arrow-right"
+        )
 </template>
 
 <script>
@@ -28,6 +33,13 @@ export default {
       wvLoading: false,
       loginUrl: null
     }
+  },
+
+  mounted () {
+    this.$refs.webview.addEventListener('did-start-loading', () => {
+      this.wvLoading = true
+    })
+    this.$refs.webview.addEventListener('did-finish-load', this.wvStateChange)
   },
 
   computed: {
@@ -59,14 +71,9 @@ export default {
         state: 12345
       }
       this.loginUrl = `${LOGIN_ORIGIN}/authorize?${objToForm(query)}`
-      this.$nextTick(() => {
-        this.$refs.webview.addEventListener('did-start-loading', () => {
-          this.wvLoading = true
-        })
-        this.$refs.webview.addEventListener('did-finish-load', this.wvStateChange)
-      })
     },
     async wvStateChange () {
+      this.wvLoading = false
       const href = this.$refs.webview.getURL()
       const urlQuery = parseURL(href)
       if (has(href, ['http://localhost/myapp', 'code'], { strict: true })) {
@@ -123,4 +130,9 @@ export default {
 webview
   flex 1
   width 100%
+
+.login-modal__content
+  height 100vh
+  display flex
+  flex-direction column
 </style>
