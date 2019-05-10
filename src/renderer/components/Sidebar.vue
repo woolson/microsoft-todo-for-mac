@@ -62,7 +62,7 @@ export default {
 <style lang="stylus" scoped>
 .sidebar
   height 100vh
-  width 160px
+  width 190px
   box-sizing border-box
   box-shadow inset 0 0 5px rgba(black, .15)
   background var(--background-sidebar)
@@ -95,9 +95,9 @@ export default {
   overflow auto
   margin 10px 0
   > div
-    margin 0 5px
+    margin 0 12px
   &::-webkit-scrollbar
-    width 0 !important
+    width 0px !important
 
 .sidebar__separate
   margin 5px !important
@@ -106,12 +106,12 @@ export default {
 .sidebar__setting
   display flex
   align-items center
-  margin 0 5px
+  margin 0 12px
   margin-top auto
   height 36px
   line-height 36px
   font-size 14px
-  padding 0 10px
+  padding 0 12px
   cursor pointer
   user-select none
   color white

@@ -207,7 +207,9 @@ export default {
   flex 1
   overflow auto
   &::-webkit-scrollbar
-    width 0 !important
+    width 3px !important
+  &::-webkit-scrollbar-thumb
+    background rgba(black, .25)
 
 .task-list__empty
   flex 1

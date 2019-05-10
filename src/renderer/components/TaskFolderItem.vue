@@ -79,11 +79,11 @@ export default {
 
 <style lang="stylus" scoped>
 .task-folder-item
-  height 36px
-  line-height 36px
+  height 40px
+  line-height 40px
   font-size 14px
   border-radius 5px
-  padding 0 10px
+  padding 0 12px
   cursor pointer
   user-select none
   color white
@@ -101,14 +101,11 @@ export default {
       font-size 16px
   &.active
     background var(--folder-background)
-  &:hover
-    text-shadow 0 0 5px rgba(black, .5)
-  .number
-    opacity .8
 
 .task-folder-item__name
   width 95px
   white-space nowrap
   overflow hidden
   text-overflow ellipsis
+  outline none
 </style>
