@@ -25,11 +25,6 @@ export default function setMenu (mainWindow) {
     {
       label: LANG.window,
       submenu: [
-        {
-          label: LANG.search,
-          accelerator: 'Command+F',
-          click: () => mainWindow.webContents.send('search')
-        },
         { label: LANG.mini, role: 'minimize' },
         {
           label: LANG.hide,
@@ -54,6 +49,11 @@ export default function setMenu (mainWindow) {
           click: () => {
             mainWindow.webContents.send('new-task')
           }
+        },
+        {
+          label: LANG.search,
+          accelerator: 'Command+F',
+          click: () => mainWindow.webContents.send('search')
         },
         { type: 'separator' },
         { label: LANG.undo, role: 'undo' },

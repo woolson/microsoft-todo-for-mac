@@ -36,7 +36,7 @@ const state = {
   showTaskDetailModal: false,
   showTaskFolderAddModal: false,
   // sort tasks
-  sort: false,
+  sort: 'default',
   taskFolders: [],
   tasks: [],
   // get token from localstorage
