@@ -3,6 +3,7 @@ import { Storage, isEmpty, separate } from '@/common/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 import moment from 'moment'
+import merge from 'deepmerge'
 import { PAGE_SIZE } from '@/common/static'
 
 // Get store settings
@@ -40,6 +41,7 @@ const state = {
   sortBy: 'default',
   // sort direction
   sortDir: true,
+  sortStash: getValue('sortStash', {}),
   taskFolders: [],
   tasks: [],
   // get token from localstorage
@@ -101,8 +103,12 @@ const getters = {
 
 const mutations = {
   UPDATE_STATE (state, data) {
-    if (data.token) {
-      token.set(data.token)
+    if (data.token) token.set(data.token)
+    if (data.currentFolder) {
+      data = merge(data, state.sortStash[data.currentFolder.Id] || {
+        sortBy: 'default',
+        sortDir: false
+      })
     }
     Object.assign(state, data)
   }
@@ -114,6 +120,7 @@ const actions = {
     const { value } = await get('/me/photo')
     console.log(value)
   },
+
   // Get all task folders
   async GET_TASK_FOLDERS ({state, commit}) {
     const newState = {}
@@ -124,6 +131,7 @@ const actions = {
     }
     commit('UPDATE_STATE', newState)
   },
+
   // Delete folder
   async DELETE_FOLDER ({state, commit}) {
     await common('DELETE', `/me/taskfolders/${state.currentFolder.Id}`)
@@ -132,11 +140,13 @@ const actions = {
     taskFolders.splice(taskIndex, 1)
     commit('UPDATE_STATE', {taskFolders, currentFolder: taskFolders[taskIndex - 1]})
   },
+
   // Get all user tasks
   async GET_TASKS ({commit}) {
     const { value } = await get(`/me/tasks?$top=${PAGE_SIZE}`, null, {showLoading: false})
     commit('UPDATE_STATE', {tasks: value})
   },
+
   // Update task, data is Object contain some property of task, Id is required
   async UPDATE_TASK ({state, commit}, data) {
     const newTask = await patch(`/me/tasks/${data.Id}`, data)
@@ -146,6 +156,7 @@ const actions = {
     newState.currentTask = newTask
     commit('UPDATE_STATE', newState)
   },
+
   // Delete task
   async DELETE_TASK ({state, commit}) {
     await common('DELETE', `/me/tasks/${state.currentTask.Id}`)

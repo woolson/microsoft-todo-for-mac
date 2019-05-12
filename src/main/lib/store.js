@@ -1,5 +1,6 @@
 import { app } from 'electron'
 import path from 'path'
+import merge from 'deepmerge'
 import fundebug from 'fundebug-nodejs'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 
@@ -28,7 +29,7 @@ export class Store {
   }
 
   set (newValue) {
-    const allValue = { ...this.get(), ...newValue }
+    const allValue = merge(this.get(), newValue)
     writeFileSync(this.filePath, JSON.stringify(allValue))
   }
 }

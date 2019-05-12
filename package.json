@@ -64,6 +64,7 @@
     }
   },
   "dependencies": {
+    "deepmerge": "^3.2.0",
     "fundebug-javascript": "^1.7.3",
     "fundebug-vue": "0.0.1",
     "vue": "^2.3.3",

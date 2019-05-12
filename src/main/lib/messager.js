@@ -9,6 +9,7 @@ export default function (mainWindow) {
   ipcMain.on('update-touchbar', (event, arg) => {
     setTouchBar(mainWindow, arg)
   })
+
   // Delete folder
   ipcMain.on('delete-folder', (event, arg) => {
     const LANG = language[store.get('language')]
@@ -19,6 +20,7 @@ export default function (mainWindow) {
       detail: `${LANG.confirmDeleteFolder} ${arg.Name} ？`
     }, res => (event.returnValue = res))
   })
+
   // Delete task
   ipcMain.on('delete-task', (event, arg) => {
     const LANG = language[store.get('language')]
@@ -29,10 +31,12 @@ export default function (mainWindow) {
       detail: `${LANG.confirmDeleteTask} ${arg.Subject} ？`
     }, res => (event.returnValue = res))
   })
+
   // Fetch setting content
   ipcMain.on('fetch-setting', (event, arg) => {
     event.returnValue = store.get()
   })
+
   // Update setting content
   ipcMain.on('update-setting', (event, arg) => {
     store.set(arg)
@@ -42,6 +46,7 @@ export default function (mainWindow) {
     }
     event.returnValue = true
   })
+
   // Get system theme
   ipcMain.on('get-theme', (event, arg) => {
     event.returnValue = systemPreferences.isDarkMode()
