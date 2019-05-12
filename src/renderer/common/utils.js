@@ -330,3 +330,14 @@ export function refreshToken (refreshToken) {
     }).catch(reject)
   })
 }
+
+export function separate (array, adjustFun) {
+  const ahead = []
+  const behind = []
+
+  for (let item of array) {
+    if (adjustFun(item)) ahead.push(item)
+    else behind.push(item)
+  }
+  return [...ahead, ...behind]
+}

@@ -97,5 +97,14 @@ export default {
     showCompleted: '@:base.show @:base.completed',
     showImportance: '@:base.show @:base.importance',
     showPlanned: '@:base.show @:base.planned'
+  },
+  sort: {
+    by: 'By',
+    default: 'Default',
+    importance: 'Importance',
+    dueDateTime: 'DueDateTime',
+    completed: 'Completed',
+    letter: 'Letter',
+    createDateTime: 'CreateTime'
   }
 }

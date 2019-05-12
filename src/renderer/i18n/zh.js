@@ -97,5 +97,14 @@ export default {
     showCompleted: '@:base.show@:base.completed',
     showImportance: '@:base.show@:base.importance',
     showPlanned: '@:base.show@:base.planned'
+  },
+  sort: {
+    by: '按',
+    default: '默认排序',
+    importance: '重要性',
+    dueDateTime: '截止时间',
+    completed: '已完成',
+    letter: '字母',
+    createDateTime: '创建时间'
   }
 }

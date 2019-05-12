@@ -1,7 +1,8 @@
 import { ipcRenderer } from 'electron'
-import { Storage, isEmpty } from '@/common/utils'
+import { Storage, isEmpty, separate } from '@/common/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
+import moment from 'moment'
 import { PAGE_SIZE } from '@/common/static'
 
 // Get store settings
@@ -36,7 +37,9 @@ const state = {
   showTaskDetailModal: false,
   showTaskFolderAddModal: false,
   // sort tasks
-  sort: false,
+  sortBy: 'default',
+  // sort direction
+  sortDir: true,
   taskFolders: [],
   tasks: [],
   // get token from localstorage
@@ -60,9 +63,30 @@ const getters = {
     return folders
   },
   // Get tasks filtered by folder
-  tasks ({sort, tasks, currentFolder, showCompleteTask}) {
+  tasks ({sortBy, sortDir, tasks, currentFolder, showCompleteTask}) {
     let taskArr = [...tasks]
-    if (!sort) taskArr = [...tasks].reverse()
+    switch (sortBy) {
+      case 'importance':
+        taskArr = separate(taskArr, item => item.Importance === 'High')
+        break
+      case 'dueDateTime':
+        taskArr = separate(taskArr, item => !!item.DueDateTime)
+        taskArr = taskArr.sort((a, b) => {
+          return a.DueDateTime && b.DueDateTime
+            ? moment(a.DueDateTime.DateTime).isAfter(moment(b.DueDateTime.DateTime)) ? 1 : -1
+            : 1
+        })
+        break
+      case 'completed':
+        taskArr = separate(taskArr, item => item.Status === 'Completed')
+        break
+      case 'letter':
+        break
+      case 'createDateTime':
+      default:
+        break
+    }
+    if (!sortDir) taskArr = taskArr.reverse()
     if (currentFolder.Key) {
       taskArr = taskArr.filter(o => o[currentFolder.Key] === currentFolder.Value)
     } else {
@@ -111,7 +135,7 @@ const actions = {
   // Get all user tasks
   async GET_TASKS ({commit}) {
     const { value } = await get(`/me/tasks?$top=${PAGE_SIZE}`, null, {showLoading: false})
-    commit('UPDATE_STATE', {tasks: value.reverse()})
+    commit('UPDATE_STATE', {tasks: value})
   },
   // Update task, data is Object contain some property of task, Id is required
   async UPDATE_TASK ({state, commit}, data) {

@@ -12,15 +12,20 @@ div.task-list
       round
     ) {{$t('base.cancel')}}
   Header(v-if="!showSearch")
-    span.u-pointer(
-      slot="left"
-      v-show="tasks.length"
-      @click="updateState({sort: !sort})"
-    )
-      i.iconfont.u-pointer.u-s12(
-        :class="sort ? 'icon-down' : 'icon-up'"
+    div(slot="left")
+      el-dropdown(@command="updateState({sortBy: $event})")
+        span.el-dropdown-link.u-clear-outline 按{{sortText}}
+        el-dropdown-menu(slot="dropdown")
+          el-dropdown-item(
+            v-for="item in sortList"
+            :command="item.value"
+          )
+            span {{item.name}}
+            i.iconfont.u-ml10.u-green(:class="{'icon-checked': item.value === sortBy}")
+      i.iconfont.u-pointer.u-s14.u-bold.u-ml5(
+        :class="sortDir ? 'icon-sort-desc' : 'icon-sort-asc'"
+        @click="updateState({sortDir: !sortDir})"
       )
-      span.u-ml5 {{$t('base.sort')}}
     el-popover(
       placement="bottom"
       width="200"
@@ -87,6 +92,14 @@ export default {
     return {
       has,
       searchStr: '',
+      sortList: [
+        { name: this.$t('sort.default'), value: 'default' },
+        { name: this.$t('sort.importance'), value: 'importance' },
+        { name: this.$t('sort.dueDateTime'), value: 'dueDateTime' },
+        { name: this.$t('sort.completed'), value: 'completed' },
+        { name: this.$t('sort.letter'), value: 'letter' },
+        { name: this.$t('sort.createDateTime'), value: 'createDateTime' }
+      ],
       cache: {
         showCompleteTask: false,
         currentFolder: {}
@@ -99,7 +112,8 @@ export default {
       'taskFolders',
       'currentTask',
       'currentFolder',
-      'sort',
+      'sortDir',
+      'sortBy',
       'showSearch',
       'showCompleteTask'
     ]),
@@ -116,6 +130,9 @@ export default {
     dontDelete () {
       const { Id, Name } = this.currentFolder
       return Id && !has(['任务', 'Task', 'task'], Name)
+    },
+    sortText () {
+      return this.sortList.find(o => o.value === this.sortBy).name
     }
   },
 
