@@ -28,6 +28,7 @@ export default {
     remind: '提醒',
     rename: '重命名',
     repeat: '重复',
+    search: '搜索',
     select: '选择',
     setting: '设置',
     show: '显示',

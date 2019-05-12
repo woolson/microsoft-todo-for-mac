@@ -1,7 +1,7 @@
 <template lang="pug">
 div.task-item.u-bb(
   ref="root"
-  :class="{active: currentTask.Id === data.Id}"
+  :class="{active: currentTask.Id === data.Id, completed: data.Status === 'Completed'}"
   @click="updateState({currentTask: data, showTaskDetailModal: true})"
 )
   i.iconfont.u-mr15(
@@ -9,16 +9,15 @@ div.task-item.u-bb(
     @click.stop="changeTaskStatus"
   )
   div.task-item__content
-    h1(:style="titleStyle") {{data.Subject}}
-    div.task-item__info(v-show="data.IsReminderOn || data.Body.Content")
-      i.iconfont.icon-bell(
-        v-show="data.IsReminderOn"
-        :title="$t('base.remind')"
-      )
-      i.iconfont.icon-note(
-        v-show="data.Body.Content"
-        :title="$t('base.note')"
-      )
+    span(:style="titleStyle") {{data.Subject}}
+    i.iconfont.icon-bell(
+      v-show="data.IsReminderOn"
+      :title="$t('base.remind')"
+    )
+    i.iconfont.icon-note(
+      v-show="data.Body.Content"
+      :title="$t('base.note')"
+    )
   i.iconfont.u-ml10(
     :class="starClass"
     @click.stop="changeTaskImportance"
@@ -139,20 +138,30 @@ export default {
       display none
   &.active
     *
-      color var(--text-main) !important
+      // color var(--text-main) !important
+      color white
     background var(--task-background-active)
     .task-item__info
       background var(--task-info-background)
+  &.completed
+    *
+      opacity .7
   &:hover:not(.active)
     background var(--background-section-hover)
 
 .task-item__content
-  h1
+  display flex
+  span
     font-size 14px
     line-height 1
     font-weight normal
     margin 0
+    margin-right 5px
     color var(--text-main)
+  .iconfont
+    font-size 12px
+    margin-left 8px
+    font-weight bold
 
 .task-item__info
   // width 100%

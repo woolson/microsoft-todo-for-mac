@@ -100,7 +100,7 @@ export default {
     width 0px !important
 
 .sidebar__separate
-  margin 5px !important
+  margin 10px 25px !important
   border-top 1px solid rgba(black, .1)
 
 .sidebar__setting

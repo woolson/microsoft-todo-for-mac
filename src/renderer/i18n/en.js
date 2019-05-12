@@ -28,6 +28,7 @@ export default {
     remind: 'Remind',
     rename: 'Rename',
     repeat: 'Repeat',
+    search: 'Search',
     select: 'Select',
     setting: 'Setting',
     show: 'Show',

@@ -51,6 +51,17 @@ div.task-list
         i.iconfont.icon-down-o.u-ml10.u-s5
     el-tooltip(
       slot="right"
+      :content="$t('base.search')"
+      placement="left"
+    )
+      el-button.u-ml10(
+        size="mini"
+        circle
+        icon="el-icon-search"
+        @click="updateState({showSearch: true})"
+      )
+    el-tooltip(
+      slot="right"
       :content="$t('task.create')"
       placement="left"
     )

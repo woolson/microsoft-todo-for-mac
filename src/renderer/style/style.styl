@@ -25,13 +25,13 @@
   --background-section $background-dark-section
   --background-section-hover rgba(black, .25)
   // Text
-  --text-main white
+  --text-main #BBBBBB
   --text-sub $text-light
   // Border
   --border #222
   --border-arrow $background-dark
   // Task-Folder
-  --folder-background $blue
+  --folder-background $text-gray
   // Task
   --task-background-active $background-dark
   --task-info-background darken($background-dark-section, 1.5)
@@ -168,3 +168,7 @@ body
     border-bottom-color var(--border-arrow) !important
   .popper__arrow:after
     border-bottom-color var(--background-content) !important
+
+.el-time-panel
+  left auto !important
+  right 0
