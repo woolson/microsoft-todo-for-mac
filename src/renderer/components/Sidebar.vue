@@ -64,7 +64,6 @@ export default {
   height 100vh
   width 190px
   box-sizing border-box
-  box-shadow inset 0 0 5px rgba(black, .15)
   background var(--background-sidebar)
   display flex
   flex-direction column

@@ -83,6 +83,7 @@ const getters = {
         taskArr = separate(taskArr, item => item.Status === 'Completed')
         break
       case 'letter':
+        taskArr = taskArr.sort((a, b) => a.Subject.localeCompare(b.Subject, 'zh'))
         break
       case 'createDateTime':
       default:
