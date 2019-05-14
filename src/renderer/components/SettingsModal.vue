@@ -27,14 +27,14 @@ Modal.settings(
           :value="showPlannedFolder"
           @change="updateState({showPlannedFolder: !showPlannedFolder})"
         )
-      div.u-form__row
-        label {{$t('task.showCompleted')}}
-        el-switch(
-          :active-color="$color.green"
-          :inactive-color="$color.red"
-          :value="showCompleteTask"
-          @change="updateState({showCompleteTask: !showCompleteTask})"
-        )
+      //- div.u-form__row
+      //-   label {{$t('task.showCompleted')}}
+      //-   el-switch(
+      //-     :active-color="$color.green"
+      //-     :inactive-color="$color.red"
+      //-     :value="showCompleteTask"
+      //-     @change="updateState({showCompleteTask: !showCompleteTask})"
+      //-   )
     div.u-form__row-section
       div.u-form__row.u-bb
         label {{$t('base.language')}}

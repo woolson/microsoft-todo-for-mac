@@ -42,6 +42,9 @@ export default {
       'token',
       'theme',
       'tasks',
+      'sortBy',
+      'sortDir',
+      'sortStash',
       'language',
       'currentTask',
       'currentFolder',
@@ -108,8 +111,11 @@ export default {
     language (newValue) {
       ipcRenderer.sendSync('update-setting', {language: newValue})
     },
+    sortBy: 'updateTaskSetting',
+    sortDir: 'updateTaskSetting',
     showCompleteTask (newValue) {
       ipcRenderer.sendSync('update-setting', {showCompleteTask: newValue})
+      this.updateTaskSetting()
     },
     showPlannedFolder (newValue) {
       ipcRenderer.sendSync('update-setting', {showPlannedFolder: newValue})
@@ -144,6 +150,18 @@ export default {
       } finally {
         loading && loading.close()
       }
+    },
+    updateTaskSetting () {
+      const sortStash = {
+        ...this.sortStash,
+        [this.currentFolder.Id]: {
+          sortBy: this.sortBy,
+          sortDir: this.sortDir,
+          showCompleteTask: this.showCompleteTask
+        }
+      }
+      this.updateState({sortStash})
+      ipcRenderer.sendSync('update-setting', {sortStash})
     }
   }
 }

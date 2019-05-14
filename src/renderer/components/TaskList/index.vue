@@ -12,59 +12,12 @@ div.task-list
       round
     ) {{$t('base.cancel')}}
   Header(v-if="!showSearch")
-    div(slot="left")
-      el-dropdown(@command="updateState({sortBy: $event})")
-        span.el-dropdown-link.u-clear-outline 按{{sortText}}
-        el-dropdown-menu(slot="dropdown")
-          el-dropdown-item(
-            v-for="item in sortList"
-            :command="item.value"
-          )
-            span {{item.name}}
-            i.iconfont.u-ml10.u-green(:class="{'icon-checked': item.value === sortBy}")
-      i.iconfont.u-pointer.u-s14.u-bold.u-ml5(
-        :class="sortDir ? 'icon-sort-desc' : 'icon-sort-asc'"
-        @click="updateState({sortDir: !sortDir})"
-      )
-    el-popover(
-      placement="bottom"
-      width="200"
-      trigger="hover"
-    )
-      div.task-list__options
-        div(:class="{'u-bb': dontDelete}")
-          span.u-mrauto {{$t('task.showCompleted')}}
-          el-switch(
-            :active-color="$color.green"
-            :inactive-color="$color.red"
-            :value="showCompleteTask"
-            @change="updateState({showCompleteTask: !showCompleteTask})"
-          )
-        p.rename.u-bb(
-          v-show="dontDelete"
-          @click="renameTaskFolder"
-        ) {{$t('base.rename')}}
-        p.delete(
-          v-show="dontDelete"
-          @click="deleteTaskFolder"
-        ) {{$t('base.delete')}}
-      div.task-list__title(slot="reference")
-        span.u-bold(
-          :style="{color: showCompleteTask ? $color.green : $color.red}"
-        ) &bull;
-        span.u-ml10 {{currentFolder.Name}}
-        i.iconfont.icon-down-o.u-ml10.u-s5
-    el-tooltip(
-      slot="right"
-      :content="$t('task.create')"
-      placement="left"
-    )
-      el-button.u-ml10(
-        size="mini"
-        circle
-        icon="el-icon-plus"
-        @click="updateState({showTaskAddModal: true})"
-      )
+    div.task-list__title(slot="left")
+      span.u-bold(
+        :style="{color: showCompleteTask ? $color.green : $color.red}"
+      ) &bull;
+      span.u-ml10 {{currentFolder.Name}}
+    Options(slot="right")
   div.task-list__content(v-if="showSearch ? searchTasks.length : tasks.length")
     Item(
       v-for="item in showSearch ? searchTasks : tasks"
@@ -79,27 +32,20 @@ div.task-list
 <script>
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import Item from './Item'
-import { ipcRenderer } from 'electron'
+import Options from './Options'
 import { has, isEmpty } from '@/common/utils'
 import { nextTask } from '@/common/event'
 
 export default {
   components: {
-    Item
+    Item,
+    Options
   },
 
   data () {
     return {
       has,
       searchStr: '',
-      sortList: [
-        { name: this.$t('sort.default'), value: 'default' },
-        { name: this.$t('sort.importance'), value: 'importance' },
-        { name: this.$t('sort.dueDateTime'), value: 'dueDateTime' },
-        { name: this.$t('sort.completed'), value: 'completed' },
-        { name: this.$t('sort.letter'), value: 'letter' },
-        { name: this.$t('sort.createDateTime'), value: 'createDateTime' }
-      ],
       cache: {
         showCompleteTask: false,
         currentFolder: {}
@@ -126,13 +72,6 @@ export default {
       return this.allTasks.filter(o => {
         return has(o.Subject.toLowerCase(), this.searchStr.toLowerCase())
       })
-    },
-    dontDelete () {
-      const { Id, Name } = this.currentFolder
-      return Id && !has(['任务', 'Task', 'task'], Name)
-    },
-    sortText () {
-      return this.sortList.find(o => o.value === this.sortBy).name
     }
   },
 
@@ -160,23 +99,6 @@ export default {
     ...mapMutations({
       updateState: 'UPDATE_STATE'
     }),
-    async deleteTaskFolder () {
-      const result = ipcRenderer.sendSync('delete-folder', this.currentFolder)
-      if (result) {
-        try {
-          await this.deleteFolder()
-          this.$message.success('删除成功')
-        } catch (err) {
-          this.$message.error('删除失败')
-        }
-      }
-    },
-    renameTaskFolder () {
-      this.updateState({
-        currentFolder: {...this.currentFolder, Type: 'Rename'},
-        showTaskFolderAddModal: true
-      })
-    },
     cancelSearch () {
       this.searchStr = ''
       this.updateState({
@@ -243,36 +165,14 @@ export default {
     margin-top 10px
     font-size 14px
 
-.task-list__options
-  color var(--text-main)
-  > div
-    display flex
-    padding 10px 12px
-    user-select none
-  p
-    cursor pointer
-    padding 10px 12px
-    margin 0
-    transition all .2s
-    background var(--background-content)
-    &.rename
-      color $green
-      &:hover
-        background $green !important
-    &.delete
-      color $red
-      border-radius 0 0 5px 5px
-      &:hover
-        background $red !important
-    &:hover
-      color white
-
 .task-list__title
   outline none
   display inline-flex
   align-items center
   justify-content center
   > span:nth-child(2)
+    font-size 16px
+    font-weight bold
     max-width 150px
     white-space nowrap
     overflow hidden

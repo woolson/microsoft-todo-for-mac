@@ -108,7 +108,8 @@ const mutations = {
     if (data.currentFolder) {
       data = merge(data, state.sortStash[data.currentFolder.Id] || {
         sortBy: 'default',
-        sortDir: false
+        sortDir: false,
+        showCompleteTask: true
       })
     }
     Object.assign(state, data)
