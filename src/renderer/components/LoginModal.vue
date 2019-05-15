@@ -5,7 +5,10 @@ Modal.login-modal(v-model="shouldLogin")
     element-loading-background="rgba(0, 0, 0, 0.8)"
     element-loading-text="加载中"
   )
-    webview(ref="webview" :src="loginUrl")
+    webview(
+      ref="webview"
+      :src="loginUrl"
+    )
     Header
       template
         el-button(

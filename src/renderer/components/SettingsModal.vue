@@ -132,7 +132,9 @@ export default {
       token.remove()
       this.updateState({
         showSettingsModal: false,
-        shouldLogin: true
+        shouldLogin: true,
+        tasks: [],
+        taskFolders: []
       })
     }
   }

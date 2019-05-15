@@ -16,7 +16,7 @@ div.task-list
       span.u-bold(
         :style="{color: showCompleteTask ? $color.green : $color.red}"
       ) &bull;
-      span.u-ml10 {{currentFolder.Name}}
+      span.u-ml10(:title="currentFolder.Name") {{currentFolder.Name}}
     Options(slot="right")
   div.task-list__content(v-if="showSearch ? searchTasks.length : tasks.length")
     Item(

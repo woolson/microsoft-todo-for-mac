@@ -63,6 +63,7 @@ export default {
 .sidebar
   height 100vh
   width 190px
+  flex-shrink 0
   box-sizing border-box
   background var(--background-sidebar)
   display flex

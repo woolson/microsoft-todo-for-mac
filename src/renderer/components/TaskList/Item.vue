@@ -9,7 +9,11 @@ div.task-item.u-bb(
     @click.stop="changeTaskStatus"
   )
   div.task-item__content
-    span(:style="titleStyle" :title="data.Subject") {{data.Subject}}
+    span(
+      v-line-clamp:14="1"
+      :style="titleStyle"
+      :title="data.Subject"
+    ) {{data.Subject}}
     i.u-ml10.u-gray(
       v-if="data.IsReminderOn || data.Body.Content || data.HasAttachments"
     ) &#8226
@@ -159,14 +163,14 @@ export default {
   display flex
   margin-right 15px
   span
-    max-width 250px
+    // max-width 240px
     font-size 14px
-    font-weight normal
+    // font-weight normal
     margin 0
     color var(--text-main)
-    text-overflow ellipsis
-    white-space nowrap
-    overflow hidden
+    // text-overflow ellipsis
+    // white-space nowrap
+    // overflow hidden
   i
     font-size 11px
     margin-left 8px
