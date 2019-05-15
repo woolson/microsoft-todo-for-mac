@@ -27,7 +27,7 @@ div.task-detail-main
     div.u-form__row.u-bb
       label {{$t('base.folder')}}
       div.u-center-end
-        el-select.u-flex-1(
+        el-select.u-w180(
           v-model="parentId"
           @change="changeParent"
         )
@@ -333,6 +333,8 @@ export default {
   height 100vh
   display flex
   flex-direction column
+  .el-date-editor.el-input
+    width 180px
 
 .task-detail__header
   padding 5px 15px
