@@ -68,7 +68,7 @@ div.task-detail-main
   div.u-form__row-section
     div.u-form__row.u-bb(
       v-for="item,index in attachments"
-      :key="item.Name"
+      :key="item.Name + index"
     )
       label {{item.Name}}
       i.iconfont.icon-close.u-s14(
@@ -197,7 +197,8 @@ export default {
       deleteTask: 'DELETE_TASK'
     }),
     ...mapMutations({
-      updateState: 'UPDATE_STATE'
+      updateState: 'UPDATE_STATE',
+      updateTask: 'UPDATE_TASK'
     }),
     changeParent (newParent) {
       this.updateTask({
@@ -235,6 +236,7 @@ export default {
       await this.$confirm(`${this.$t('message.confirmToDelete')} ${item.Name}`)
       await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}/attachments/${item.Id}`)
       this.attachments.splice(index, 1)
+      this.updateTaskAttachment()
     },
     async remindSubmit (value) {
       await this.updateTask({
@@ -259,7 +261,6 @@ export default {
       this.$refs.file.click()
     },
     async selectFile (evt) {
-      console.dir(evt.target)
       const file = evt.target.files[0]
       const base64 = await fileToBase64(file)
       const result = await this.$post(`/me/tasks/${this.currentTask.Id}/attachments`, {
@@ -267,7 +268,9 @@ export default {
         Name: file.name,
         ContentBytes: base64.split('base64,')[1]
       })
+      evt.target.value = ''
       this.attachments.push(result)
+      this.updateTaskAttachment()
     },
     async noteSubmit () {
       const Body = this.currentTask.Body || {}
@@ -311,6 +314,12 @@ export default {
           detail: `${this.$t('message.confirmToDelete')} ${arg.Subject} ？`
         }, resolve)
       })
+    },
+    updateTaskAttachment () {
+      const index = this.tasks.findIndex(o => o.Id === this.currentTask.Id)
+      if (index !== -1) {
+        this.updateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
+      }
     }
   }
 }

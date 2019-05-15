@@ -13,17 +13,17 @@ div.task-item.u-bb(
     span.u-ml10.u-gray(
       v-if="data.IsReminderOn || data.Body.Content || data.HasAttachments"
     ) &#8226
-    i.iconfont.icon-bell.u-bold(
+    i.el-icon-bell(
       v-show="data.IsReminderOn"
       :title="$t('base.remind')"
     )
-    i.iconfont.icon-note.u-bold(
-      v-show="data.Body.Content"
-      :title="$t('base.note')"
-    )
-    i.iconfont.icon-attachment(
+    i.el-icon-paperclip(
       v-show="data.HasAttachments"
       :title="$t('base.attachment')"
+    )
+    i.el-icon-document-add(
+      v-show="data.Body.Content"
+      :title="$t('base.note')"
     )
   i.iconfont.u-ml10(
     :class="starClass"
@@ -129,10 +129,8 @@ export default {
       font-size 20px
     &.icon-check
       color $green
-      // animation bounceIn .75s
     &.icon-star
       color $yellow
-      // animation bounceIn .75s
     &:hover
       animation bounceIn .75s
   &:first-child
@@ -164,10 +162,11 @@ export default {
     font-weight normal
     margin 0
     color var(--text-main)
-  .iconfont
-    font-size 10px
+  i
+    font-size 11px
     margin-left 8px
-    opacity .7
+    // opacity .7
+    line-height 45px
 
 .task-item__info
   // width 100%

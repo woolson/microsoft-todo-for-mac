@@ -36,6 +36,11 @@
   --task-background-active $background-dark
   --task-info-background darken($background-dark-section, 1.5)
 
+  .el-select-dropdown__item.hover
+  .el-button--default
+  .el-input input
+    background var(--background) !important
+
 ::selection
   background $blue
   color white
@@ -120,11 +125,6 @@ body
 
 .el-date-editor.el-input
   width auto
-
-.el-select-dropdown__item.hover
-.el-button--default
-.el-input input
-  background var(--background) !important
 
 .el-input__inner
 .el-select-dropdown

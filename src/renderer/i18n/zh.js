@@ -2,6 +2,7 @@ export default {
   base: {
     async: '同步',
     at: '于',
+    attachment: '附件',
     auto: '自动',
     cancel: '取消',
     check: '检查',

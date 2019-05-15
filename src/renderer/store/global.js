@@ -3,6 +3,7 @@ import { Storage, isEmpty, separate } from '@/common/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 import moment from 'moment'
+import Vue from 'vue'
 import merge from 'deepmerge'
 import { PAGE_SIZE } from '@/common/static'
 
@@ -113,6 +114,10 @@ const mutations = {
       })
     }
     Object.assign(state, data)
+  },
+  UPDATE_TASK (state, data) {
+    const index = state.tasks.findIndex(o => o.Id === data.Id)
+    if (index !== -1) Vue.set(state.tasks, index, data)
   }
 }
 
