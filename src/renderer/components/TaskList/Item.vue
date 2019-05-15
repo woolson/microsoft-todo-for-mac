@@ -1,24 +1,30 @@
 <template lang="pug">
 div.task-item.u-bb(
   ref="root"
-  :class="{active: currentTask.Id === data.Id}"
+  :class="{active: currentTask.Id === data.Id, completed: data.Status === 'Completed'}"
   @click="updateState({currentTask: data, showTaskDetailModal: true})"
 )
-  i.iconfont.u-mr15(
+  i.iconfont.u-mr5(
     :class="checkClass"
     @click.stop="changeTaskStatus"
   )
   div.task-item__content
-    h1(:style="titleStyle") {{data.Subject}}
-    div.task-item__info(v-show="data.IsReminderOn || data.Body.Content")
-      i.iconfont.icon-bell(
-        v-show="data.IsReminderOn"
-        :title="$t('base.remind')"
-      )
-      i.iconfont.icon-note(
-        v-show="data.Body.Content"
-        :title="$t('base.note')"
-      )
+    span(:style="titleStyle") {{data.Subject}}
+    span.u-ml10.u-gray(
+      v-if="data.IsReminderOn || data.Body.Content || data.HasAttachments"
+    ) &#8226
+    i.iconfont.icon-bell.u-bold(
+      v-show="data.IsReminderOn"
+      :title="$t('base.remind')"
+    )
+    i.iconfont.icon-note.u-bold(
+      v-show="data.Body.Content"
+      :title="$t('base.note')"
+    )
+    i.iconfont.icon-attachment(
+      v-show="data.HasAttachments"
+      :title="$t('base.attachment')"
+    )
   i.iconfont.u-ml10(
     :class="starClass"
     @click.stop="changeTaskImportance"
@@ -107,7 +113,8 @@ export default {
   display flex
   align-items center
   background var(--background-section)
-  padding 11px 15px
+  padding 0 12px
+  line-height 45px
   background-size 0px 100%
   position relative
   transition all .2s
@@ -115,18 +122,17 @@ export default {
   user-select none
   box-sizing border-box
   color var(--text-main)
-  > div
-    flex 1
   > i
     &.icon-check
     &.icon-check-o
+      padding 0 5px
       font-size 20px
     &.icon-check
       color $green
-      animation bounceIn .75s
+      // animation bounceIn .75s
     &.icon-star
       color $yellow
-      animation bounceIn .75s
+      // animation bounceIn .75s
     &:hover
       animation bounceIn .75s
   &:first-child
@@ -139,20 +145,29 @@ export default {
       display none
   &.active
     *
-      color var(--text-main) !important
+      // color var(--text-main) !important
+      color white
     background var(--task-background-active)
     .task-item__info
       background var(--task-info-background)
+  &.completed
+    *
+      opacity .7
   &:hover:not(.active)
     background var(--background-section-hover)
 
 .task-item__content
-  h1
+  flex 1
+  display flex
+  span
     font-size 14px
-    line-height 1
     font-weight normal
     margin 0
     color var(--text-main)
+  .iconfont
+    font-size 10px
+    margin-left 8px
+    opacity .7
 
 .task-item__info
   // width 100%

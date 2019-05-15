@@ -1,18 +1,18 @@
 <template lang="pug">
-div.task-folder-item(
-  ref="root"
-  :class="activeClass"
-  @click="updateState({currentFolder: data})"
+el-tooltip(
+  effect="dark"
+  :content="data.Name"
+  placement="right"
+  :open-delay="1000"
 )
-  i.iconfont(:class="folderIcon")
-  el-tooltip.u-ml5(
-    effect="dark"
-    :content="data.Name"
-    placement="right"
-    :open-delay="500"
+  div.task-folder-item(
+    ref="root"
+    :class="activeClass"
+    @click="updateState({currentFolder: data})"
   )
+    i.iconfont.u-mr5(:class="folderIcon")
     span.task-folder-item__name {{data.Name}}
-  span.number.u-mlauto {{data.number}}
+    span.number.u-mlauto {{data.number}}
 </template>
 
 <script>
@@ -23,10 +23,10 @@ const FOLDER_ICON = {
   'task': 'icon-task',
   'tasks': 'icon-task',
   'Task': 'icon-task',
-  '重要': 'icon-star',
-  'Importance': 'icon-star',
-  'importance': 'icon-star',
-  '计划日程': 'icon-calendar-o',
+  '重要': 'icon-star u-yellow',
+  'Importance': 'icon-star u-yellow',
+  'importance': 'icon-star u-yellow',
+  '已计划日程': 'icon-calendar-o',
   'Planned': 'icon-calendar-o',
   'planned': 'icon-calendar-o'
 }
@@ -89,8 +89,9 @@ export default {
   color white
   display flex
   align-items center
-  transition all .2s
+  // transition all .2s
   margin 1px 0
+  outline none
   i
     font-size 18px
     &.icon-star

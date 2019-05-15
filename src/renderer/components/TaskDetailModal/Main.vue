@@ -121,7 +121,8 @@ export default {
     ...mapState([
       'tasks',
       'currentTask',
-      'taskFolders'
+      'taskFolders',
+      'showTaskDetailModal'
     ]),
     titleStyle () {
       const { Status } = this.currentTask
@@ -173,9 +174,16 @@ export default {
         this.parentId = ParentFolderId
         this.name = Subject
         this.note = Body && Body.Content
-        if (HasAttachments) this.fetchAttachments()
+        // get task attachments
+        if (HasAttachments && this.showTaskDetailModal) this.fetchAttachments()
+        else this.attachments = []
       },
       deep: true
+    },
+    showTaskDetailModal (newValue) {
+      if (this.currentTask.HasAttachments && newValue) {
+        this.fetchAttachments()
+      }
     }
   },
 

@@ -10,8 +10,9 @@
   --text-sub $text
   // Border
   --border $border
+  --border-arrow $arrow
   // Task-Folder
-  --folder-background rgba(black, .1)
+  --folder-background rgba(black, .3)
   // Task
   --task-background-active linear-gradient(45deg, $blue, $purple)
   --task-info-background rgba(white, .4)
@@ -24,12 +25,13 @@
   --background-section $background-dark-section
   --background-section-hover rgba(black, .25)
   // Text
-  --text-main white
+  --text-main #BBBBBB
   --text-sub $text-light
   // Border
   --border #222
+  --border-arrow $background-dark
   // Task-Folder
-  --folder-background $blue
+  --folder-background $text-gray
   // Task
   --task-background-active $background-dark
   --task-info-background darken($background-dark-section, 1.5)
@@ -74,7 +76,7 @@ body
 
 .el-message--success
 .el-message--error
-  margin-left 80px
+  margin-left 95px
   p,
   i
     color white !important
@@ -163,6 +165,10 @@ body
 .el-popover
   .popper__arrow
   .popper__arrow:after
-    border-bottom-color var(--background) !important
+    border-bottom-color var(--border-arrow) !important
   .popper__arrow:after
     border-bottom-color var(--background-content) !important
+
+.el-time-panel
+  left auto !important
+  right 0
