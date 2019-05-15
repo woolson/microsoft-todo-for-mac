@@ -7,7 +7,7 @@
   --background-section-hover rgba($blue, .15)
   // Text
   --text-main $text
-  --text-sub $text
+  --text-sub $gray
   // Border
   --border $border
   --border-arrow $arrow
@@ -35,11 +35,6 @@
   // Task
   --task-background-active $background-dark
   --task-info-background darken($background-dark-section, 1.5)
-
-  .el-select-dropdown__item.hover
-  .el-button--default
-  .el-input input
-    background var(--background) !important
 
 ::selection
   background $blue
@@ -157,9 +152,11 @@ body
 .el-picker-panel__icon-btn
   color var(--text-main) !important
 
-.el-input__inner::-webkit-input-placeholder
 .el-date-table__row .prev-month
 .el-date-table__row .next-month
+  color var(--text-main) !important
+
+.el-input__inner::-webkit-input-placeholder
   color var(--text-sub)
 
 .el-popover
@@ -172,3 +169,14 @@ body
 .el-time-panel
   left auto !important
   right 0
+
+.el-select-dropdown__item.hover
+// .el-button--default
+.el-input input
+  background var(--background) !important
+
+.el-select-dropdown__item
+  max-width 180px
+  text-overflow ellipsis
+  white-space nowrap
+  overflow hidden

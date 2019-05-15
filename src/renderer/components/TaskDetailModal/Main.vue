@@ -37,7 +37,7 @@ div.task-detail-main
             :value="item.Id"
             :label="item.Name"
           )
-        i.iconfont.icon-right.u-ml5
+        i.el-icon-arrow-right.u-ml5.u-s20
     div.u-form__row.u-bb
       label {{$t('task.remindTime')}}
       div.u-center-end
@@ -48,8 +48,9 @@ div.task-detail-main
           format="MM-dd HH:mm"
           :placeholder="$t('base.select')"
           @change="remindSubmit"
+          @blur="remindSubmit"
         )
-        i.iconfont.icon-right.u-ml5
+        i.el-icon-arrow-right.u-ml5.u-s20
     div.u-form__row
       label {{$t('task.dueTime')}}
       div.u-center-end
@@ -60,8 +61,9 @@ div.task-detail-main
           format="MM-dd"
           :placeholder="$t('base.select')"
           @change="stopDateSubmit"
+          @blur="stopDateSubmit"
         )
-        i.iconfont.icon-right.u-ml5
+        i.el-icon-arrow-right.u-ml5.u-s20
     //- div.u-form__row(@click="$emit('update:step', 1)")
     //-   label 重复
     //-   i.iconfont.icon-right.u-ml5
@@ -155,7 +157,8 @@ export default {
 
   watch: {
     currentTask: {
-      handler (newValue) {
+      handler (newValue, oldValue) {
+        if (newValue.Id === oldValue.Id) return
         const {
           Body,
           DueDateTime,
@@ -198,7 +201,7 @@ export default {
     }),
     ...mapMutations({
       updateState: 'UPDATE_STATE',
-      updateTask: 'UPDATE_TASK'
+      updateStateTask: 'UPDATE_TASK'
     }),
     changeParent (newParent) {
       this.updateTask({
@@ -241,20 +244,20 @@ export default {
     async remindSubmit (value) {
       await this.updateTask({
         Id: this.currentTask.Id,
-        IsReminderOn: true,
-        ReminderDateTime: {
+        IsReminderOn: !!value,
+        ReminderDateTime: value ? {
           DateTime: value.toISOString(),
           TimeZone: 'Asia/Shanghai'
-        }
+        } : null
       })
     },
     async stopDateSubmit (value) {
       await this.updateTask({
         Id: this.currentTask.Id,
-        DueDateTime: {
+        DueDateTime: value ? {
           DateTime: value.toISOString(),
           TimeZone: 'Asia/Shanghai'
-        }
+        } : null
       })
     },
     showSelect () {
@@ -318,7 +321,7 @@ export default {
     updateTaskAttachment () {
       const index = this.tasks.findIndex(o => o.Id === this.currentTask.Id)
       if (index !== -1) {
-        this.updateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
+        this.updateStateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
       }
     }
   }
