@@ -2,6 +2,7 @@ export default {
   base: {
     async: 'Async',
     at: 'At',
+    attachment: 'Attachment',
     auto: 'Auto',
     cancel: 'Cancel',
     check: 'Check',
@@ -16,6 +17,7 @@ export default {
     folder: 'Folder',
     hide: 'Hide',
     importance: 'Importance',
+    list: 'List',
     language: 'Language',
     loading: 'Loading',
     logout: 'Logout',
@@ -23,6 +25,7 @@ export default {
     name: 'Name',
     note: 'Note',
     notice: 'Notice',
+    options: 'Options',
     period: 'Period',
     planned: 'Planned',
     remind: 'Remind',

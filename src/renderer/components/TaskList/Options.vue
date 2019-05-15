@@ -15,10 +15,10 @@ div.task-options
         v-show="currentStep"
         @click="currentStep = 0"
       )
-      h1 {{$t('base.list')}}{{$t('base.options')}}
+      h1 {{$t('base.options')}}
     div.task-options__list
       li.u-form__row
-        span.u-mrauto {{$t('task.showCompleted')}}
+        span.u-mrauto {{$t('base.completed')}}
         el-switch(
           :active-color="$color.green"
           :inactive-color="$color.red"
