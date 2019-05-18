@@ -68,6 +68,7 @@
     "element-ui": "^2.8.2",
     "fundebug-javascript": "^1.7.3",
     "fundebug-vue": "0.0.1",
+    "temp-dir": "^2.0.0",
     "vue": "^2.6.10",
     "vue-electron": "^1.0.6",
     "vue-i18n": "^8.9.0",

@@ -152,7 +152,7 @@ export default {
 .modal--right
   .modal__main
     height 100vh
-    width 50vw
+    width 60vw
     max-width 400px
     min-width 350px
 

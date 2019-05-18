@@ -1,8 +1,14 @@
 <template lang="pug">
 div.task-item.u-bb(
   ref="root"
-  :class="{active: currentTask.Id === data.Id, completed: data.Status === 'Completed'}"
-  @click="updateState({currentTask: data, showTaskDetailModal: true})"
+  :class="{\
+    active: currentTask.Id === data.Id,\
+    completed: data.Status === 'Completed'\
+  }"
+  @click="updateState({\
+    currentTask: data,\
+    showTaskDetailModal: true\
+  })"
 )
   i.iconfont.u-mr5(
     :class="checkClass"

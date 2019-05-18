@@ -27,7 +27,7 @@ div.task-detail-main
     div.u-form__row.u-bb
       label {{$t('base.folder')}}
       div.u-center-end
-        el-select.u-w180(
+        el-select.u-w210(
           v-model="parentId"
           @change="changeParent"
         )
@@ -45,9 +45,9 @@ div.task-detail-main
           v-model="dateTime"
           type="datetime"
           format="yyyy-MM-dd HH:mm"
+          align="right"
           :placeholder="$t('base.select')"
           @change="remindSubmit"
-          @blur="remindSubmit"
         )
     div.u-form__row
       label {{$t('task.dueTime')}}
@@ -56,10 +56,10 @@ div.task-detail-main
           ref="stopPicker"
           v-model="stopDate"
           type="date"
+          align="right"
           format="yyyy-MM-dd"
           :placeholder="$t('base.select')"
           @change="stopDateSubmit"
-          @blur="stopDateSubmit"
         )
     //- div.u-form__row(@click="$emit('update:step', 1)")
     //-   label 重复
@@ -78,6 +78,7 @@ div.task-detail-main
     div.u-form__row.u-bb(
       v-for="item,index in attachments"
       :key="item.Name + index"
+      @click="viewFile(item)"
     )
       label.u-underline.u-s12 {{item.Name}}
       i.iconfont.icon-close.u-s10.u-pointer(
@@ -110,6 +111,7 @@ import { ipcRenderer, remote } from 'electron'
 export default {
   data () {
     return {
+      loading: false,
       parentId: '',
       name: '',
       dateTime: '',
@@ -232,7 +234,11 @@ export default {
       else showPicker()
     },
     async fetchAttachments () {
-      const { value } = await this.$get(`/me/tasks/${this.currentTask.Id}/attachments`)
+      const { value } = await this.$get(
+        `/me/tasks/${this.currentTask.Id}/attachments`,
+        null,
+        {showLoading: false}
+      )
       this.attachments = value
     },
     async removeAttachment (item, index) {
@@ -323,6 +329,10 @@ export default {
       if (index !== -1) {
         this.updateStateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
       }
+    },
+    viewFile (file) {
+      console.log('viewFile')
+      ipcRenderer.sendSync('view-file', file)
     }
   }
 }
@@ -334,7 +344,7 @@ export default {
   display flex
   flex-direction column
   .el-date-editor.el-input
-    width 180px
+    width 210px
 
 .task-detail__header
   padding 5px 15px

@@ -3,6 +3,10 @@ import setTouchBar from './touchbar'
 import setMenu from './menu'
 import language from './language'
 import store from './store'
+import path from 'path'
+import tempPath from 'temp-dir'
+import { writeFileSync } from 'fs'
+import { execSync } from 'child_process'
 
 export default function (mainWindow) {
   // Update touchbar
@@ -50,5 +54,14 @@ export default function (mainWindow) {
   // Get system theme
   ipcMain.on('get-theme', (event, arg) => {
     event.returnValue = systemPreferences.isDarkMode()
+  })
+
+  // View file content
+  ipcMain.on('view-file', (event, arg) => {
+    const filePath = path.join(tempPath, arg.Name)
+    const fileContent = Buffer.from(arg.ContentBytes, 'base64')
+    writeFileSync(filePath, fileContent)
+    execSync(`open ${filePath}`)
+    event.returnValue = true
   })
 }
