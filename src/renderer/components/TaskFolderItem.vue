@@ -86,7 +86,7 @@ export default {
   padding 0 12px
   cursor pointer
   user-select none
-  color white
+  color var(--folder-color)
   display flex
   align-items center
   // transition all .2s
