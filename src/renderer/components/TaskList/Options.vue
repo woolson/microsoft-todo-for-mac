@@ -3,12 +3,11 @@ div.task-options
   el-popover(
     trigger="hover"
     placement="bottom"
-    transition="none"
   )
     el-button.button-more(
       slot="reference"
       size="mini"
-      icon="el-icon-more"
+      icon="el-icon-setting"
     )
     div.task-options__title
       i.el-icon-back(
@@ -36,12 +35,12 @@ div.task-options
   el-popover(
     trigger="hover"
     placement="bottom"
-    transition="none"
   )
     el-button.button-sort(
       slot="reference"
       size="mini"
-    ) {{$t('base.sort')}}
+      icon="el-icon-s-operation"
+    )
     div.task-options__title
       i.el-icon-back(
         v-show="currentStep"
@@ -62,7 +61,13 @@ div.task-options
     i.iconfont.u-s12(
       :class="sortDir ? 'icon-sort-desc' : 'icon-sort-asc'"
     )
-  el-button(
+  el-button.button-search(
+    size="mini"
+    circle
+    icon="el-icon-search"
+    @click="updateState({showSearch: true})"
+  )
+  el-button.button-add(
     size="mini"
     circle
     icon="el-icon-plus"
@@ -136,6 +141,9 @@ export default {
 .task-options
   display flex
   align-items stretch
+  button
+    background var(--background-section)
+    border-color var(--background-section)
 
 .task-options__title
   display flex
@@ -160,7 +168,8 @@ export default {
     user-select none
   .u-form__row
     border-radius 0 !important
-    background white
+    // background white
+    cursor pointer
     &.rename
       color $green
     &.delete
@@ -169,8 +178,9 @@ export default {
 .task-options__sort
   .u-form__row
     border-radius 0 !important
-    background white
+    // background white
     padding 0 12px
+    cursor pointer
 
 .button-more
   border-radius 50% 0 0 50%
@@ -184,6 +194,13 @@ export default {
 .button-dir
   border-radius 0 50% 50% 0
   padding 8px
+
+.button-search
+  border-radius 50% 0 0 50%
+
+.button-add
+  margin-left 0
+  border-radius 0 50% 50% 0
 
 .steps
   height 200px !important

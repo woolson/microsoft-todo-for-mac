@@ -37,7 +37,6 @@ div.task-detail-main
             :value="item.Id"
             :label="item.Name"
           )
-        i.el-icon-arrow-right.u-ml5.u-s20
     div.u-form__row.u-bb
       label {{$t('task.remindTime')}}
       div.u-center-end
@@ -45,12 +44,11 @@ div.task-detail-main
           ref="remindPicker"
           v-model="dateTime"
           type="datetime"
-          format="MM-dd HH:mm"
+          format="yyyy-MM-dd HH:mm"
           :placeholder="$t('base.select')"
           @change="remindSubmit"
           @blur="remindSubmit"
         )
-        i.el-icon-arrow-right.u-ml5.u-s20
     div.u-form__row
       label {{$t('task.dueTime')}}
       div.u-center-end
@@ -58,24 +56,16 @@ div.task-detail-main
           ref="stopPicker"
           v-model="stopDate"
           type="date"
-          format="MM-dd"
+          format="yyyy-MM-dd"
           :placeholder="$t('base.select')"
           @change="stopDateSubmit"
           @blur="stopDateSubmit"
         )
-        i.el-icon-arrow-right.u-ml5.u-s20
     //- div.u-form__row(@click="$emit('update:step', 1)")
     //-   label 重复
     //-   i.iconfont.icon-right.u-ml5
   div.u-form__row-section
-    div.u-form__row.u-bb(
-      v-for="item,index in attachments"
-      :key="item.Name + index"
-    )
-      label {{item.Name}}
-      i.iconfont.icon-close.u-s14(
-        @click="removeAttachment(item, index)"
-      )
+    //- Choose upload file
     div.u-form__row
       label {{$t('task.addFile')}}
       input.u-transparent.u-w0(
@@ -84,7 +74,17 @@ div.task-detail-main
         @change="selectFile"
       )
       el-button(@click="showSelect") {{$t('base.upload')}}
+    //- Attachment file list
+    div.u-form__row.u-bb(
+      v-for="item,index in attachments"
+      :key="item.Name + index"
+    )
+      label.u-underline.u-s12 {{item.Name}}
+      i.iconfont.icon-close.u-s10.u-pointer(
+        @click="removeAttachment(item, index)"
+      )
   div.u-form__row-section
+    //- Note
     div.u-form__row
       textarea(
         v-model="note"

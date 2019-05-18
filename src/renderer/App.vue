@@ -147,6 +147,7 @@ export default {
       try {
         await this.getTaskFolders()
         await this.getTasks()
+        // await this.getUserPhoto()
       } finally {
         loading && loading.close()
       }
