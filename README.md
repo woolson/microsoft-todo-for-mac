@@ -5,7 +5,7 @@
 
 <div align="center">
   <a src="https://woolson.github.io/microsoft-todo-for-mac/" target="_blank">
-    <img src="build/icons/icon.png" width="240" />
+    <img src="https://user-images.githubusercontent.com/27878293/58305716-ac3ec880-7e2b-11e9-8ea3-8ad2b6f5032a.png" width="240" />
   </a>
 </div>
 
