@@ -1,8 +1,3 @@
-### 因代码签名问题，旧版无法启动正常使用，请下载 New-Microsoft-ToDo.dmg或.zip重新安装，谢谢。
-### App crashed at app start up because of code sign invalid, thank you.
-
-[New Release-2.0.2](https://github.com/woolson/microsoft-todo-mac/releases/tag/v2.0.2)
-
 <div align="center">
   <a src="https://woolson.github.io/microsoft-todo-for-mac/" target="_blank">
     <img src="https://user-images.githubusercontent.com/27878293/58305716-ac3ec880-7e2b-11e9-8ea3-8ad2b6f5032a.png" />
@@ -20,6 +15,10 @@
 </div>
 
 Welcome to star if you like it, Thanks!!!
+
+> **WARNING**  
+> 因代码签名问题，旧版无法启动正常使用，请下载 New-Microsoft-ToDo.dmg或.zip重新安装，谢谢。[查看最新](https://github.com/woolson/microsoft-todo-mac/releases/)  
+> App crashed at app start up because of invalid code sign, thank you.  [View newest](https://github.com/woolson/microsoft-todo-mac/releases/)  
 
 [ZH Docs](/README_ZH.md)
 
