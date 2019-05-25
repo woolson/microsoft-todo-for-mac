@@ -98,8 +98,9 @@ export default {
           Id: this.data.Id,
           Status: this.data.Status === 'Completed' ? 'NotStarted' : 'Completed'
         })
-        this.$message.success(this.$t('message.updateSuccessfully'))
+        this.$message.success(this.$root.$t('message.updateSuccessfully'))
       } catch (err) {
+        console.log(err)
         this.$message.error(this.$t('message.updateFailed'))
       }
     },
@@ -119,6 +120,18 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+.complete-leave-active
+  animation leave 1s
+  overflow hidden
+
+@keyframes leave
+  0%
+    height 45px
+    opacity 1
+  100%
+    height 0px
+    opacity 0
+
 .task-item
   display flex
   align-items center
@@ -127,7 +140,8 @@ export default {
   line-height 45px
   background-size 0px 100%
   position relative
-  transition all .2s
+  // transition all .2s
+  transition all 1s
   cursor pointer
   user-select none
   box-sizing border-box

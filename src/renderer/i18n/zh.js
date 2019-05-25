@@ -1,5 +1,6 @@
 export default {
   base: {
+    alert: '提示',
     async: '同步',
     at: '于',
     attachment: '附件',
@@ -42,7 +43,8 @@ export default {
     theme: '主题',
     time: '时间',
     update: '更新',
-    upload: '上传'
+    upload: '上传',
+    volume: '音量'
   },
   date: {
     custom: '自定义',
@@ -84,6 +86,7 @@ export default {
   setting: {
     checkFailed: '@:base.check@:base.failed',
     checkVersion: '查看版本',
+    completeAlert: '@:base.completed@:base.alert',
     darkTheme: '深色',
     lightTheme: '浅色',
     quiteInstall: '退出并安装',

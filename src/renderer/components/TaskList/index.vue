@@ -18,7 +18,11 @@ div.task-list
       ) &bull;
       span.u-ml10(:title="currentFolder.Name") {{currentFolder.Name}}
     Options(slot="right")
-  div.task-list__content(v-if="showSearch ? searchTasks.length : tasks.length")
+  transition-group.task-list__content(
+    tag="div"
+    name="complete"
+    v-if="showSearch ? searchTasks.length : tasks.length"
+  )
     Item(
       v-for="item in showSearch ? searchTasks : tasks"
       :data="item"

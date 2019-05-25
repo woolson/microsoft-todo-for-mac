@@ -48,6 +48,8 @@ export default {
       'language',
       'currentTask',
       'currentFolder',
+      'playAlertVoice',
+      'alertVoicevolume',
       'showCompleteTask',
       'showPlannedFolder',
       'showImportanceFolder'
@@ -117,6 +119,12 @@ export default {
       ipcRenderer.sendSync('update-setting', {showCompleteTask: newValue})
       this.updateTaskSetting()
     },
+    playAlertVoice (newValue) {
+      ipcRenderer.sendSync('update-setting', {playAlertVoice: newValue})
+    },
+    alertVoicevolume (newValue) {
+      ipcRenderer.sendSync('update-setting', {alertVoicevolume: newValue})
+    },
     showPlannedFolder (newValue) {
       ipcRenderer.sendSync('update-setting', {showPlannedFolder: newValue})
     },
@@ -148,7 +156,9 @@ export default {
         await this.getTaskFolders()
         await this.getTasks()
         // await this.getUserPhoto()
-      } finally {
+        loading && loading.close()
+      } catch (err) {
+        console.log(err)
         loading && loading.close()
       }
     },

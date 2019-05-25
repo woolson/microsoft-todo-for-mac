@@ -56,6 +56,22 @@ Modal.settings(
           el-option(:label="$t('base.auto')" value="auto")
           el-option(:label="$t('setting.lightTheme')" value="light")
           el-option(:label="$t('setting.darkTheme')" value="dark")
+    div.u-form__row-section
+      div.u-form__row.u-bb
+        label {{$t('base.alert')}}
+        el-switch(
+          :active-color="$color.green"
+          :inactive-color="$color.red"
+          :value="playAlertVoice"
+          @change="updateState({playAlertVoice: !playAlertVoice})"
+        )
+      div.u-form__row.u-bb(v-show="playAlertVoice")
+        label {{$t('base.volume')}}
+        el-slider.u-w120.u-mr12(
+          v-model="volume"
+          :min="20"
+          :step="10"
+        )
     el-button.u-ml12.u-mr12.u-mtauto(
       round
       type="danger"
@@ -73,6 +89,7 @@ const token = new Storage('TOKEN')
 export default {
   data () {
     return {
+      volume: this.alertVoicevolume,
       currentLang: null,
       newVersion: false
     }
@@ -82,6 +99,8 @@ export default {
     ...mapState([
       'theme',
       'language',
+      'playAlertVoice',
+      'alertVoicevolume',
       'showSettingsModal',
       'showCompleteTask',
       'showPlannedFolder',
@@ -101,6 +120,9 @@ export default {
         const isDark = ipcRenderer.sendSync('get-theme')
         document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
       }
+    },
+    volume (newValue) {
+      this.updateState({alertVoicevolume: newValue})
     }
   },
 
@@ -157,4 +179,8 @@ export default {
     background transparent
     border none
     text-align right
+
+.settings
+  >>> .el-slider__runway
+    margin 5px 0
 </style>

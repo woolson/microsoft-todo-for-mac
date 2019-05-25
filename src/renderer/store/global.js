@@ -1,5 +1,5 @@
 import { ipcRenderer } from 'electron'
-import { Storage, isEmpty, separate } from '@/common/utils'
+import { Storage, isEmpty, separate, playCompleteVoice } from '@/common/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 import moment from 'moment'
@@ -27,6 +27,8 @@ const state = {
   shouldLogin: false,
   theme: getValue('theme'),
   language: getValue('language'),
+  playAlertVoice: getValue('playAlertVoice', true),
+  alertVoicevolume: getValue('alertVoicevolume', 100),
   showCompleteTask: getValue('showCompleteTask', true),
   // display importance folder on sidebar
   showImportanceFolder: getValue('showImportanceFolder', true),
@@ -159,6 +161,12 @@ const actions = {
     const newTask = await patch(`/me/tasks/${data.Id}`, data)
     const newState = {tasks: [...state.tasks]}
     const taskIndex = state.tasks.findIndex(o => o.Id === data.Id)
+
+    // play voice
+    if (data.Status === 'Completed' && state.playAlertVoice) {
+      playCompleteVoice(state.alertVoicevolume)
+    }
+
     newState.tasks[taskIndex] = newTask
     newState.currentTask = newTask
     commit('UPDATE_STATE', newState)
