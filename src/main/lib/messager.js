@@ -64,4 +64,12 @@ export default function (mainWindow) {
     execSync(`open ${filePath}`)
     event.returnValue = true
   })
+
+  ipcMain.on('clear-session', (event) => {
+    // console.dir()
+    mainWindow.webContents.session.clearStorageData({
+      origin: 'https://login.microsoftonline.com'
+    })
+    event.returnValue = true
+  })
 }

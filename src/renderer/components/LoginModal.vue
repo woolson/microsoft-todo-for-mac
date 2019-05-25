@@ -1,5 +1,8 @@
 <template lang="pug">
-Modal.login-modal(v-model="shouldLogin")
+Modal.login-modal(
+  v-model="shouldLogin"
+  position="bottom"
+)
   div.login-modal__content(
     v-loading="wvLoading"
     element-loading-background="rgba(0, 0, 0, 0.8)"
@@ -128,7 +131,8 @@ export default {
   display flex
   flex-direction column
   >>> .modal__main
-    width 450px !important
+    max-height 100vh !important
+    height  100vh !important
 
 webview
   flex 1

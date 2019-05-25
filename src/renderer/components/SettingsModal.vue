@@ -129,6 +129,7 @@ export default {
       this.updateState({language: lang})
     },
     logout () {
+      ipcRenderer.sendSync('clear-session')
       token.remove()
       this.updateState({
         showSettingsModal: false,
