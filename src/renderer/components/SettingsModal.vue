@@ -69,7 +69,7 @@ Modal.settings(
         label {{$t('base.volume')}}
         el-slider.u-w120.u-mr12(
           v-model="volume"
-          :min="20"
+          :min="10"
           :step="10"
         )
     el-button.u-ml12.u-mr12.u-mtauto(
@@ -82,7 +82,7 @@ Modal.settings(
 <script>
 import { ipcRenderer } from 'electron'
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { Storage } from '@/common/utils'
+import { Storage, playCompleteVoice } from '@/common/utils'
 
 const token = new Storage('TOKEN')
 
@@ -122,6 +122,7 @@ export default {
       }
     },
     volume (newValue) {
+      playCompleteVoice(newValue)
       this.updateState({alertVoicevolume: newValue})
     }
   },
