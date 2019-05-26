@@ -120,18 +120,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.complete-leave-active
-  animation leave 1s
-  overflow hidden
-
-@keyframes leave
-  0%
-    height 45px
-    opacity 1
-  100%
-    height 0px
-    opacity 0
-
 .task-item
   display flex
   align-items center
@@ -140,8 +128,7 @@ export default {
   line-height 45px
   background-size 0px 100%
   position relative
-  // transition all .2s
-  transition all 1s
+  transition all .2s
   cursor pointer
   user-select none
   box-sizing border-box
@@ -156,7 +143,8 @@ export default {
     &.icon-star
       color $yellow
     &:hover
-      animation bounceIn .75s
+      font-weight bold
+      // animation bounceIn .75s
   &:first-child
     border-top-left-radius 5px
     border-top-right-radius 5px

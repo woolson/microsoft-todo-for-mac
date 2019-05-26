@@ -121,8 +121,8 @@ export default {
         document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
       }
     },
-    volume (newValue) {
-      playCompleteVoice(newValue)
+    volume (newValue, oldValue) {
+      oldValue && playCompleteVoice(newValue)
       this.updateState({alertVoicevolume: newValue})
     }
   },
