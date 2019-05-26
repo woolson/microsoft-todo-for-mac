@@ -153,8 +153,10 @@ export default {
         })
       }
       try {
-        await this.getTaskFolders()
-        await this.getTasks()
+        await Promise.all([
+          this.getTaskFolders(),
+          this.getTasks()
+        ])
         // await this.getUserPhoto()
         loading && loading.close()
       } catch (err) {
