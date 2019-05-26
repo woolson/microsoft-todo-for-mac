@@ -77,7 +77,7 @@ export const common = (type, url, data, options = {}) => {
     // 显示loading
     process: true,
     // 超时时间
-    timeout: 15000,
+    timeout: 60000,
     // 是否需要提示
     headers: {
       Authorization: `Bearer ${tokenInfo.access_token}`,
