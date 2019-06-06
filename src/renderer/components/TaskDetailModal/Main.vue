@@ -23,76 +23,81 @@ div.task-detail-main
     center
     :closable="false"
   )
-  div.u-form__row-section.u-mt12
-    div.u-form__row.u-bb
-      label {{$t('base.folder')}}
-      div.u-center-end
-        el-select.u-w210(
-          v-model="parentId"
-          @change="changeParent"
-        )
-          el-option(
-            v-for="item in taskFolders"
-            :key="item.Id"
-            :value="item.Id"
-            :label="item.Name"
+  div.task-detail-main__content
+    div.u-form__row-section.u-mt12
+      div.u-form__row.u-bb
+        label {{$t('base.folder')}}
+        div.u-center-end
+          el-select.u-w210(
+            v-model="parentId"
+            @change="changeParent"
           )
-    div.u-form__row.u-bb
-      label {{$t('task.remindTime')}}
-      div.u-center-end
-        el-date-picker(
-          ref="remindPicker"
-          v-model="dateTime"
-          type="datetime"
-          format="yyyy-MM-dd HH:mm"
-          align="right"
-          :placeholder="$t('base.select')"
-          @change="remindSubmit"
+            el-option(
+              v-for="item in taskFolders"
+              :key="item.Id"
+              :value="item.Id"
+              :label="item.Name"
+            )
+      div.u-form__row.u-bb
+        label {{$t('task.remindTime')}}
+        div.u-center-end
+          el-date-picker(
+            ref="remindPicker"
+            v-model="dateTime"
+            type="datetime"
+            format="yyyy-MM-dd HH:mm"
+            align="right"
+            :placeholder="$t('base.select')"
+            @change="remindSubmit"
+          )
+      div.u-form__row
+        label {{$t('task.dueTime')}}
+        div.u-center-end
+          el-date-picker(
+            ref="stopPicker"
+            v-model="stopDate"
+            type="date"
+            align="right"
+            format="yyyy-MM-dd"
+            :placeholder="$t('base.select')"
+            @change="stopDateSubmit"
+          )
+      //- div.u-form__row(@click="$emit('update:step', 1)")
+      //-   label 重复
+      //-   i.iconfont.icon-right.u-ml5
+    div.u-form__row-section
+      //- Choose upload file
+      div.u-form__row
+        label {{$t('task.addFile')}}
+        input.u-transparent.u-w0(
+          ref="file"
+          type="file"
+          @change="selectFile"
         )
-    div.u-form__row
-      label {{$t('task.dueTime')}}
-      div.u-center-end
-        el-date-picker(
-          ref="stopPicker"
-          v-model="stopDate"
-          type="date"
-          align="right"
-          format="yyyy-MM-dd"
-          :placeholder="$t('base.select')"
-          @change="stopDateSubmit"
+        el-button(@click="showSelect") {{$t('base.upload')}}
+      //- Attachment file list
+      div.u-form__row.u-bb(
+        v-for="item,index in attachments"
+        :key="item.Name + index"
+      )
+        label.u-underline.u-s12.u-pointer(
+          @click="viewFile(item)"
+        ) {{item.Name}}
+        i.el-icon-download.u-mlauto.u-mr15.u-s16.u-pointer(
+          @click="downloadAttachment(item)"
         )
-    //- div.u-form__row(@click="$emit('update:step', 1)")
-    //-   label 重复
-    //-   i.iconfont.icon-right.u-ml5
-  div.u-form__row-section
-    //- Choose upload file
-    div.u-form__row
-      label {{$t('task.addFile')}}
-      input.u-transparent.u-w0(
-        ref="file"
-        type="file"
-        @change="selectFile"
-      )
-      el-button(@click="showSelect") {{$t('base.upload')}}
-    //- Attachment file list
-    div.u-form__row.u-bb(
-      v-for="item,index in attachments"
-      :key="item.Name + index"
-      @click="viewFile(item)"
-    )
-      label.u-underline.u-s12 {{item.Name}}
-      i.iconfont.icon-close.u-s10.u-pointer(
-        @click="removeAttachment(item, index)"
-      )
-  div.u-form__row-section
-    //- Note
-    div.u-form__row
-      textarea(
-        v-model="note"
-        :placeholder="$t('base.note')"
-        @blur="noteSubmit"
-        @keyup.enter="noteSubmit"
-      )
+        i.el-icon-close.u-s16.u-pointer(
+          @click="removeAttachment(item, index)"
+        )
+    div.u-form__row-section
+      //- Note
+      div.u-form__row
+        textarea(
+          v-model="note"
+          :placeholder="$t('base.note')"
+          @blur="noteSubmit"
+          @keyup.enter="noteSubmit"
+        )
   div.task-detail-main__bottom
     span {{taskDateInfo}}
     el-button(
@@ -330,8 +335,18 @@ export default {
         this.updateStateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
       }
     },
+    downloadAttachment (file) {
+      remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+        defaultPath: file.Name
+      }, (filename) => {
+        if (filename) {
+          ipcRenderer.sendSync('save-file', {file, filename})
+          this.$message.success('成功')
+        }
+      })
+    },
     viewFile (file) {
-      console.log('viewFile')
+      // console.log('viewFile')
       ipcRenderer.sendSync('view-file', file)
     }
   }
@@ -345,12 +360,15 @@ export default {
   flex-direction column
   .el-date-editor.el-input
     width 210px
+  .el-alert
+    flex-shrink 0
 
 .task-detail__header
   padding 5px 15px
   display flex
   align-items center
   box-shadow 0 0 5px rgba(black, .1)
+  flex-shrink 0
   h1
     flex 1
     font-size 16px
@@ -379,6 +397,14 @@ textarea
 
 .el-input__prefix
   top -2px
+
+.task-detail-main__content
+  flex 1
+  overflow auto
+  &::-webkit-scrollbar
+    width 3px !important
+  &::-webkit-scrollbar-thumb
+    background rgba(black, .25)
 
 .task-detail-main__bottom
   display flex

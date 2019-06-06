@@ -12,7 +12,7 @@ el-tooltip(
   )
     i.iconfont.u-mr5(:class="folderIcon")
     span.task-folder-item__name {{data.Name}}
-    span.number.u-mlauto {{data.number}}
+    span.number.u-mlauto(v-show="data.number") {{data.number}}
 </template>
 
 <script>

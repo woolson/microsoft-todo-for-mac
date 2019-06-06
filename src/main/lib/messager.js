@@ -65,6 +65,13 @@ export default function (mainWindow) {
     event.returnValue = true
   })
 
+  // Save file content
+  ipcMain.on('save-file', (event, arg) => {
+    const fileContent = Buffer.from(arg.file.ContentBytes, 'base64')
+    writeFileSync(arg.filename, fileContent)
+    event.returnValue = true
+  })
+
   ipcMain.on('clear-session', (event) => {
     // console.dir()
     mainWindow.webContents.session.clearStorageData({
