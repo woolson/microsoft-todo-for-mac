@@ -81,13 +81,6 @@ body
   border none
 
 .el-message--success
-.el-message--error
-  margin-left 95px
-  p,
-  i
-    color white !important
-
-.el-message--success
   background $green
   border-color $green
 
@@ -95,12 +88,28 @@ body
   background $red
   border-color $red
 
+.el-message--info
+  background $text-light
+  border-color $text-light
+
 .el-button--success:not(.is-plain)
   background $green
   border-color $green
 
 .el-popover
   padding 0
+
+.el-message
+  min-width 50px
+  padding 5px 15px 5px 20px
+  border-radius 0 0 4px 4px
+  top 0
+  margin-left 95px
+  p, i
+    color white !important
+
+.el-message__icon
+  font-size 14px
 
 .el-message-box
   padding-bottom 15px
