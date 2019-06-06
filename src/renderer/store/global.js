@@ -136,7 +136,13 @@ const actions = {
     const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`, null, {showLoading: false})
     newState.taskFolders = value
     if (isEmpty(state.currentFolder)) {
-      newState.currentFolder = value.find(o => o.IsDefaultFolder)
+      const lastOpenFolder = getValue('lastOpenFolder')
+      if (lastOpenFolder) {
+        newState.currentFolder = value.find(o => o.Id === lastOpenFolder)
+      }
+      if (isEmpty(newState.currentFolder)) {
+        newState.currentFolder = value.find(o => o.IsDefaultFolder)
+      }
     }
     commit('UPDATE_STATE', newState)
   },

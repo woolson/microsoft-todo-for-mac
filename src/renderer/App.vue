@@ -100,6 +100,7 @@ export default {
     currentFolder: {
       handler (newValue) {
         this.updateState({currentTask: {}})
+        ipcRenderer.sendSync('update-setting', {lastOpenFolder: newValue.Id})
       },
       deep: true
     },
