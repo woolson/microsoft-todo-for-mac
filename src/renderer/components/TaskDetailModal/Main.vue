@@ -247,10 +247,17 @@ export default {
       this.attachments = value
     },
     async removeAttachment (item, index) {
-      await this.$confirm(`${this.$t('message.confirmToDelete')} ${item.Name}`)
-      await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}/attachments/${item.Id}`)
-      this.attachments.splice(index, 1)
-      this.updateTaskAttachment()
+      try {
+        const message = `${this.$t('message.confirmToDelete')} ${item.Name}`
+        const result = await this.showNativeMessage(message)
+        if (!result) {
+          await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}/attachments/${item.Id}`)
+          this.attachments.splice(index, 1)
+          this.updateTaskAttachment()
+        }
+      } catch (err) {
+        this.$message.error(this.$t('message.deleteFailed'))
+      }
     },
     async remindSubmit (value) {
       await this.updateTask({
@@ -307,17 +314,18 @@ export default {
     },
     async onDelete () {
       try {
-        const result = await this.showNativeMessage(this.currentTask)
+        const message = `${this.$t('message.confirmToDelete')} ${this.currentTask.Subject} ？`
+        const result = await this.showNativeMessage(message)
         if (!result) {
           await this.deleteTask()
           this.$message.success(this.$t('message.deleteSuccessfully'))
         }
       } catch (err) {
-        console.log(err)
+        // console.log(err)
         this.$message.error(this.$t('message.deleteFailed'))
       }
     },
-    showNativeMessage (arg) {
+    showNativeMessage (message) {
       return new Promise((resolve, reject) => {
         remote.dialog.showMessageBox(remote.getCurrentWindow(), {
           type: 'question',
@@ -325,7 +333,7 @@ export default {
           buttons: [this.$t('base.submit'), this.$t('base.cancel')],
           defaultId: 0,
           message: this.$t('base.notice'),
-          detail: `${this.$t('message.confirmToDelete')} ${arg.Subject} ？`
+          detail: message
         }, resolve)
       })
     },
