@@ -344,7 +344,7 @@ export function separate (array, adjustFun) {
 
 export function playCompleteVoice (volume) {
   const $audio = document.createElement('audio')
-  $audio.src = '/static/completed.m4r'
+  $audio.src = require('@/assets/audio/completed.m4r')
   $audio.volume = volume / 100
   $audio.play()
 }

@@ -60,6 +60,16 @@ let webConfig = {
         }
       },
       {
+        test: /\.m4r$/,
+        use: {
+          loader: 'url-loader',
+          query: {
+            limit: 10,
+            name: 'audio/[name].[ext]'
+          }
+        }
+      },
+      {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
         use: {
           loader: 'url-loader',
