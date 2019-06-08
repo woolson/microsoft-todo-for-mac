@@ -170,8 +170,10 @@ export default {
   flex 1
   display flex
   margin-right 15px
+  height 45px
   span
     // max-width 240px
+    line-height 45px
     font-size 14px
     // font-weight normal
     margin 0
