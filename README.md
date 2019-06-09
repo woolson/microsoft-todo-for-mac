@@ -1,3 +1,9 @@
+## New
+
+微软出了macOS版的啦，预计2019年06月17日发布，现在可以去[预约](https://itunes.apple.com/cn/app/microsoft-to-do/id1274495053?mt=12)了。
+
+> **注意**：在官方出来后此项目仍会继续，做自己心目中想要的样子，大家收录大家的意见的。
+
 <div align="center">
   <a src="https://woolson.github.io/microsoft-todo-for-mac/" target="_blank">
     <img src="https://user-images.githubusercontent.com/27878293/58305716-ac3ec880-7e2b-11e9-8ea3-8ad2b6f5032a.png" />
