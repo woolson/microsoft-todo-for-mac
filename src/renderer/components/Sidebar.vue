@@ -61,7 +61,7 @@ export default {
 
 <style lang="stylus" scoped>
 .sidebar
-  height 100vh
+  // height 100vh
   width 190px
   flex-shrink 0
   box-sizing border-box

@@ -1,7 +1,9 @@
 <template lang="pug">
 div#app
-  Sidebar
-  TaskList
+  //- App views
+  Tabbar
+  RouterView
+  //- Modals
   LoginModal
   TaskDetailModal
   AddFolderModal
@@ -14,7 +16,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import initShortCut from './common/event'
 import Notification from './common/notification'
 import LoginModal from '@/components/LoginModal'
-import Sidebar from '@/components/Sidebar'
+import Tabbar from '@/components/Tabbar'
 import TaskList from '@/components/TaskList/'
 import TaskDetailModal from '@/components/TaskDetailModal'
 import AddFolderModal from '@/components/AddFolderModal'
@@ -28,7 +30,7 @@ export default {
   name: 'ms-todo',
 
   components: {
-    Sidebar,
+    Tabbar,
     TaskList,
     LoginModal,
     TaskDetailModal,
@@ -190,5 +192,9 @@ body
 #app
   width 100vw
   height 100vh
+  display flex
+
+main
+  flex 1
   display flex
 </style>

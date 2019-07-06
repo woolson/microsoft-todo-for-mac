@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import i18n from './common/i18n'
+import router from './common/router'
 
 // Load package and config
 import './common/init'
@@ -17,7 +18,9 @@ i18n.locale = store.state.language
 
 /* eslint-disable no-new */
 window.vm = new Vue({
+  el: '#app',
   store,
+  router,
   i18n,
   render: h => h(App)
-}).$mount('#app')
+})
