@@ -71,7 +71,7 @@ export default {
   transition background .2s
 
 .sidebar__header
-  height 50px
+  height 30px
   -webkit-app-region drag
 
 .sidebar__add
@@ -81,9 +81,9 @@ export default {
   line-height 36px
   border-radius 5px
   cursor pointer
-  color white
+  color var(--folder-color)
   text-align center
-  margin-bottom 10px
+  // margin-bottom 10px
   &:hover
     i
       text-shadow 0 0 5px rgba(black, .15)
@@ -95,7 +95,7 @@ export default {
   overflow auto
   margin 10px 0
   > div
-    margin 0 12px
+    margin 0 12px 5px
   &::-webkit-scrollbar
     width 0px !important
 
@@ -114,6 +114,6 @@ export default {
   padding 0 12px
   cursor pointer
   user-select none
-  color white
+  color #333
   margin-bottom 20px
 </style>

@@ -137,7 +137,7 @@ export default {
     &.icon-check
     &.icon-check-o
       padding 0 5px
-      font-size 20px
+      font-size 16px
     &.icon-check
       color $green
     &.icon-star
@@ -155,7 +155,6 @@ export default {
       display none
   &.active
     *
-      // color var(--text-main) !important
       color white
     background var(--task-background-active)
     .task-item__info

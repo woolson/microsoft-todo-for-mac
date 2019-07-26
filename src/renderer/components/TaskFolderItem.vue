@@ -10,8 +10,13 @@ el-tooltip(
     :class="activeClass"
     @click="updateState({currentFolder: data})"
   )
-    i.iconfont.u-mr5(:class="folderIcon")
-    span.task-folder-item__name {{data.Name}}
+    i.iconfont.u-mr5.u-s18(
+      v-if="shouldShowIcon"
+      :class="folderIcon"
+    )
+    span.u-s18(v-else) {{data.Name.substr(0, 2)}}
+    span.task-folder-item__name(v-if="shouldShowIcon") {{data.Name}}
+    span.task-folder-item__name(v-else) {{data.Name.substr(2)}}
     span.number.u-mlauto(v-show="data.number") {{data.number}}
 </template>
 
@@ -19,16 +24,16 @@ el-tooltip(
 import { mapState, mapMutations } from 'vuex'
 
 const FOLDER_ICON = {
-  '任务': 'icon-task',
-  'task': 'icon-task',
-  'tasks': 'icon-task',
-  'Task': 'icon-task',
+  '任务': 'icon-task u-red',
+  'task': 'icon-task u-red',
+  'tasks': 'icon-task u-red',
+  'Task': 'icon-task u-red',
   '重要': 'icon-star u-yellow',
   'Importance': 'icon-star u-yellow',
   'importance': 'icon-star u-yellow',
-  '已计划日程': 'icon-calendar-o',
-  'Planned': 'icon-calendar-o',
-  'planned': 'icon-calendar-o'
+  '已计划日程': 'icon-calendar-o u-red',
+  'Planned': 'icon-calendar-o u-red',
+  'planned': 'icon-calendar-o u-red'
 }
 
 export default {
@@ -52,6 +57,11 @@ export default {
       } else {
         return { active: this.currentFolder.Key === this.data.Key }
       }
+    },
+    shouldShowIcon () {
+      const ranges = /(?:[\u2700-\u27bf]|(?:\ud83c[\udde6-\uddff]){2}|[\ud800-\udbff][\udc00-\udfff]|[\u0023-\u0039]\ufe0f?\u20e3|\u3299|\u3297|\u303d|\u3030|\u24c2|\ud83c[\udd70-\udd71]|\ud83c[\udd7e-\udd7f]|\ud83c\udd8e|\ud83c[\udd91-\udd9a]|\ud83c[\udde6-\uddff]|[\ud83c[\ude01-\ude02]|\ud83c\ude1a|\ud83c\ude2f|[\ud83c[\ude32-\ude3a]|[\ud83c[\ude50-\ude51]|\u203c|\u2049|[\u25aa-\u25ab]|\u25b6|\u25c0|[\u25fb-\u25fe]|\u00a9|\u00ae|\u2122|\u2139|\ud83c\udc04|[\u2600-\u26FF]|\u2b05|\u2b06|\u2b07|\u2b1b|\u2b1c|\u2b50|\u2b55|\u231a|\u231b|\u2328|\u23cf|[\u23e9-\u23f3]|[\u23f8-\u23fa]|\ud83c\udccf|\u2934|\u2935|[\u2190-\u21ff])/g
+      const start = this.data.Name.substr(0, 2)
+      return !start.match(ranges)
     }
   },
 
@@ -79,8 +89,8 @@ export default {
 
 <style lang="stylus" scoped>
 .task-folder-item
-  height 40px
-  line-height 40px
+  height 35px
+  line-height 35px
   font-size 14px
   border-radius 5px
   padding 0 12px
