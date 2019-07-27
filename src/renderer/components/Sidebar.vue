@@ -95,7 +95,7 @@ export default {
   overflow auto
   margin 10px 0
   > div
-    margin 0 12px 5px
+    margin 0 12px 2px
   &::-webkit-scrollbar
     width 0px !important
 
