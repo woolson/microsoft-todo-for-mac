@@ -14,7 +14,7 @@ el-tooltip(
       v-if="shouldShowIcon"
       :class="folderIcon"
     )
-    span.u-s16(v-else) {{data.Name.substr(0, 2)}}
+    span.u-s18(v-else) {{data.Name.substr(0, 2)}}
     span.task-folder-item__name(v-if="shouldShowIcon") {{data.Name}}
     span.task-folder-item__name(v-else) {{data.Name.substr(2)}}
     span.number.u-mlauto(v-show="data.number") {{data.number}}
@@ -89,9 +89,9 @@ export default {
 
 <style lang="stylus" scoped>
 .task-folder-item
-  height 32px
-  line-height 32px
-  font-size 12px
+  height 35px
+  line-height 35px
+  font-size 14px
   border-radius 5px
   padding 0 12px
   cursor pointer
