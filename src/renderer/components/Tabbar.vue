@@ -26,15 +26,14 @@ ul.tabbar
   display flex
   flex-shrink 0
   flex-direction column
-  line-height 50px
+  line-height 30px
   margin 0
-  padding 0
   align-items center
   // justify-content center
   color var(--folder-color)
   // border-right 1px solid rgba(black, .1)
   box-shadow 0 0 1px rgba(black, .2)
-  padding-top 20px
+  padding 30px 0 10px 0
   li
     margin 10px 0
     cursor pointer

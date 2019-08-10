@@ -75,7 +75,7 @@ export default {
   transition background .2s
 
 .sidebar__header
-  height 30px
+  height 40px
   -webkit-app-region drag
 
 .sidebar__add

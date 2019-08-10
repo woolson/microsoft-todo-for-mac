@@ -2,10 +2,10 @@
 div.calendar
   VueCal.vuecal--blue-theme(
     default-view="month"
+    events-on-month-view="short"
     :locale="language === 'en' ? 'en' : 'zh-cn'"
     :disable-views="['years', 'week']"
     :events="events"
-    events-on-month-view="short"
     :on-event-click="onEventClick"
   )
 </template>
@@ -14,8 +14,8 @@ div.calendar
 import VueCal from 'vue-cal'
 import 'vue-cal/dist/vuecal.css'
 import 'vue-cal/dist/i18n/zh-cn.js'
-import { mapState, mapMutations } from 'vuex'
 import moment from 'moment'
+import { mapState, mapMutations } from 'vuex'
 
 export default {
   components: { VueCal },
@@ -64,6 +64,14 @@ export default {
     button
     span
       color white !important
+  >>> .vuecal__menu button
+    border-top 2px solid transparent
+    &.active
+      border-bottom-width 0
+      border-color white
+      background linear-gradient(to bottom, rgba(white, .2), rgba(white, 0))
+  >>> .vuecal__title-bar
+    font-size 14px
   >>> .vuecal__weekdays-headings
     background var(--background-section)
     color var(--text-main)
@@ -98,6 +106,6 @@ export default {
     height 100%
     align-items flex-end
   >>> .vuecal--month-view .vuecal__cell-date
-    padding 4px
+    padding 10px
 </style>
 
