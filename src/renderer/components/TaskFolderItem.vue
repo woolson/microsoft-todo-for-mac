@@ -49,7 +49,7 @@ export default {
       'currentFolder'
     ]),
     folderIcon () {
-      const name = this.data.name || ''
+      const name = this.data.Name || ''
       const firstLetter = name.substr(0, 1)
       if (firstLetter.match(/\ud83c[\udf00-\udfff]|\ud83d[\udc00-\ude4f]|\ud83d[\ude80-\udeff]/g)) {
         return ''

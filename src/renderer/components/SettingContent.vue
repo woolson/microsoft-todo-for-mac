@@ -6,40 +6,37 @@ div
     div.u-form__row-section
       div.u-form__row
         label {{$t('base.async')}}
-        el-button.u-w100(round @click="syncData") {{$t('base.async')}}
+        el-button.u-w100.u-mt-5.u-mb-5(
+          round
+          @click="syncData"
+        ) {{$t('base.async')}}
+      div.u-form__row.u-bb
+        label {{$t('setting.showCalendar')}}
+        el-switch(
+          :value="showCalendarView"
+          @change="updateState({showCalendarView: !showCalendarView})"
+        )
     div.u-form__row-section
       div.u-form__row.u-bb
         label {{$t('task.showImportance')}}
         el-switch(
-          :active-color="$color.green"
-          :inactive-color="$color.red"
           :value="showImportanceFolder"
           @change="updateState({showImportanceFolder: !showImportanceFolder})"
         )
       div.u-form__row.u-bb
         label {{$t('task.showPlanned')}}
         el-switch(
-          :active-color="$color.green"
-          :inactive-color="$color.red"
           :value="showPlannedFolder"
           @change="updateState({showPlannedFolder: !showPlannedFolder})"
         )
-      //- div.u-form__row
-      //-   label {{$t('task.showCompleted')}}
-      //-   el-switch(
-      //-     :active-color="$color.green"
-      //-     :inactive-color="$color.red"
-      //-     :value="showCompleteTask"
-      //-     @change="updateState({showCompleteTask: !showCompleteTask})"
-      //-   )
     div.u-form__row-section
       div.u-form__row.u-bb
         label {{$t('base.language')}}
         el-radio-group(
           v-model="currentLang"
           @change="languageChange"
-          size="mini"
-          :fill="$color.green"
+          :fill="$color.blue"
+          text-color="white"
         )
           el-radio-button(name="language" label="中")
           el-radio-button(name="language" label="EN")
@@ -57,14 +54,12 @@ div
       div.u-form__row.u-bb
         label {{$t('base.alert')}}
         el-switch(
-          :active-color="$color.green"
-          :inactive-color="$color.red"
           :value="playAlertVoice"
           @change="updateState({playAlertVoice: !playAlertVoice})"
         )
       div.u-form__row.u-bb(v-show="playAlertVoice")
         label {{$t('base.volume')}}
-        el-slider.u-w120.u-mr12(
+        el-slider.u-w120.u-mr12.u-mt-10.u-mb-10(
           v-model="volume"
           :min="10"
           :step="10"
@@ -99,6 +94,7 @@ export default {
       'playAlertVoice',
       'alertVoicevolume',
       'showSettingsModal',
+      'showCalendarView',
       'showCompleteTask',
       'showPlannedFolder',
       'showImportanceFolder'
@@ -172,6 +168,7 @@ export default {
 
 .settings__theme
   width 80px
+  margin -5px 0
   >>> .el-input
   >>> .el-input__inner
     background transparent

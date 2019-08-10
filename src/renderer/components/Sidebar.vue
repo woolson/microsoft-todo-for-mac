@@ -15,6 +15,7 @@ div.sidebar
       div.sidebar__separate(v-if="item.Key === 'Spacer'")
       TaskFolderItem(:data="item" v-else)
   div.sidebar__setting(
+    v-if="!showCalendarView"
     @click="updateState({showSettingsModal: true})"
   )
     i.iconfont.icon-setting
@@ -35,6 +36,7 @@ export default {
       'tasks',
       'taskFolders',
       'currentFolder',
+      'showCalendarView',
       'showPlannedFolder',
       'showImportanceFolder'
     ]),

@@ -1,7 +1,7 @@
 <template lang="pug">
 div#app
   //- App views
-  Tabbar
+  Tabbar(v-if="showCalendarView")
   KeepAlive
     RouterView
   //- Modals
@@ -55,6 +55,7 @@ export default {
       'alertVoicevolume',
       'showCompleteTask',
       'showPlannedFolder',
+      'showCalendarView',
       'showImportanceFolder'
     ])
   },
@@ -128,6 +129,12 @@ export default {
     },
     alertVoicevolume (newValue) {
       ipcRenderer.sendSync('update-setting', {alertVoicevolume: newValue})
+    },
+    showCalendarView (newValue) {
+      if (!newValue && this.$route.fullPath === '/setting') {
+        this.$router.push('/')
+      }
+      ipcRenderer.sendSync('update-setting', {showCalendarView: newValue})
     },
     showPlannedFolder (newValue) {
       ipcRenderer.sendSync('update-setting', {showPlannedFolder: newValue})

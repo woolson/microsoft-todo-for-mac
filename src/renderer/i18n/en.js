@@ -87,6 +87,7 @@ export default {
     darkTheme: 'Dark',
     lightTheme: 'Light',
     quiteInstall: 'Quite & Install',
+    showCalendar: 'Calendar View',
     selectTheme: '@:base.select @:base.theme'
   },
   task: {

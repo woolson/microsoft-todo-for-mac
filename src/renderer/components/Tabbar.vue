@@ -34,7 +34,7 @@ ul.tabbar
   color var(--folder-color)
   // border-right 1px solid rgba(black, .1)
   box-shadow 0 0 1px rgba(black, .2)
-  padding 20px 0
+  padding-top 20px
   li
     margin 10px 0
     cursor pointer

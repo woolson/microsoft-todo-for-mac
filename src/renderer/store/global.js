@@ -1,5 +1,4 @@
-import { ipcRenderer } from 'electron'
-import { Storage, isEmpty, separate, playCompleteVoice } from '@/common/utils'
+import { Storage, isEmpty, separate, playCompleteVoice, getStoreValue } from '@/common/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 import moment from 'moment'
@@ -7,33 +6,24 @@ import Vue from 'vue'
 import merge from 'deepmerge'
 import { PAGE_SIZE } from '@/common/static'
 
-// Get store settings
-const storeSetting = ipcRenderer.sendSync('fetch-setting')
 // Get user token from localStorage
 const token = new Storage('TOKEN')
-
-// Get setting from store
-function getValue (key, defaultValue) {
-  if (storeSetting[key] === void 0) {
-    return defaultValue
-  } else {
-    return storeSetting[key]
-  }
-}
 
 const state = {
   currentFolder: {},
   currentTask: {},
   shouldLogin: false,
-  theme: getValue('theme'),
-  language: getValue('language'),
-  playAlertVoice: getValue('playAlertVoice', true),
-  alertVoicevolume: getValue('alertVoicevolume', 100),
-  showCompleteTask: getValue('showCompleteTask', true),
+  theme: getStoreValue('theme'),
+  language: getStoreValue('language'),
+  playAlertVoice: getStoreValue('playAlertVoice', true),
+  alertVoicevolume: getStoreValue('alertVoicevolume', 100),
+  // show calendar view
+  showCalendarView: getStoreValue('showCalendarView', true),
+  showCompleteTask: getStoreValue('showCompleteTask', true),
   // display importance folder on sidebar
-  showImportanceFolder: getValue('showImportanceFolder', true),
+  showImportanceFolder: getStoreValue('showImportanceFolder', true),
   // display schedule folder on sidebar
-  showPlannedFolder: getValue('showPlannedFolder', true),
+  showPlannedFolder: getStoreValue('showPlannedFolder', true),
   // display global task search
   showSearch: false,
   showSettingsModal: false,
@@ -44,7 +34,7 @@ const state = {
   sortBy: 'default',
   // sort direction
   sortDir: true,
-  sortStash: getValue('sortStash', {}),
+  sortStash: getStoreValue('sortStash', {}),
   taskFolders: [],
   tasks: [],
   // get token from localstorage
@@ -136,7 +126,7 @@ const actions = {
     const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`, null, {showLoading: false})
     newState.taskFolders = value
     if (isEmpty(state.currentFolder)) {
-      const lastOpenFolder = getValue('lastOpenFolder')
+      const lastOpenFolder = getStoreValue('lastOpenFolder')
       if (lastOpenFolder) {
         newState.currentFolder = value.find(o => o.Id === lastOpenFolder)
       }

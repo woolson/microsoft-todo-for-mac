@@ -2,7 +2,7 @@
 div.calendar
   VueCal.vuecal--blue-theme(
     default-view="month"
-    locale="zh-cn"
+    :locale="language === 'en' ? 'en' : 'zh-cn'"
     :disable-views="['years', 'week']"
     :events="events"
     events-on-month-view="short"
@@ -22,7 +22,8 @@ export default {
 
   computed: {
     ...mapState({
-      allTasks: 'tasks'
+      allTasks: 'tasks',
+      language: 'language'
     }),
     events () {
       const events = this.allTasks.filter(item => item.IsReminderOn)
@@ -54,13 +55,15 @@ export default {
 <style lang="stylus" scoped>
 .calendar
   flex 1
-  >>> .vuecal__menu
-  >>> .vuecal__title-bar
+  >>> .vuecal__header
     -webkit-app-region drag
     background var(--task-background-active) !important
+  >>> .vuecal__menu
+  >>> .vuecal__title-bar
+    background none !important
     button
     span
-      color var(--text-main) !important
+      color white !important
   >>> .vuecal__weekdays-headings
     background var(--background-section)
     color var(--text-main)
