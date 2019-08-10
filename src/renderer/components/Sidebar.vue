@@ -14,7 +14,9 @@ div.sidebar
     template(v-for="item in compFolders")
       div.sidebar__separate(v-if="item.Key === 'Spacer'")
       TaskFolderItem(:data="item" v-else)
-  div.sidebar__setting(@click="updateState({showSettingsModal: true})")
+  div.sidebar__setting(
+    @click="updateState({showSettingsModal: true})"
+  )
     i.iconfont.icon-setting
     span.u-ml5 {{$t('base.setting')}}
 </template>

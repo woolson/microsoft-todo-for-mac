@@ -2,7 +2,8 @@
 div#app
   //- App views
   Tabbar
-  RouterView
+  KeepAlive
+    RouterView
   //- Modals
   LoginModal
   TaskDetailModal

@@ -1,4 +1,5 @@
 import store from '../store/index'
+import router from './router'
 import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
@@ -48,9 +49,10 @@ export default function () {
   })
   // Show settings
   ipcRenderer.on('preferences', () => {
-    commit('UPDATE_STATE', {
-      showSettingsModal: true
-    })
+    router.push('/setting')
+    // commit('UPDATE_STATE', {
+    //   showSettingsModal: true
+    // })
   })
 
   // Global task search
