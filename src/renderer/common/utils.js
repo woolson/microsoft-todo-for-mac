@@ -1,6 +1,17 @@
 import axios from 'axios'
 import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '@/common/static'
 // import { post } from '@/common/fetch'
+import { ipcRenderer } from 'electron'
+
+// Get setting from store
+export function getStoreValue (key, defaultValue) {
+  const storeSetting = ipcRenderer.sendSync('fetch-setting')
+  if (storeSetting[key] === void 0) {
+    return defaultValue
+  } else {
+    return storeSetting[key]
+  }
+}
 
 export function fileToBase64 (file) {
   return new Promise((resolve, reject) => {

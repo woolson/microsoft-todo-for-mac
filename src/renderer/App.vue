@@ -1,7 +1,10 @@
 <template lang="pug">
 div#app
-  Sidebar
-  TaskList
+  //- App views
+  Tabbar(v-if="showCalendarView")
+  KeepAlive
+    RouterView
+  //- Modals
   LoginModal
   TaskDetailModal
   AddFolderModal
@@ -14,7 +17,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import initShortCut from './common/event'
 import Notification from './common/notification'
 import LoginModal from '@/components/LoginModal'
-import Sidebar from '@/components/Sidebar'
+import Tabbar from '@/components/Tabbar'
 import TaskList from '@/components/TaskList/'
 import TaskDetailModal from '@/components/TaskDetailModal'
 import AddFolderModal from '@/components/AddFolderModal'
@@ -28,7 +31,7 @@ export default {
   name: 'ms-todo',
 
   components: {
-    Sidebar,
+    Tabbar,
     TaskList,
     LoginModal,
     TaskDetailModal,
@@ -52,6 +55,7 @@ export default {
       'alertVoicevolume',
       'showCompleteTask',
       'showPlannedFolder',
+      'showCalendarView',
       'showImportanceFolder'
     ])
   },
@@ -126,6 +130,12 @@ export default {
     alertVoicevolume (newValue) {
       ipcRenderer.sendSync('update-setting', {alertVoicevolume: newValue})
     },
+    showCalendarView (newValue) {
+      if (!newValue && this.$route.fullPath === '/setting') {
+        this.$router.push('/')
+      }
+      ipcRenderer.sendSync('update-setting', {showCalendarView: newValue})
+    },
     showPlannedFolder (newValue) {
       ipcRenderer.sendSync('update-setting', {showPlannedFolder: newValue})
     },
@@ -190,5 +200,9 @@ body
 #app
   width 100vw
   height 100vh
+  display flex
+
+main
+  flex 1
   display flex
 </style>

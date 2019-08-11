@@ -1,8 +1,9 @@
 import store from '../store/index'
+import router from './router'
 import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
-import { isEmpty } from './utils'
+import { isEmpty, getStoreValue } from './utils'
 
 export default function () {
   const { dispatch, commit, state } = store
@@ -48,9 +49,17 @@ export default function () {
   })
   // Show settings
   ipcRenderer.on('preferences', () => {
-    commit('UPDATE_STATE', {
-      showSettingsModal: true
-    })
+    if (getStoreValue('showCalendarView', true)) {
+      if (router.currentRoute.fullPath === '/setting') {
+        router.push('/')
+      } else {
+        router.push('/setting')
+      }
+    } else {
+      commit('UPDATE_STATE', {
+        showSettingsModal: !store.state.showSettingsModal
+      })
+    }
   })
 
   // Global task search

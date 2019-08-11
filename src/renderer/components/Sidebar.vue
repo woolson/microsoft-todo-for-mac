@@ -14,7 +14,10 @@ div.sidebar
     template(v-for="item in compFolders")
       div.sidebar__separate(v-if="item.Key === 'Spacer'")
       TaskFolderItem(:data="item" v-else)
-  div.sidebar__setting(@click="updateState({showSettingsModal: true})")
+  div.sidebar__setting(
+    v-if="!showCalendarView"
+    @click="updateState({showSettingsModal: true})"
+  )
     i.iconfont.icon-setting
     span.u-ml5 {{$t('base.setting')}}
 </template>
@@ -33,6 +36,7 @@ export default {
       'tasks',
       'taskFolders',
       'currentFolder',
+      'showCalendarView',
       'showPlannedFolder',
       'showImportanceFolder'
     ]),
@@ -61,7 +65,7 @@ export default {
 
 <style lang="stylus" scoped>
 .sidebar
-  height 100vh
+  // height 100vh
   width 190px
   flex-shrink 0
   box-sizing border-box
@@ -71,7 +75,7 @@ export default {
   transition background .2s
 
 .sidebar__header
-  height 30px
+  height 40px
   -webkit-app-region drag
 
 .sidebar__add

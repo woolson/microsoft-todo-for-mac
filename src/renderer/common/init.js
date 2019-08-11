@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import lineClamp from 'vue-line-clamp'
-import '../assets/font/iconfont.css'
+// import '../assets/font/iconfont.css'
+// import 'normal.css'
 import 'element-ui/lib/theme-chalk/index.css'
 import 'element-ui/lib/theme-chalk/base.css'
 

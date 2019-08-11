@@ -90,6 +90,7 @@ export default {
     darkTheme: '深色',
     lightTheme: '浅色',
     quiteInstall: '退出并安装',
+    showCalendar: '日历视图',
     selectTheme: '@:base.select@:base.theme'
   },
   task: {

@@ -127,7 +127,6 @@ export default {
   flex 1
   display flex
   flex-direction column
-  height 100vh
   position relative
   background var(--background-content)
   transition background .2s
