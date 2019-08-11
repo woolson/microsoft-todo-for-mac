@@ -26,12 +26,16 @@ export default {
       language: 'language'
     }),
     events () {
-      const events = this.allTasks.filter(item => item.IsReminderOn)
+      const events = this.allTasks.filter(item => item.ReminderDateTime)
       return events.map(item => {
+        const date = moment((item.ReminderDateTime || {}).DateTime)
+        const icon = item.Status === 'Completed'
+          ? '<i class="iconfont icon-check u-s10 u-mr5"></i>'
+          : ''
         return {
-          start: moment((item.ReminderDateTime || {}).DateTime).format('YYYY-MM-DD HH:mm:SS'),
-          end: moment((item.ReminderDateTime || {}).DateTime).add(0.5, 'hours').format('YYYY-MM-DD HH:mm:SS'),
-          title: item.Subject,
+          start: date.format('YYYY-MM-DD HH:mm:SS'),
+          end: date.add(0.5, 'hours').format('YYYY-MM-DD HH:mm:SS'),
+          title: icon + item.Subject,
           data: item
         }
       })
@@ -106,6 +110,6 @@ export default {
     height 100%
     align-items flex-end
   >>> .vuecal--month-view .vuecal__cell-date
-    padding 10px
+    padding 10px 10px 5px 10px
 </style>
 
