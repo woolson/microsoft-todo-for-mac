@@ -17,41 +17,29 @@
 
 ## News & Warning 新消息
 
-### Update 无法更新
+> ⭕️**NOTICE 注意**  
+> App crashed at app start up because of invalid code sign. 因代码签名问题，旧版无法启动正常使用。
+> Download the latest version manually. **请手动下载最新版。**[**View newest 查看最新**](https://github.com/woolson/microsoft-todo-mac/releases/)  
 
-App crashed at app start up because of invalid code sign, thank you. 因代码签名问题，旧版无法启动正常使用。
+>🔆**NEWS 新闻**  
+> 微软出了macOS版的啦，预计2019年06月17日发布，现在可以去[**预约**](https://itunes.apple.com/cn/app/microsoft-to-do/id1274495053?mt=12)了。<br/>
+> *<u>在官方出来后此项目仍会继续，做自己心目中想要的样子，大家收录大家的意见的。</u>*
 
-> Download the latest version manually. 请手动下载最新版。[View newest 查看最新](https://github.com/woolson/microsoft-todo-mac/releases/)  
-
-### Official 官方APP
-
-微软出了macOS版的啦，预计2019年06月17日发布，现在可以去[预约](https://itunes.apple.com/cn/app/microsoft-to-do/id1274495053?mt=12)了。
-
-> **注意**：在官方出来后此项目仍会继续，做自己心目中想要的样子，大家收录大家的意见的。
+> 🎉**TIP 提示**  
+> <u>Welcome to **★Star★** if you like it, Thanks. 喜欢请点下 **★Star★**，谢谢。</u>
 
 ## Tech 技术信息
 
-- Based on [Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/) - 基于[Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/)
-- Microsoft [Outlook Task API](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)- 微软[Outlook接口](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)
+- UI Develop 界面构建
+  - Based on [Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/) - 基于[Electron Vue](https://simulatedgreg.gitbooks.io/electron-vue/)
+
+- Data Source 数据来源
+  - Microsoft [Outlook Task API](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)- 微软[Outlook接口](https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations)
 
 ## ScreenShot 软件截图
 
-<div>
-  <div style="display:flex;overflow:auto;height:655px;position:relative;">
-    <img src="./website/src/assets/190816-01.png" />
-    <img src="./website/src/assets/190816-02.png" />
-    <img src="./website/src/assets/190816-03.png" />
-  </div>
-  <p style="color:#ccc;font-size:12px;text-align:center;margin-top: -30px;z-index:9;position:relative;">>>右滑查看更多>></p>
-</div>
-<div>
-  <div style="display:flex;overflow:auto;height:655px;position:relative;">
-    <img src="./website/src/assets/190816-04.png" />
-    <img src="./website/src/assets/190816-05.png" />
-    <img src="./website/src/assets/190816-06.png" />
-  </div>
-  <p style="color:#ccc;font-size:12px;text-align:center;margin-top: -30px;z-index:9;position:relative;">>>右滑查看更多>></p>
-</div>
+![Light](./website/src/assets/190816-01.gif)
+![Dark](./website/src/assets/190816-02.gif)
 
 [For more information 更多信息](https://woolson.github.io/microsoft-todo-mac/)
 
@@ -82,5 +70,3 @@ App crashed at app start up because of invalid code sign, thank you. 因代码�
 ## Other 其他
 
 欢迎使用和反馈，可在Issue中进行反馈所遇到的问题。
-
-<span style="font-weight:bold;color:#E7CF78">Welcome to star if you like it, Thanks!!! 喜欢请点下 Start，谢谢！！！</span>
