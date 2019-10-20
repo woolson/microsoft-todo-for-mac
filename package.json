@@ -60,7 +60,7 @@
       ]
     },
     "mac": {
-      "icon": "build/icons/icon.icns"
+      "icon": "assets/icons/icon.icns"
     }
   },
   "dependencies": {
