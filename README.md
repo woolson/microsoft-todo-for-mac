@@ -38,8 +38,8 @@
 
 ## ScreenShot 软件截图
 
-![Light](./website/src/assets/190816-01.gif)
-![Dark](./website/src/assets/190816-02.gif)
+![Light](./assets/images/190816-01.gif)
+![Dark](./assets/images/190816-02.gif)
 
 [For more information 更多信息](https://woolson.github.io/microsoft-todo-mac/)
 
