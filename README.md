@@ -41,8 +41,6 @@
 ![Light](./assets/images/190816-01.gif)
 ![Dark](./assets/images/190816-02.gif)
 
-[For more information 更多信息](https://woolson.github.io/microsoft-todo-mac/)
-
 ## Introduction 功能介绍
 
 - Microsoft To-Do macOS client【Microsoft To-Do macOS客户端】
