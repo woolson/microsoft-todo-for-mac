@@ -194,15 +194,18 @@ export default {
 <style lang="stylus">
 html
 body
+  background transparent
   *
     font-family Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
 
 #app
+  background transparent
   width 100vw
   height 100vh
   display flex
 
 main
+  background transparent
   flex 1
   display flex
 </style>

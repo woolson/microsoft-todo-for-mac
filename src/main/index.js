@@ -9,7 +9,7 @@ import fundebug from 'fundebug-nodejs'
 
 fundebug.apikey = 'd7014f96a99bf969b1a571343679a75b4ac453f4c5cd1496fa63782b2ee3ea6b'
 
-const setting = storeSetting.get()
+// const setting = storeSetting.get()
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
@@ -35,7 +35,7 @@ function createWindow () {
     show: false,
     titleBarStyle: 'hidden',
     transparent: true,
-    backgroundColor: setting.theme === 'dark' ? '#202124' : 'white',
+    // backgroundColor: setting.theme === 'dark' ? '#202124' : 'white',
     resizable: true,
     webPreferences: {
       webSecurity: false,
@@ -52,6 +52,8 @@ function createWindow () {
   setMenu(mainWindow)
   // Touch bar
   setTouchBar(mainWindow)
+  // Set transprent background
+  mainWindow.setVibrancy('light')
   // Load page
   mainWindow.loadURL(winURL)
   // add event
