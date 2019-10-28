@@ -69,11 +69,11 @@ export default {
     span
       color white !important
   >>> .vuecal__menu button
-    border-top 2px solid transparent
+    border-top 4px solid transparent
     &.active
       border-bottom-width 0
       border-color white
-      background linear-gradient(to bottom, rgba(white, .2), rgba(white, 0))
+      background transparent
   >>> .vuecal__title-bar
     font-size 14px
   >>> .vuecal__weekdays-headings
