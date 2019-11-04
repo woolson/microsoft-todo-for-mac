@@ -49,6 +49,12 @@ const getters = {
     if (showPlannedFolder || showImportanceFolder) {
       folders.unshift({ Key: 'Spacer' })
     }
+    const index = folders.findIndex(item => '任务Task'.includes(item.Name))
+    if (index !== -1) {
+      const taskFolder = folders[index]
+      folders.splice(index, 1)
+      folders.unshift(taskFolder)
+    }
     if (showPlannedFolder) {
       folders.unshift({ Name: i18n.t('base.planned'), Key: 'IsReminderOn', Value: true })
     }
