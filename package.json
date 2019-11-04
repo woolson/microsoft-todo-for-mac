@@ -1,6 +1,6 @@
 {
   "name": "microsoft-todo",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "author": "woolson <woolson.lee@gmail.com>",
   "description": "macOS client for microsoft todo app",
   "license": "MIT",
@@ -60,7 +60,8 @@
       ]
     },
     "mac": {
-      "icon": "assets/icons/icon.icns"
+      "icon": "assets/icons/icon.icns",
+      "darkModeSupport": true
     }
   },
   "dependencies": {
