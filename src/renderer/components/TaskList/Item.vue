@@ -163,7 +163,7 @@ export default {
     *
       opacity .7
   &:hover:not(.active)
-    background var(--background-section-hover)
+    background rgba(black, .15)
 
 .task-item__content
   flex 1

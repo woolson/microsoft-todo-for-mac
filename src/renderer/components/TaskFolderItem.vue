@@ -14,7 +14,7 @@ el-tooltip(
       v-if="shouldShowIcon"
       :class="folderIcon"
     )
-    span.u-s18(v-else) {{data.Name.substr(0, 2)}}
+    span.u-s14.u-mr5(v-else) {{data.Name.substr(0, 2)}}
     span.task-folder-item__name(v-if="shouldShowIcon") {{data.Name}}
     span.task-folder-item__name(v-else) {{data.Name.substr(2)}}
     span.number.u-mlauto(v-show="data.number") {{data.number}}
