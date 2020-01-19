@@ -80,7 +80,7 @@ export default {
 
 .sidebar__add
   padding 0 10px
-  font-size 16px
+  $size-text-large
   height 36px
   line-height 36px
   border-radius 5px
@@ -114,7 +114,7 @@ export default {
   margin-top auto
   height 36px
   line-height 36px
-  font-size 14px
+  font-size $size-text-medium
   padding 0 12px
   cursor pointer
   user-select none

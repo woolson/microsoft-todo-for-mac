@@ -157,7 +157,7 @@ export default {
     font-weight bold
     cursor pointer
   h1
-    font-size 14px
+    font-size $size-text-medium
     text-align center
 
 .task-options__list

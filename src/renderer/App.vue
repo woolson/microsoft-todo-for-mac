@@ -193,10 +193,14 @@ export default {
 
 <style lang="stylus">
 html
+  background transparent
+  font-family $font-family
+  *
+    font-family $font-family
+
+html
 body
   background transparent
-  *
-    font-family Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
 
 #app
   background transparent

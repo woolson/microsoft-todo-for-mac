@@ -97,7 +97,7 @@ export default {
 .task-folder-item
   height 35px
   line-height 35px
-  font-size 14px
+  font-size $size-text-medium
   border-radius 5px
   padding 0 12px
   cursor pointer
@@ -115,7 +115,7 @@ export default {
       font-size 15px
       margin-right 1px
     &.icon-calendar-o
-      font-size 16px
+      $size-text-large
   &.active
     background var(--folder-background)
 

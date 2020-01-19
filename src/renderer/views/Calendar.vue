@@ -75,7 +75,7 @@ export default {
       border-color white
       background transparent
   >>> .vuecal__title-bar
-    font-size 14px
+    font-size $size-text-medium
   >>> .vuecal__weekdays-headings
     background var(--background-section)
     color var(--text-main)

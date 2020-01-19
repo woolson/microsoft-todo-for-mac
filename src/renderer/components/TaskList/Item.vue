@@ -137,7 +137,7 @@ export default {
     &.icon-check
     &.icon-check-o
       padding 0 5px
-      font-size 16px
+      $size-text-large
     &.icon-check
       color $green
     &.icon-star
@@ -173,7 +173,7 @@ export default {
   span
     // max-width 240px
     line-height 45px
-    font-size 14px
+    font-size $size-text-medium
     // font-weight normal
     margin 0
     color var(--text-main)
@@ -199,7 +199,7 @@ export default {
   transition all .2s
   i
     margin-right 10px
-    font-size 12px
+    $size-text-small
     color var(--text-main)
     &.icon-bell
       font-size 13px
