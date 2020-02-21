@@ -100,10 +100,6 @@ export default function () {
     const { showCompleteTask } = store.state
     commit('UPDATE_STATE', {showCompleteTask: !showCompleteTask})
   })
-  // Toggle theme
-  ipcRenderer.on('theme-change', (event, isDark) => {
-    document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
-  })
 }
 
 // Move current folder

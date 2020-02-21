@@ -1,4 +1,4 @@
-import { dialog, ipcMain, systemPreferences } from 'electron'
+import { dialog, ipcMain, nativeTheme } from 'electron'
 import setTouchBar from './touchbar'
 import setMenu from './menu'
 import language from './language'
@@ -53,7 +53,7 @@ export default function (mainWindow) {
 
   // Get system theme
   ipcMain.on('get-theme', (event, arg) => {
-    event.returnValue = systemPreferences.isDarkMode()
+    event.returnValue = nativeTheme.shouldUseDarkColors
   })
 
   // View file content
@@ -61,7 +61,7 @@ export default function (mainWindow) {
     const filePath = path.join(tempPath, arg.Name)
     const fileContent = Buffer.from(arg.ContentBytes, 'base64')
     writeFileSync(filePath, fileContent)
-    execSync(`open ${filePath}`)
+    execSync(`open ${filePath.replace(/\s/, '\\ ')}`)
     event.returnValue = true
   })
 

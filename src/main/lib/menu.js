@@ -1,3 +1,4 @@
+import { app } from 'electron'
 import language from './language'
 import store from './store'
 
@@ -89,5 +90,5 @@ export default function setMenu (mainWindow) {
       ]
     }
   ]
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template))
+  app.applicationMenu = Menu.buildFromTemplate(template)
 }

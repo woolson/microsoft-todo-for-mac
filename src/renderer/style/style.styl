@@ -1,24 +1,4 @@
-:root
-  // Background
-  --background-sidebar $sidebar-light
-  --background white
-  --background-content white
-  --background-section #F8F8FA
-  --background-section-hover rgba($blue, .15)
-  // Text
-  --text-main $text
-  --text-sub $gray
-  // Border
-  --border $border
-  --border-arrow $arrow
-  // Task-Folder
-  --folder-background rgba(black, .08)
-  --folder-color #333333
-  // Task
-  --task-background-active linear-gradient(45deg, $blue, $purple)
-  --task-info-background rgba(white, .4)
-
-[data-theme="theme-dark"]
+darkTheme() {
   // Background
   --background-sidebar $sidebar-dark
   --background $background-dark
@@ -37,6 +17,41 @@
   // Task
   --task-background-active $background-dark
   --task-info-background darken($background-dark-section, 1.5)
+}
+
+lightTheme() {
+  // Background
+  --background-sidebar $sidebar-light
+  --background white
+  --background-content white
+  --background-section #F8F8FA
+  --background-section-hover rgba($blue, .15)
+  // Text
+  --text-main $text
+  --text-sub $gray
+  // Border
+  --border $border
+  --border-arrow $arrow
+  // Task-Folder
+  --folder-background rgba(black, .08)
+  --folder-color #333333
+  // Task
+  --task-background-active linear-gradient(45deg, $blue, $purple)
+  --task-info-background rgba(white, .4)
+}
+
+:root
+  lightTheme()
+
+@media (prefers-color-scheme: dark)
+  :root
+    darkTheme()
+
+[data-theme="theme-light"]
+  lightTheme()
+
+[data-theme="theme-dark"]
+  darkTheme()
 
 ::selection
   background $blue

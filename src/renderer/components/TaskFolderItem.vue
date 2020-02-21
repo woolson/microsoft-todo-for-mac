@@ -4,7 +4,7 @@ el-tooltip(
   :content="data.Name"
   placement="right"
   :open-delay="1000"
-  :disabled="data.Name > 8"
+  :disabled="data.Name.length < 10"
 )
   div.task-folder-item(
     ref="root"

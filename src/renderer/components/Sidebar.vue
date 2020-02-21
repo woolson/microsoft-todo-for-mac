@@ -118,6 +118,6 @@ export default {
   padding 0 12px
   cursor pointer
   user-select none
-  color #333
+  color var(--folder-color)
   margin-bottom 20px
 </style>

@@ -53,7 +53,7 @@ function createWindow () {
   // Touch bar
   setTouchBar(mainWindow)
   // Set transprent background
-  mainWindow.setVibrancy('light')
+  mainWindow.setVibrancy('menu')
   // Load page
   mainWindow.loadURL(winURL)
   // add event

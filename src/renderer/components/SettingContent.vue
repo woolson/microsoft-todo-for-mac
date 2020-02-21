@@ -108,12 +108,14 @@ export default {
       },
       immediate: true
     },
-    theme (newValue) {
-      if (newValue === 'auto') {
-        const isDark = ipcRenderer.sendSync('get-theme')
-        document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
-      }
-    },
+    // theme (newValue) {
+    //   if (newValue === 'auto') {
+    //     document.documentElement.removeAttribute('data-theme')
+    //   } else {
+    //     const isDark = ipcRenderer.sendSync('get-theme')
+    //     document.documentElement.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
+    //   }
+    // },
     volume (newValue, oldValue) {
       oldValue && playCompleteVoice(newValue)
       this.updateState({alertVoicevolume: newValue})

@@ -24,6 +24,7 @@ import AddFolderModal from '@/components/AddFolderModal'
 import AddTaskModal from '@/components/AddTaskModal'
 import SettingsModal from '@/components/SettingsModal'
 import { ipcRenderer } from 'electron'
+import { changeTheme } from '@/common/utils'
 
 const notify = new Notification()
 
@@ -63,11 +64,6 @@ export default {
   mounted () {
     this.init()
     initShortCut()
-    // Set theme if theme setting is auto
-    if (this.theme === 'auto') {
-      const isDark = ipcRenderer.sendSync('get-theme')
-      document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
-    }
     // Update data when window focus
     if (process.env.NODE_ENV !== 'development') {
       window.onfocus = () => this.init(false)
@@ -110,7 +106,7 @@ export default {
     },
     theme: {
       handler (newValue) {
-        document.body.setAttribute('data-theme', `theme-${newValue}`)
+        changeTheme(newValue)
         ipcRenderer.sendSync('update-setting', {theme: newValue})
       },
       immediate: true

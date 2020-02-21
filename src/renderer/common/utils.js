@@ -359,3 +359,13 @@ export function playCompleteVoice (volume) {
   $audio.volume = volume / 100
   $audio.play()
 }
+
+export function changeTheme (theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'theme-dark')
+  } else if (theme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'theme-light')
+  } else {
+    document.documentElement.removeAttribute('data-theme')
+  }
+}
