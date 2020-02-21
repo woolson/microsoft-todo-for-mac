@@ -192,16 +192,6 @@ export default {
 </script>
 
 <style lang="stylus">
-html
-  background transparent
-  font-family $font-family
-  *
-    font-family $font-family
-
-html
-body
-  background transparent
-
 #app
   background transparent
   width 100vw

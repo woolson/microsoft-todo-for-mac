@@ -177,15 +177,6 @@ export default {
   top 0
   left 0
   position fixed
-  backdrop-filter saturate(100%) blur(10px)
-  animation-duration .2s !important
+  backdrop-filter saturate(30%) blur(2px)
   background rgba(black, .3)
-</style>
-
-<style lang="stylus">
-[data-theme="theme-light"] .modal__mask
-  background rgba(white, 1)
-
-[data-theme="theme-dark"] .modal__mask
-  background rgba(black, 1)
 </style>

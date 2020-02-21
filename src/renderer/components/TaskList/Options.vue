@@ -3,6 +3,8 @@ div.task-options
   el-popover(
     trigger="hover"
     placement="bottom"
+    transition="none"
+    :close-delay="0"
   )
     el-button.button-more(
       slot="reference"
@@ -35,6 +37,8 @@ div.task-options
   el-popover(
     trigger="hover"
     placement="bottom"
+    transition="none"
+    :close-delay="0"
   )
     el-button.button-sort(
       slot="reference"
