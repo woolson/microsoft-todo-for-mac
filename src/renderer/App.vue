@@ -50,6 +50,7 @@ export default {
       'sortDir',
       'sortStash',
       'language',
+      'shouldLogin',
       'currentTask',
       'currentFolder',
       'playAlertVoice',
@@ -138,6 +139,9 @@ export default {
     showImportanceFolder (newValue) {
       ipcRenderer.sendSync('update-setting', {showImportanceFolder: newValue})
     }
+    // shouldLogin () {
+
+    // }
   },
 
   methods: {

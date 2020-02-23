@@ -82,7 +82,7 @@ div.task-options
 <script>
 import { ipcRenderer } from 'electron'
 import { mapMutations, mapState } from 'vuex'
-import { has } from '@/common/utils'
+import { has } from '~/share/utils'
 
 export default {
   data () {

@@ -35,7 +35,7 @@ div.task-list
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import Item from './Item'
 import Options from './Options'
-import { has, isEmpty } from '@/common/utils'
+import { has, isEmpty } from '~/share/utils'
 import { nextTask } from '@/common/event'
 
 export default {

@@ -27,8 +27,8 @@ Modal.login-modal(
 
 <script>
 import { mapMutations, mapActions, mapState } from 'vuex'
-import { has, parseURL, objToForm, dater, Storage } from '@/common/utils'
-import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '@/common/static'
+import { has, parseURL, objToForm, dater, Storage } from '~/share/utils'
+import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '~/share/static'
 
 const token = new Storage('TOKEN')
 const LOGIN_ORIGIN = 'https://login.microsoftonline.com/common/oauth2/v2.0'
@@ -54,8 +54,10 @@ export default {
 
   watch: {
     shouldLogin (newValue) {
-      if (newValue) this.login()
-      else this.loginUrl = null
+      if (newValue) {
+        this.loginUrl = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout'
+        this.login()
+      } else this.loginUrl = null
     }
   },
 

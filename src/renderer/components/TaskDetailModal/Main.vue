@@ -110,7 +110,7 @@ div.task-detail-main
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
-import { dater, fileToBase64 } from '@/common/utils'
+import { dater, fileToBase64 } from '~/share/utils'
 import { ipcRenderer, remote } from 'electron'
 
 export default {

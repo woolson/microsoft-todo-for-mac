@@ -72,9 +72,10 @@ div
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
+// import { ipcRenderer } from 'electron'
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { Storage, playCompleteVoice } from '@/common/utils'
+import { Storage } from '~/share/utils'
+import { playCompleteVoice } from '@/common/utils'
 
 const token = new Storage('TOKEN')
 
@@ -147,7 +148,6 @@ export default {
       this.updateState({language: lang})
     },
     logout () {
-      ipcRenderer.sendSync('clear-session')
       token.remove()
       this.updateState({
         showSettingsModal: false,

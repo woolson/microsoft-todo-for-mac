@@ -22,7 +22,7 @@ div.modal(
 </template>
 
 <script>
-import { has } from '@/common/utils'
+import { has } from '~/share/utils'
 
 export default {
   name: 'Modal',

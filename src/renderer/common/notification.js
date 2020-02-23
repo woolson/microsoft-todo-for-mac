@@ -1,4 +1,4 @@
-import { isEmpty, dater } from './utils'
+import { isEmpty, dater } from '~/share/utils'
 
 export default class Notification {
   constructor () {

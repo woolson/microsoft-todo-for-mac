@@ -1,4 +1,4 @@
-import { dialog, ipcMain, nativeTheme } from 'electron'
+import { dialog, ipcMain, nativeTheme, BrowserView } from 'electron'
 import setTouchBar from './touchbar'
 import setMenu from './menu'
 import language from './language'
@@ -7,6 +7,8 @@ import path from 'path'
 import tempPath from 'temp-dir'
 import { writeFileSync } from 'fs'
 import { execSync } from 'child_process'
+import { AUTH_SCOPE, CLIENT_ID, REDIRECT_URI } from '~/share/static'
+import { objToForm } from '~/share/utils'
 
 export default function (mainWindow) {
   // Update touchbar
@@ -76,6 +78,31 @@ export default function (mainWindow) {
     // console.dir()
     mainWindow.webContents.session.clearStorageData({
       origin: 'https://login.microsoftonline.com'
+    })
+    event.returnValue = true
+  })
+
+  ipcMain.on('login', (event) => {
+    const LOGIN_ORIGIN = 'https://login.microsoftonline.com/common/oauth2/v2.0'
+    const query = {
+      client_id: CLIENT_ID,
+      response_type: 'code',
+      redirect_uri: REDIRECT_URI,
+      response_mode: 'query',
+      scope: AUTH_SCOPE,
+      state: 12345
+    }
+    const view = new BrowserView()
+    const rect = mainWindow.getBounds()
+    mainWindow.setBrowserView(view)
+    view.setBounds({
+      x: 0,
+      y: 0,
+      width: rect.width,
+      height: rect.height
+    })
+    view.webContents.loadURL(`${LOGIN_ORIGIN}/authorize?${objToForm(query)}`)
+    view.webContents.addEventListener('did-finish-load', () => {
     })
     event.returnValue = true
   })

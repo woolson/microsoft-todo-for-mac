@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { has } from '@/common/utils'
+import { has } from '~/share/utils'
 
 Vue.directive('toggle-class', {
   componentUpdated: updateClass,
