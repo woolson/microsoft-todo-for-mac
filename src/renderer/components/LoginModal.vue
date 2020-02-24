@@ -6,7 +6,7 @@ Modal.login-modal(
   div.login-modal__content(
     v-loading="wvLoading"
     element-loading-background="rgba(0, 0, 0, 0.8)"
-    element-loading-text="加载中"
+    :element-loading-text="$t('base.loading')"
   )
     webview(
       ref="webview"

@@ -6,6 +6,7 @@ div#app
     RouterView
   //- Modals
   LoginModal
+  LogoutModal
   TaskDetailModal
   AddFolderModal
   AddTaskModal
@@ -17,6 +18,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import initShortCut from './common/event'
 import Notification from './common/notification'
 import LoginModal from '@/components/LoginModal'
+import LogoutModal from '@/components/LogoutModal'
 import Tabbar from '@/components/Tabbar'
 import TaskList from '@/components/TaskList/'
 import TaskDetailModal from '@/components/TaskDetailModal'
@@ -35,6 +37,7 @@ export default {
     Tabbar,
     TaskList,
     LoginModal,
+    LogoutModal,
     TaskDetailModal,
     AddFolderModal,
     AddTaskModal,
