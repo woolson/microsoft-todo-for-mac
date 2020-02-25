@@ -79,5 +79,5 @@ export default function setTouchBar (mainWindow, options) {
     ])
   }
 
-  mainWindow.setTouchBar(touchbar)
+  mainWindow.setTouchBar(new TouchBar({items: touchbar}))
 }
