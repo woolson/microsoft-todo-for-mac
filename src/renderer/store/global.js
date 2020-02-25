@@ -1,4 +1,5 @@
-import { Storage, isEmpty, separate, playCompleteVoice, getStoreValue } from '@/common/utils'
+import { separate, playCompleteVoice, getStoreValue } from '@/common/utils'
+import { Storage, isEmpty } from '~/share/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 import moment from 'moment'
@@ -13,6 +14,7 @@ const state = {
   currentFolder: {},
   currentTask: {},
   shouldLogin: false,
+  shouldLogout: false,
   theme: getStoreValue('theme'),
   language: getStoreValue('language'),
   playAlertVoice: getStoreValue('playAlertVoice', true),

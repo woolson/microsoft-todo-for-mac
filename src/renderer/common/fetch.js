@@ -2,9 +2,11 @@ import Vue from 'vue'
 import store from '../store/index'
 import i18n from '../common/i18n'
 import axios from 'axios'
+// import { ipcRenderer } from 'electron'
 import { Message } from 'element-ui'
-import { BASE_URL } from '@/common/static'
-import { dater, isEmpty, Storage, refreshToken, has } from '@/common/utils'
+import { dater, isEmpty, Storage, has } from '~/share/utils'
+import { BASE_URL } from '~/share/static'
+import { refreshToken } from '@/common/utils'
 
 let loading
 const token = new Storage('TOKEN')
@@ -17,6 +19,7 @@ function checkAuth (options) {
     const isLogin = has(options.url, '/oauth2/v2.0/token')
     if (isEmpty(tokenInfo) && !isLogin) {
       store.commit('UPDATE_STATE', {shouldLogin: true})
+      // ipcRenderer.sendSync('login')
       loading && loading.close()
       reject(new Error('expired'))
     } else if (tokenInfo.expires_time < dater().format('X') && !isLogin) {
@@ -109,6 +112,7 @@ axios.interceptors.response.use(function (response) {
     Message.error(error.message)
   }
   if (error.response.status === 401 || error.response.status === 400) {
+    // ipcRenderer.sendSync('login')
     store.commit('UPDATE_STATE', {shouldLogin: true})
   }
   return Promise.reject(error)

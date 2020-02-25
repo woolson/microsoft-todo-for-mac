@@ -1,7 +1,7 @@
 {
   "name": "microsoft-todo",
-  "version": "2.2.2",
-  "author": "woolson <woolson.lee@gmail.com>",
+  "version": "2.2.3",
+  "author": "Woolson Lee <woolson.lee@gmail.com>",
   "description": "macOS client for microsoft todo app",
   "license": "MIT",
   "main": "./dist/electron/main.js",
@@ -45,6 +45,7 @@
       "dist/electron/**/*"
     ],
     "dmg": {
+      "background": "assets/icons/background.png",
       "contents": [
         {
           "x": 410,
@@ -100,11 +101,11 @@
     "css-loader": "^0.28.4",
     "del": "^3.0.0",
     "devtron": "^1.4.0",
-    "electron": "^4.2.12",
+    "electron": "^7.1.9",
     "electron-builder": "^21.1.5",
     "electron-debug": "^1.4.0",
     "electron-devtools-installer": "^2.2.0",
-    "electron-log": "^2.2.17",
+    "electron-log": "^4.0.6",
     "eslint": "^4.4.1",
     "eslint-config-standard": "^10.2.1",
     "eslint-friendly-formatter": "^3.0.0",

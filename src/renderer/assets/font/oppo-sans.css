@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "OPPOSans-Regular";
+  src: url('oppo-sans-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: "OPPOSans-Bold";
+  src: url('oppo-sans-bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: "OPPOSans-L";
+  src: url('oppo-sans-l.woff2') format('woff2');
+}
+@font-face {
+  font-family: "OPPOSans-M";
+  src: url('oppo-sans-m.woff2') format('woff2');
+}
+@font-face {
+  font-family: "OPPOSans-H";
+  src: url('oppo-sans-h.woff2') format('woff2');
+}

@@ -131,7 +131,7 @@ export default {
   display flex
   align-items center
   margin-bottom 10px
-  font-size 14px
+  font-size $size-text-medium
 
 .task-detail-repeat__content
   margin 10px
@@ -146,7 +146,7 @@ export default {
   padding 12px
   box-sizing border-box
   color $text
-  font-size 14px
+  font-size $size-text-medium
   cursor pointer
   user-select none
   .el-input

@@ -4,6 +4,7 @@ el-tooltip(
   :content="data.Name"
   placement="right"
   :open-delay="1000"
+  :disabled="data.Name.length < 10"
 )
   div.task-folder-item(
     ref="root"
@@ -14,7 +15,7 @@ el-tooltip(
       v-if="shouldShowIcon"
       :class="folderIcon"
     )
-    span.u-s18(v-else) {{data.Name.substr(0, 2)}}
+    span.u-s14.u-mr5(v-else) {{data.Name.substr(0, 2)}}
     span.task-folder-item__name(v-if="shouldShowIcon") {{data.Name}}
     span.task-folder-item__name(v-else) {{data.Name.substr(2)}}
     span.number.u-mlauto(v-show="data.number") {{data.number}}
@@ -97,7 +98,7 @@ export default {
 .task-folder-item
   height 35px
   line-height 35px
-  font-size 14px
+  font-size $size-text-medium
   border-radius 5px
   padding 0 12px
   cursor pointer
@@ -115,7 +116,7 @@ export default {
       font-size 15px
       margin-right 1px
     &.icon-calendar-o
-      font-size 16px
+      $size-text-large
   &.active
     background var(--folder-background)
 

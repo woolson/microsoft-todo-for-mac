@@ -110,7 +110,7 @@ div.task-detail-main
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex'
-import { dater, fileToBase64 } from '@/common/utils'
+import { dater, fileToBase64 } from '~/share/utils'
 import { ipcRenderer, remote } from 'electron'
 
 export default {
@@ -379,7 +379,7 @@ export default {
   flex-shrink 0
   h1
     flex 1
-    font-size 16px
+    $size-text-large
     font-weight normal
     overflow hidden
     text-overflow ellipsis
@@ -399,7 +399,7 @@ textarea
   border none
   resize none
   outline none
-  font-size 14px
+  font-size $size-text-medium
   color var(--text-main)
   background transparent
 

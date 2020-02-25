@@ -72,9 +72,10 @@ div
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
+// import { ipcRenderer } from 'electron'
 import { mapState, mapMutations, mapActions } from 'vuex'
-import { Storage, playCompleteVoice } from '@/common/utils'
+import { Storage } from '~/share/utils'
+import { playCompleteVoice } from '@/common/utils'
 
 const token = new Storage('TOKEN')
 
@@ -108,12 +109,14 @@ export default {
       },
       immediate: true
     },
-    theme (newValue) {
-      if (newValue === 'auto') {
-        const isDark = ipcRenderer.sendSync('get-theme')
-        document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
-      }
-    },
+    // theme (newValue) {
+    //   if (newValue === 'auto') {
+    //     document.documentElement.removeAttribute('data-theme')
+    //   } else {
+    //     const isDark = ipcRenderer.sendSync('get-theme')
+    //     document.documentElement.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
+    //   }
+    // },
     volume (newValue, oldValue) {
       oldValue && playCompleteVoice(newValue)
       this.updateState({alertVoicevolume: newValue})
@@ -145,13 +148,10 @@ export default {
       this.updateState({language: lang})
     },
     logout () {
-      ipcRenderer.sendSync('clear-session')
       token.remove()
       this.updateState({
         showSettingsModal: false,
-        shouldLogin: true,
-        tasks: [],
-        taskFolders: []
+        shouldLogout: true
       })
     }
   }

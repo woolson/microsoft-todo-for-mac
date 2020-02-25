@@ -228,7 +228,7 @@ for $size in 10 11 12 13 14 15 20
   padding 12px
   box-sizing border-box
   color var(--text-main)
-  font-size 14px
+  font-size $size-text-medium
   user-select none
   background var(--background-section)
   transition background .2s
@@ -246,5 +246,3 @@ for $size in 10 11 12 13 14 15 20
     border-bottom-right-radius 5px
     &:after
       display none
-  &:hover:not(.disabled)
-    background var(--background-section-hover)

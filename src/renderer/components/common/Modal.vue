@@ -22,7 +22,7 @@ div.modal(
 </template>
 
 <script>
-import { has } from '@/common/utils'
+import { has } from '~/share/utils'
 
 export default {
   name: 'Modal',
@@ -177,5 +177,6 @@ export default {
   top 0
   left 0
   position fixed
-  background rgba(0, 0, 0, .6)
+  backdrop-filter saturate(30%) blur(2px)
+  background rgba(black, .3)
 </style>

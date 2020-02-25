@@ -35,7 +35,7 @@ div.task-list
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import Item from './Item'
 import Options from './Options'
-import { has, isEmpty } from '@/common/utils'
+import { has, isEmpty } from '~/share/utils'
 import { nextTask } from '@/common/event'
 
 export default {
@@ -164,7 +164,7 @@ export default {
   span
     color $gray
     margin-top 10px
-    font-size 14px
+    font-size $size-text-medium
 
 .task-list__title
   outline none
@@ -172,7 +172,7 @@ export default {
   align-items center
   justify-content center
   > span:nth-child(2)
-    font-size 16px
+    $size-text-large
     font-weight bold
     max-width 150px
     white-space nowrap

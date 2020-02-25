@@ -6,6 +6,7 @@ div#app
     RouterView
   //- Modals
   LoginModal
+  LogoutModal
   TaskDetailModal
   AddFolderModal
   AddTaskModal
@@ -17,6 +18,7 @@ import { mapState, mapActions, mapMutations } from 'vuex'
 import initShortCut from './common/event'
 import Notification from './common/notification'
 import LoginModal from '@/components/LoginModal'
+import LogoutModal from '@/components/LogoutModal'
 import Tabbar from '@/components/Tabbar'
 import TaskList from '@/components/TaskList/'
 import TaskDetailModal from '@/components/TaskDetailModal'
@@ -24,6 +26,7 @@ import AddFolderModal from '@/components/AddFolderModal'
 import AddTaskModal from '@/components/AddTaskModal'
 import SettingsModal from '@/components/SettingsModal'
 import { ipcRenderer } from 'electron'
+import { changeTheme } from '@/common/utils'
 
 const notify = new Notification()
 
@@ -34,6 +37,7 @@ export default {
     Tabbar,
     TaskList,
     LoginModal,
+    LogoutModal,
     TaskDetailModal,
     AddFolderModal,
     AddTaskModal,
@@ -49,6 +53,7 @@ export default {
       'sortDir',
       'sortStash',
       'language',
+      'shouldLogin',
       'currentTask',
       'currentFolder',
       'playAlertVoice',
@@ -63,11 +68,6 @@ export default {
   mounted () {
     this.init()
     initShortCut()
-    // Set theme if theme setting is auto
-    if (this.theme === 'auto') {
-      const isDark = ipcRenderer.sendSync('get-theme')
-      document.body.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
-    }
     // Update data when window focus
     if (process.env.NODE_ENV !== 'development') {
       window.onfocus = () => this.init(false)
@@ -110,7 +110,7 @@ export default {
     },
     theme: {
       handler (newValue) {
-        document.body.setAttribute('data-theme', `theme-${newValue}`)
+        changeTheme(newValue)
         ipcRenderer.sendSync('update-setting', {theme: newValue})
       },
       immediate: true
@@ -142,6 +142,9 @@ export default {
     showImportanceFolder (newValue) {
       ipcRenderer.sendSync('update-setting', {showImportanceFolder: newValue})
     }
+    // shouldLogin () {
+
+    // }
   },
 
   methods: {
@@ -192,12 +195,6 @@ export default {
 </script>
 
 <style lang="stylus">
-html
-body
-  background transparent
-  *
-    font-family Segoe UI,SegoeUI,Segoe WP,Helvetica Neue,Helvetica,Tahoma,Arial,sans-serif
-
 #app
   background transparent
   width 100vw

@@ -3,7 +3,8 @@ import router from './router'
 import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
-import { isEmpty, getStoreValue } from './utils'
+import { getStoreValue } from './utils'
+import { isEmpty } from '~/share/utils'
 
 export default function () {
   const { dispatch, commit, state } = store
@@ -99,10 +100,6 @@ export default function () {
   ipcRenderer.on('toggle-complete', async () => {
     const { showCompleteTask } = store.state
     commit('UPDATE_STATE', {showCompleteTask: !showCompleteTask})
-  })
-  // Toggle theme
-  ipcRenderer.on('theme-change', (event, isDark) => {
-    document.body.setAttribute('data-theme', `theme-${!isDark ? 'dark' : 'light'}`)
   })
 }
 

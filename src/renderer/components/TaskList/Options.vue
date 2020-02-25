@@ -3,6 +3,8 @@ div.task-options
   el-popover(
     trigger="hover"
     placement="bottom"
+    transition="none"
+    :close-delay="0"
   )
     el-button.button-more(
       slot="reference"
@@ -35,6 +37,8 @@ div.task-options
   el-popover(
     trigger="hover"
     placement="bottom"
+    transition="none"
+    :close-delay="0"
   )
     el-button.button-sort(
       slot="reference"
@@ -78,7 +82,7 @@ div.task-options
 <script>
 import { ipcRenderer } from 'electron'
 import { mapMutations, mapState } from 'vuex'
-import { has } from '@/common/utils'
+import { has } from '~/share/utils'
 
 export default {
   data () {
@@ -157,7 +161,7 @@ export default {
     font-weight bold
     cursor pointer
   h1
-    font-size 14px
+    font-size $size-text-medium
     text-align center
 
 .task-options__list
