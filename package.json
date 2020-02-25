@@ -1,7 +1,7 @@
 {
   "name": "microsoft-todo",
   "version": "2.2.3",
-  "author": "woolson <woolson.lee@gmail.com>",
+  "author": "Woolson Lee <woolson.lee@gmail.com>",
   "description": "macOS client for microsoft todo app",
   "license": "MIT",
   "main": "./dist/electron/main.js",
@@ -45,6 +45,7 @@
       "dist/electron/**/*"
     ],
     "dmg": {
+      "background": "assets/icons/background.png",
       "contents": [
         {
           "x": 410,
