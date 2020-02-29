@@ -6,7 +6,6 @@ import store from './store'
 import path from 'path'
 import tempPath from 'temp-dir'
 import { writeFileSync } from 'fs'
-import { execSync } from 'child_process'
 
 export default function (mainWindow) {
   // Update touchbar
@@ -61,7 +60,8 @@ export default function (mainWindow) {
     const filePath = path.join(tempPath, arg.Name)
     const fileContent = Buffer.from(arg.ContentBytes, 'base64')
     writeFileSync(filePath, fileContent)
-    execSync(`open ${filePath.replace(/\s/, '\\ ')}`)
+    mainWindow.previewFile(filePath.replace(/\s/g, '\\ '))
+    // execSync(`qlmanage -p ${filePath.replace(/\s/g, '\\ ')}`)
     event.returnValue = true
   })
 

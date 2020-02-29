@@ -68,7 +68,13 @@ div.task-detail-main
     div.u-form__row-section
       //- Choose upload file
       div.u-form__row
-        label {{$t('task.addFile')}}
+        label
+          span {{$t('base.attachment')}}
+          i.el-icon-loading.u-ml5(v-if="isLoading")
+          i.el-icon-refresh.u-ml5.u-pointer(
+            v-else
+            @click="fetchAttachments"
+          )
         input.u-transparent.u-w0(
           ref="file"
           type="file"
@@ -122,7 +128,8 @@ export default {
       dateTime: '',
       stopDate: '',
       note: '',
-      attachments: []
+      attachments: [],
+      isLoading: false
     }
   },
 
@@ -166,13 +173,15 @@ export default {
     currentTask: {
       handler (newValue, oldValue) {
         if (newValue.Id === oldValue.Id) return
+        this.attachments = []
         const {
           Body,
           DueDateTime,
           HasAttachments,
           ParentFolderId,
           ReminderDateTime,
-          Subject
+          Subject,
+          Attachments
         } = newValue
         if (ReminderDateTime) {
           this.dateTime = dater(ReminderDateTime.DateTime).format('x')
@@ -185,8 +194,13 @@ export default {
         this.name = Subject
         this.note = Body && Body.Content
         // get task attachments
-        if (HasAttachments && this.showTaskDetailModal) this.fetchAttachments()
-        else this.attachments = []
+        if (HasAttachments && this.showTaskDetailModal) {
+          if (Attachments) {
+            this.attachments = Attachments
+          } else {
+            this.fetchAttachments()
+          }
+        } else this.attachments = []
       },
       deep: true
     },
@@ -239,11 +253,16 @@ export default {
       else showPicker()
     },
     async fetchAttachments () {
+      this.isLoading = true
       const { value } = await this.$get(
         `/me/tasks/${this.currentTask.Id}/attachments`,
         null,
         {showLoading: false}
       )
+      this.updateStateTask({
+        Id: this.currentTask.Id, Attachments: value
+      })
+      this.isLoading = false
       this.attachments = value
     },
     async removeAttachment (item, index) {
@@ -343,15 +362,14 @@ export default {
         this.updateStateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
       }
     },
-    downloadAttachment (file) {
-      remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+    async downloadAttachment (file) {
+      const res = await remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
         defaultPath: file.Name
-      }, (filename) => {
-        if (filename) {
-          ipcRenderer.sendSync('save-file', {file, filename})
-          this.$message.success('成功')
-        }
       })
+      if (res.filePath) {
+        ipcRenderer.sendSync('save-file', {file, filename: res.filePath})
+        this.$message.success('成功')
+      }
     },
     viewFile (file) {
       // console.log('viewFile')
