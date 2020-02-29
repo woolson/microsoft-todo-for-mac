@@ -73,6 +73,7 @@ div.task-detail-main
           i.el-icon-loading.u-ml5(v-if="isLoading")
           i.el-icon-refresh.u-ml5.u-pointer(
             v-else
+            :title="$t('base.update')"
             @click="fetchAttachments"
           )
         input.u-transparent.u-w0(
@@ -80,7 +81,10 @@ div.task-detail-main
           type="file"
           @change="selectFile"
         )
-        el-button(@click="showSelect") {{$t('base.upload')}}
+        el-button.u-mt-5.u-mb-5(
+          size="mini"
+          @click="showSelect"
+        ) {{$t('base.upload')}}
       //- Attachment file list
       div.u-form__row.u-bb(
         v-for="item,index in attachments"

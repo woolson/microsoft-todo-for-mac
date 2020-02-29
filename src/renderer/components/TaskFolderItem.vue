@@ -10,6 +10,7 @@ el-tooltip(
     ref="root"
     :class="activeClass"
     @click="updateState({currentFolder: data})"
+    @dblclick="renameTaskFolder"
   )
     i.iconfont.u-mr5.u-s16(
       v-if="shouldShowIcon"
@@ -89,7 +90,13 @@ export default {
   methods: {
     ...mapMutations({
       updateState: 'UPDATE_STATE'
-    })
+    }),
+    renameTaskFolder () {
+      this.updateState({
+        currentFolder: {...this.currentFolder, Type: 'Rename'},
+        showTaskFolderAddModal: true
+      })
+    }
   }
 }
 </script>

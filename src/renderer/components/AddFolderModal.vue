@@ -70,6 +70,7 @@ export default {
     async submit () {
       const { Type, Name, Id } = this.currentFolder
       if ((Type && Name === this.name) || !this.name) return
+      const operateType = this.operateType
       try {
         if (Type) {
           await this.$patch(`/me/taskfolders/${Id}`, {Name: this.name})
@@ -88,9 +89,9 @@ export default {
             showTaskFolderAddModal: false
           })
         }
-        this.$message.success(this.$t('message.commonSuccessfully', [this.operateType]))
+        this.$message.success(this.$t('message.commonSuccessfully', [operateType]))
       } catch (err) {
-        this.$message.error(this.$t('message.commonFailed', [this.operateType]))
+        this.$message.error(this.$t('message.commonFailed', [operateType]))
       }
     }
   }
