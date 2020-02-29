@@ -146,8 +146,9 @@ export default {
   display flex
   align-items stretch
   button
+    font-size 14px
     background var(--background-section)
-    border-color var(--background-section)
+    border none !important
 
 .task-options__title
   display flex
@@ -163,6 +164,7 @@ export default {
   h1
     font-size $size-text-medium
     text-align center
+    color var(--text-main)
 
 .task-options__list
   color var(--text-main)
@@ -172,39 +174,41 @@ export default {
     user-select none
   .u-form__row
     border-radius 0 !important
-    // background white
     cursor pointer
-    &.rename
-      color $green
+    background var(--background-content)
+    border-color var(--background-section)
     &.delete
       color $red
 
 .task-options__sort
   .u-form__row
     border-radius 0 !important
-    // background white
+    background var(--background-content)
+    border-color var(--background-section)
     padding 0 12px
     cursor pointer
 
 .button-more
-  border-radius 50% 0 0 50%
-  padding 8px
+  border-radius 5px 0 0 5px
+  padding 5px 5px 5px 10px
 
 .button-sort
-  padding 8px
+  padding 5px
   border-radius 0
   margin 0 -1px
 
 .button-dir
-  border-radius 0 50% 50% 0
-  padding 8px
+  border-radius 0 5px 5px 0
+  padding 5px 10px 5px 5px
 
 .button-search
-  border-radius 50% 0 0 50%
+  border-radius 5px 0 0 5px
+  padding 5px 5px 5px 10px
 
 .button-add
   margin-left 0
-  border-radius 0 50% 50% 0
+  border-radius 0 5px 5px 0
+  padding 5px 10px 5px 5px
 
 .steps
   height 200px !important

@@ -142,14 +142,10 @@ export default {
 
 .task-list__content
   padding 15px
-  padding-top 65px
+  padding-top 55px
   transition background .2s
   flex 1
   overflow auto
-  &::-webkit-scrollbar
-    width 3px !important
-  &::-webkit-scrollbar-thumb
-    background rgba(black, .25)
 
 .task-list__empty
   flex 1
