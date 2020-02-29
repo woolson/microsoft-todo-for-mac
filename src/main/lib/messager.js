@@ -60,8 +60,7 @@ export default function (mainWindow) {
     const filePath = path.join(tempPath, arg.Name)
     const fileContent = Buffer.from(arg.ContentBytes, 'base64')
     writeFileSync(filePath, fileContent)
-    mainWindow.previewFile(filePath.replace(/\s/g, '\\ '))
-    // execSync(`qlmanage -p ${filePath.replace(/\s/g, '\\ ')}`)
+    mainWindow.previewFile(filePath, arg.Name)
     event.returnValue = true
   })
 

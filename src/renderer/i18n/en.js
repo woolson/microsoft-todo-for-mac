@@ -1,5 +1,6 @@
 export default {
   base: {
+    alert: 'Alert',
     async: 'Async',
     at: 'At',
     attachment: 'Attachment',
@@ -42,7 +43,8 @@ export default {
     theme: 'Theme',
     time: 'Time',
     update: 'Update',
-    upload: 'Upload'
+    upload: 'Upload',
+    volume: 'Volume'
   },
   date: {
     custom: 'Custom',
