@@ -155,39 +155,63 @@ body
 .el-date-editor.el-input
   width auto
 
+.el-date-picker
+  width 275px
+  .el-date-table td
+    padding 0
+  .el-picker-panel__content
+    width 250px
+  .el-date-picker__header
+    margin 5px 12px 0
+  .el-picker-panel__content
+    margin 0 12px 5px
+
 .el-input__inner
 .el-select-dropdown
 .el-alert--info
 .el-input__inner
-.el-picker-panel
-.el-picker-panel__footer
 .el-message-box
+.el-time-spinner__item:hover:not(.disabled):not(.active)
   background var(--background-section)
 
 .el-popover
 .el-select-dropdown
+.el-time-panel
+.el-picker-panel
+.el-picker-panel__footer
   background var(--background-content)
 
 .el-popover
 .el-button--default
-.el-date-picker__time-header
-.el-picker-panel
-.el-picker-panel__footer
-.el-date-table th
   border-color var(--border)
 
 .el-input__inner
 .el-select-dropdown
+.el-picker-panel
+.el-picker-panel__footer
+.el-date-table th
+.el-date-picker__time-header
+.el-time-panel
+.el-time-panel__footer
+.el-time-panel__content::before
+.el-time-panel__content::after
   border-color var(--background-section)
 
 .el-select-dropdown__item
 .el-input__inner
 .el-date-table__row .available
 .el-picker-panel__icon-btn
+.el-time-panel__btn.cancel
   color var(--text-main) !important
 
 .el-date-table__row .prev-month
 .el-date-table__row .next-month
+  opacity .3
+
+.el-picker-panel__footer
+  border-radius 0 0 4px 4px
+
+.el-time-spinner__item.active
   color var(--text-main) !important
 
 .el-input__inner::-webkit-input-placeholder
@@ -196,7 +220,7 @@ body
 .el-popover
 .el-popper
   .popper__arrow
-    border-bottom-color var(--border-arrow) !important
+    border-bottom-color var(--background-section) !important
   .popper__arrow::after
     border-bottom-color var(--background-content) !important
 
@@ -209,11 +233,11 @@ body
 .el-input input
   background var(--background) !important
 
-.el-select-dropdown__item
-  max-width 180px
-  text-overflow ellipsis
-  white-space nowrap
-  overflow hidden
+// .el-select-dropdown__item
+//   max-width 180px
+//   text-overflow ellipsis
+//   white-space nowrap
+//   overflow hidden
 
 .el-button--default
 .el-radio-button__inner

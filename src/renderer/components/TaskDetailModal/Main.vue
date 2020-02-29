@@ -28,7 +28,7 @@ div.task-detail-main
       div.u-form__row.u-bb
         label {{$t('base.folder')}}
         div.u-center-end
-          el-select.u-w210(
+          el-select.u-w180.u-mt-5.u-mb-5(
             v-model="parentId"
             @change="changeParent"
           )
@@ -41,7 +41,7 @@ div.task-detail-main
       div.u-form__row.u-bb
         label {{$t('task.remindTime')}}
         div.u-center-end
-          el-date-picker(
+          el-date-picker.u-w180.u-mt-5.u-mb-5(
             ref="remindPicker"
             v-model="dateTime"
             type="datetime"
@@ -53,7 +53,7 @@ div.task-detail-main
       div.u-form__row
         label {{$t('task.dueTime')}}
         div.u-center-end
-          el-date-picker(
+          el-date-picker.u-w180.u-mt-5.u-mb-5(
             ref="stopPicker"
             v-model="stopDate"
             type="date"
@@ -82,7 +82,6 @@ div.task-detail-main
           @change="selectFile"
         )
         el-button.u-mt-5.u-mb-5(
-          size="mini"
           @click="showSelect"
         ) {{$t('base.upload')}}
       //- Attachment file list

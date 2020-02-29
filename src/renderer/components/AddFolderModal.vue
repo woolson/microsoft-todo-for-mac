@@ -21,7 +21,7 @@ Modal.add-task-folder(
     div.form__main
       div.u-form__row
         label {{$t('base.name')}}
-        el-input(
+        el-input.u-mt-5.u-mb-5(
           ref="input"
           v-model="name"
           :placeholder="$t('folder.name')"

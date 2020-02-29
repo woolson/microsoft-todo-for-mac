@@ -21,17 +21,16 @@ Modal.add-task(
     div.u-form__row-section
       div.u-form__row
         label.u-w50 {{$t('base.folder')}}
-        el-select.u-flex-1(v-model="belongFolder")
+        el-select.u-flex-1.u-mt-5.u-mb-5(v-model="belongFolder")
           el-option(
             v-for="item in taskFolders"
             :key="item.Id"
             :value="item.Id"
             :label="item.Name"
           )
-    div.u-form__row-section
       div.u-form__row
         label.u-w50 {{$t('base.name')}}
-        el-input(
+        el-input.u-mt-5.u-mb-5(
           ref="input"
           v-model="name"
           :placeholder="$t('task.name')"
