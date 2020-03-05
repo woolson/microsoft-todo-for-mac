@@ -96,17 +96,20 @@ export default {
       },
       deep: true
     },
-    currentTaskId () {
-      // ipcRenderer.send('update-touchbar', {
-      //   ...this.currentTask,
-      //   showCompleteTask: this.showCompleteTask
-      // })
+    currentTask: {
+      handler () {
+        ipcRenderer.send('update-touchbar', {
+          ...this.currentTask,
+          showCompleteTask: this.showCompleteTask
+        })
+      },
+      deep: true
     },
     currentFolderId (newValue) {
       this.updateState({currentTaskId: null})
-      // ipcRenderer.sendSync('update-setting', {
-      //   lastOpenFolder: newValue
-      // })
+      ipcRenderer.sendSync('update-setting', {
+        lastOpenFolder: newValue
+      })
     },
     theme: {
       handler (newValue) {

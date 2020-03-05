@@ -193,14 +193,14 @@ const actions = {
 
   // Delete task
   async DELETE_TASK ({state, commit}) {
-    await common('DELETE', `/me/tasks/${state.currentTask.Id}`)
+    await common('DELETE', `/me/tasks/${state.currentTaskId}`)
     const tasks = [...state.tasks]
-    const index = tasks.findIndex(o => o.Id === state.currentTask.Id)
+    const index = tasks.findIndex(o => o.Id === state.currentTaskId)
     tasks.splice(index, 1)
     commit('UPDATE_STATE', {
       showTaskDetailModal: false,
       tasks,
-      currentTask: {}
+      currentTaskId: null
     })
   }
 }

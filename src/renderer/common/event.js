@@ -71,7 +71,7 @@ export default function () {
   // Toggle task completed
   ipcRenderer.on('complete-task', async () => {
     try {
-      const { currentTask } = store.state
+      const { currentTask } = store.getters
       await dispatch('UPDATE_TASK', {
         Id: currentTask.Id,
         Status: currentTask.Status === 'Completed' ? 'NotStarted' : 'Completed'
@@ -85,7 +85,7 @@ export default function () {
   // Toggle task importance
   ipcRenderer.on('importance-task', async () => {
     try {
-      const { currentTask } = store.state
+      const { currentTask } = store.getters
       await dispatch('UPDATE_TASK', {
         Id: currentTask.Id,
         Importance: currentTask.Importance === 'High' ? 'Normal' : 'High'
@@ -128,13 +128,22 @@ function nextFolder (dir) {
 export function nextTask (dir, tasks) {
   const { currentTaskId, showSearch } = store.state
   const taskList = showSearch ? tasks : store.getters.tasks
-  if (!taskList.length) return
+  // if (!taskList.length) return
   const index = taskList.findIndex(o => o.Id === currentTaskId)
   const nextIndex = index + dir
+  console.log(index, nextIndex)
 
-  if (nextIndex < 0 || nextIndex === taskList.length) {
-    store.commit('UPDATE_STATE', {
-      currentTaskId: taskList[dir < 0 ? taskList.length - 1 : 0].Id
+  if (nextIndex < 0) {
+    nextFolder(-1)
+    // eslint-disable-next-line no-undef
+    vm.$nextTick(() => {
+      nextTask(1)
+    })
+  } else if (nextIndex === taskList.length) {
+    nextFolder(1)
+    // eslint-disable-next-line no-undef
+    vm.$nextTick(() => {
+      nextTask(1)
     })
   } else {
     store.commit('UPDATE_STATE', {

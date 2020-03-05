@@ -343,7 +343,7 @@ export default {
           this.$message.success(this.$t('message.deleteSuccessfully'))
         }
       } catch (err) {
-        // console.log(err)
+        console.log(err)
         this.$message.error(this.$t('message.deleteFailed'))
       }
     },
