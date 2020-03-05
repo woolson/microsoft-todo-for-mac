@@ -121,6 +121,7 @@ div.task-detail-main
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import { dater, fileToBase64 } from '~/share/utils'
 import { ipcRenderer, remote } from 'electron'
+import { showNativeMessage } from '@/common/utils'
 
 export default {
   data () {
@@ -206,10 +207,6 @@ export default {
     }
   },
 
-  mounted () {
-    ipcRenderer.on('delete-task', () => this.onDelete())
-  },
-
   methods: {
     ...mapActions({
       updateTask: 'UPDATE_TASK',
@@ -264,7 +261,7 @@ export default {
     async removeAttachment (item, index) {
       try {
         const message = `${this.$t('message.confirmToDelete')} ${item.Name}`
-        const { response } = await this.showNativeMessage(message)
+        const { response } = await showNativeMessage(message)
         if (!response) {
           await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}/attachments/${item.Id}`)
           const newAttachment = [...this.attachments]
@@ -336,7 +333,7 @@ export default {
     async onDelete () {
       try {
         const message = `${this.$t('message.confirmToDelete')} ${this.currentTask.Subject} ？`
-        const { response } = await this.showNativeMessage(message)
+        const { response } = await showNativeMessage(message)
 
         if (!response) {
           await this.deleteTask()
@@ -346,16 +343,6 @@ export default {
         console.log(err)
         this.$message.error(this.$t('message.deleteFailed'))
       }
-    },
-    showNativeMessage (message) {
-      return remote.dialog.showMessageBox(remote.getCurrentWindow(), {
-        type: 'question',
-        icon: remote.nativeImage.createFromDataURL(require('@/assets/image/warning.png')),
-        buttons: [this.$t('base.submit'), this.$t('base.cancel')],
-        defaultId: 0,
-        message: this.$t('base.notice'),
-        detail: message
-      })
     },
     updateTaskAttachment () {
       const index = this.tasks.findIndex(o => o.Id === this.currentTask.Id)

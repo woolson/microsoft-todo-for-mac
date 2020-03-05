@@ -3,7 +3,7 @@ import router from './router'
 import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
-import { getStoreValue } from './utils'
+import { getStoreValue, showNativeMessage } from './utils'
 
 export default function () {
   const { dispatch, commit, state } = store
@@ -12,7 +12,7 @@ export default function () {
     switch (evt.keyCode) {
       // Enter display detail
       case 13:
-        if (!state.currentTaskId && !state.showTaskAddModal && !state.showTaskFolderAddModal) {
+        if (state.currentTaskId && !state.showTaskAddModal && !state.showTaskFolderAddModal) {
           commit('UPDATE_STATE', { showTaskDetailModal: true })
         }
         break
@@ -66,6 +66,15 @@ export default function () {
   // Global task search
   ipcRenderer.on('search', () => {
     commit('UPDATE_STATE', { showSearch: true })
+  })
+
+  // Delete task
+  ipcRenderer.on('delete-task', () => {
+    showNativeMessage(
+      `${i18n.t('message.confirmDeleteTask')}「 ${store.getters.currentTask.Subject} 」`
+    ).then(({response}) => {
+      if (!response) commit('DELETE_TAKS')
+    })
   })
 
   // Toggle task completed

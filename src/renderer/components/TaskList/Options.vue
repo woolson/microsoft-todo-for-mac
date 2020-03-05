@@ -80,9 +80,10 @@ div.task-options
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
+// import { ipcRenderer } from 'electron'
 import { mapMutations, mapState, mapGetters, mapActions } from 'vuex'
 import { has } from '~/share/utils'
+import { showNativeMessage } from '@/common/utils'
 
 export default {
   data () {
@@ -127,13 +128,14 @@ export default {
     }),
     renameTaskFolder () {
       this.updateState({
-        currentFolder: {...this.currentFolder, Type: 'Rename'},
+        isCreateFolder: false,
         showTaskFolderAddModal: true
       })
     },
     async deleteTaskFolder () {
-      const { response } = ipcRenderer.sendSync('delete-folder', this.currentFolder)
-      console.log(response)
+      const { response } = await showNativeMessage(
+        `${this.$t('message.confirmDeleteFolder')}「 ${this.currentFolder.Name} 」？`
+      )
       if (!response) {
         try {
           await this.deleteFolder()

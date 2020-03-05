@@ -72,6 +72,8 @@ export default {
     name: '@:base.folder @:base.name'
   },
   message: {
+    confirmDeleteFolder: 'Confirm delete folder',
+    confirmDeleteTask: 'Confirm delete task',
     commonFailed: '{0} @:base.failed',
     commonSuccessfully: '{0} @:base.successfully',
     confirmToDelete: 'Confirm to delete',

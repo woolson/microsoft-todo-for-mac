@@ -1,7 +1,6 @@
-import { dialog, ipcMain, nativeTheme } from 'electron'
+import { ipcMain, nativeTheme } from 'electron'
 import setTouchBar from './touchbar'
 import setMenu from './menu'
-import language from './language'
 import store from './store'
 import path from 'path'
 import tempPath from 'temp-dir'
@@ -11,30 +10,6 @@ export default function (mainWindow) {
   // Update touchbar
   ipcMain.on('update-touchbar', (event, arg) => {
     setTouchBar(mainWindow, arg)
-  })
-
-  // Delete folder
-  ipcMain.on('delete-folder', (event, arg) => {
-    const LANG = language[store.get('language')]
-    dialog.showMessageBox(mainWindow, {
-      type: 'question',
-      buttons: [LANG.submit, LANG.cancel],
-      defaultId: 0,
-      message: LANG.notice,
-      detail: `${LANG.confirmDeleteFolder} ${arg.Name} ？`
-    }).then(res => (event.returnValue = res))
-  })
-
-  // Delete task
-  ipcMain.on('delete-task', (event, arg) => {
-    const LANG = language[store.get('language')]
-    dialog.showMessageBox(mainWindow, {
-      type: 'question',
-      buttons: [LANG.submit, LANG.cancel],
-      defaultId: 0,
-      message: LANG.notice,
-      detail: `${LANG.confirmDeleteTask} ${arg.Subject} ？`
-    }).then(res => (event.returnValue = res))
   })
 
   // Fetch setting content

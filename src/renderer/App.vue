@@ -177,7 +177,7 @@ export default {
         // await this.getUserPhoto()
         loading && loading.close()
       } catch (err) {
-        console.log(err)
+        // console.log(err)
         loading && loading.close()
       }
     },
