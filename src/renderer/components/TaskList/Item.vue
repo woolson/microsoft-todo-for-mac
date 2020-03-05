@@ -6,7 +6,7 @@ div.task-item.u-bb(
     completed: data.Status === 'Completed'\
   }"
   @click="updateState({\
-    currentTask: data,\
+    currentTaskId: data.Id,\
     showTaskDetailModal: true\
   })"
 )
@@ -42,7 +42,7 @@ div.task-item.u-bb(
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -54,7 +54,9 @@ export default {
 
   computed: {
     ...mapState([
-      'theme',
+      'theme'
+    ]),
+    ...mapGetters([
       'currentTask'
     ]),
     titleStyle () {

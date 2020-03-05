@@ -1,5 +1,5 @@
 import { separate, playCompleteVoice, getStoreValue } from '@/common/utils'
-import { Storage, isEmpty } from '~/share/utils'
+import { Storage } from '~/share/utils'
 import { get, patch, common } from '@/common/fetch'
 import i18n from '@/common/i18n'
 import moment from 'moment'
@@ -11,8 +11,11 @@ import { PAGE_SIZE } from '@/common/static'
 const token = new Storage('TOKEN')
 
 const state = {
-  currentFolder: {},
-  currentTask: {},
+  // currentFolder: {},
+  // currentTask: {},
+  isCreateFolder: false,
+  currentFolderId: getStoreValue('lastOpenFolder'),
+  currentTaskId: getStoreValue('lastOpenFolder'),
   shouldLogin: false,
   shouldLogout: false,
   theme: getStoreValue('theme'),
@@ -58,15 +61,25 @@ const getters = {
       folders.unshift(taskFolder)
     }
     if (showPlannedFolder) {
-      folders.unshift({ Name: i18n.t('base.planned'), Key: 'IsReminderOn', Value: true })
+      folders.unshift({
+        Name: i18n.t('base.planned'),
+        Key: 'IsReminderOn',
+        Value: true,
+        Id: 'IsReminderOn'
+      })
     }
     if (showImportanceFolder) {
-      folders.unshift({ Name: i18n.t('base.importance'), Key: 'Importance', Value: 'High' })
+      folders.unshift({
+        Name: i18n.t('base.importance'),
+        Key: 'Importance',
+        Value: 'High',
+        Id: 'Importance'
+      })
     }
     return folders
   },
   // Get tasks filtered by folder
-  tasks ({sortBy, sortDir, tasks, currentFolder, showCompleteTask}) {
+  tasks ({sortBy, currentFolderId, sortDir, tasks, showCompleteTask}) {
     let taskArr = [...tasks]
     switch (sortBy) {
       case 'importance':
@@ -91,23 +104,31 @@ const getters = {
         break
     }
     if (!sortDir) taskArr = taskArr.reverse()
-    if (currentFolder.Key) {
-      taskArr = taskArr.filter(o => o[currentFolder.Key] === currentFolder.Value)
+    if (currentFolderId === 'Importance') {
+      taskArr = taskArr.filter(o => o['Importance'] === 'High')
+    } else if (currentFolderId === 'IsReminderOn') {
+      taskArr = taskArr.filter(o => o['IsReminderOn'] === true)
     } else {
-      taskArr = taskArr.filter(o => o.ParentFolderId === currentFolder.Id)
+      taskArr = taskArr.filter(o => o.ParentFolderId === currentFolderId)
     }
     if (!showCompleteTask) {
       taskArr = taskArr.filter(o => o.Status !== 'Completed')
     }
     return taskArr
+  },
+  currentFolder ({currentFolderId}, {folders}) {
+    return folders.find(o => o.Id === currentFolderId) || {}
+  },
+  currentTask ({tasks, currentTaskId}) {
+    return tasks.find(o => o.Id === currentTaskId) || {}
   }
 }
 
 const mutations = {
   UPDATE_STATE (state, data) {
     if (data.token) token.set(data.token)
-    if (data.currentFolder) {
-      data = merge(data, state.sortStash[data.currentFolder.Id] || {
+    if (data.currentFolderId) {
+      data = merge(data, state.sortStash[data.currentFolderId] || {
         sortBy: 'default',
         sortDir: false,
         showCompleteTask: true
@@ -133,25 +154,19 @@ const actions = {
     const newState = {}
     const { value } = await get(`/me/taskfolders?$top=${PAGE_SIZE}`, null, {showLoading: false})
     newState.taskFolders = value
-    if (isEmpty(state.currentFolder)) {
-      const lastOpenFolder = getStoreValue('lastOpenFolder')
-      if (lastOpenFolder) {
-        newState.currentFolder = value.find(o => o.Id === lastOpenFolder)
-      }
-      if (isEmpty(newState.currentFolder)) {
-        newState.currentFolder = value.find(o => o.IsDefaultFolder)
-      }
-    }
     commit('UPDATE_STATE', newState)
   },
 
   // Delete folder
   async DELETE_FOLDER ({state, commit}) {
-    await common('DELETE', `/me/taskfolders/${state.currentFolder.Id}`)
+    await common('DELETE', `/me/taskfolders/${state.currentFolderId}`)
     const taskFolders = [...state.taskFolders]
-    const taskIndex = state.taskFolders.findIndex(o => o.Id === state.currentFolder.Id)
+    const taskIndex = state.taskFolders.findIndex(o => o.Id === state.currentFolderId)
     taskFolders.splice(taskIndex, 1)
-    commit('UPDATE_STATE', {taskFolders, currentFolder: taskFolders[taskIndex - 1]})
+    commit('UPDATE_STATE', {
+      taskFolders,
+      currentFolderId: taskFolders[taskIndex - 1].Id
+    })
   },
 
   // Get all user tasks
@@ -172,7 +187,7 @@ const actions = {
     }
 
     newState.tasks[taskIndex] = newTask
-    newState.currentTask = newTask
+    newState.currentTaskId = newTask.Id
     commit('UPDATE_STATE', newState)
   },
 

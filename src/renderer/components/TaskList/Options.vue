@@ -81,7 +81,7 @@ div.task-options
 
 <script>
 import { ipcRenderer } from 'electron'
-import { mapMutations, mapState } from 'vuex'
+import { mapMutations, mapState, mapGetters, mapActions } from 'vuex'
 import { has } from '~/share/utils'
 
 export default {
@@ -104,12 +104,14 @@ export default {
     ...mapState([
       'sortBy',
       'sortDir',
-      'currentFolder',
       'showCompleteTask'
     ]),
+    ...mapGetters([
+      'currentFolder'
+    ]),
     dontDelete () {
-      const { Id, Name } = this.currentFolder
-      return Id && !has(['任务', 'Task', 'task'], Name)
+      const { Id, Name, Key } = this.currentFolder
+      return Id && !Key && !has(['任务', 'Task', 'task'], Name)
     },
     sortText () {
       return this.sortList.find(o => o.value === this.sortBy).name
@@ -120,6 +122,9 @@ export default {
     ...mapMutations({
       updateState: 'UPDATE_STATE'
     }),
+    ...mapActions({
+      deleteFolder: 'DELETE_FOLDER'
+    }),
     renameTaskFolder () {
       this.updateState({
         currentFolder: {...this.currentFolder, Type: 'Rename'},
@@ -127,8 +132,9 @@ export default {
       })
     },
     async deleteTaskFolder () {
-      const result = ipcRenderer.sendSync('delete-folder', this.currentFolder)
-      if (result) {
+      const { response } = ipcRenderer.sendSync('delete-folder', this.currentFolder)
+      console.log(response)
+      if (!response) {
         try {
           await this.deleteFolder()
           this.$message.success('删除成功')

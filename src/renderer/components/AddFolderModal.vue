@@ -32,7 +32,7 @@ Modal.add-task-folder(
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: 'AddFolder',
@@ -44,11 +44,14 @@ export default {
   computed: {
     ...mapState([
       'taskFolders',
-      'currentFolder',
+      'isCreateFolder',
       'showTaskFolderAddModal'
     ]),
+    ...mapGetters([
+      'currentFolder'
+    ]),
     operateType () {
-      return this.currentFolder.Type ? this.$t('base.edit') : this.$t('base.create')
+      return this.isCreateFolder ? this.$t('base.create') : this.$t('base.edit')
     }
   },
 
@@ -56,10 +59,13 @@ export default {
     showTaskFolderAddModal (newValue) {
       if (newValue) {
         this.$nextTick(this.$refs.input.focus)
-        if (this.currentFolder.Type) {
+        if (!this.isCreateFolder) {
           this.name = this.currentFolder.Name
         }
-      } else this.name = ''
+      } else {
+        this.updateState({isCreateFolder: false})
+        this.name = ''
+      }
     }
   },
 
@@ -68,25 +74,26 @@ export default {
       updateState: 'UPDATE_STATE'
     }),
     async submit () {
-      const { Type, Name, Id } = this.currentFolder
-      if ((Type && Name === this.name) || !this.name) return
+      const { Name, Id } = this.currentFolder
+      if ((!this.isCreateFolder && Name === this.name) || !this.name) return
       const operateType = this.operateType
       try {
-        if (Type) {
+        if (!this.isCreateFolder) {
           await this.$patch(`/me/taskfolders/${Id}`, {Name: this.name})
           const folders = JSON.parse(JSON.stringify(this.taskFolders))
           const index = folders.findIndex(o => o.Id === Id)
           folders[index].Name = this.name
           this.updateState({
             taskFolders: folders,
-            currentFolder: folders[index],
+            currentFolderId: folders[index].Id,
             showTaskFolderAddModal: false
           })
         } else {
           const newFolder = await this.$post(`/me/taskfolders`, {Name: this.name})
           this.updateState({
             taskFolders: [...this.taskFolders, newFolder],
-            showTaskFolderAddModal: false
+            showTaskFolderAddModal: false,
+            isCreateFolder: false
           })
         }
         this.$message.success(this.$t('message.commonSuccessfully', [operateType]))

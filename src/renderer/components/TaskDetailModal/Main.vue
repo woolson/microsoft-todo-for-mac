@@ -118,7 +118,7 @@ div.task-detail-main
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import { dater, fileToBase64 } from '~/share/utils'
 import { ipcRenderer, remote } from 'electron'
 
@@ -131,7 +131,6 @@ export default {
       dateTime: '',
       stopDate: '',
       note: '',
-      attachments: [],
       isLoading: false
     }
   },
@@ -139,10 +138,16 @@ export default {
   computed: {
     ...mapState([
       'tasks',
-      'currentTask',
       'taskFolders',
+      'currentTaskId',
       'showTaskDetailModal'
     ]),
+    ...mapGetters([
+      'currentTask'
+    ]),
+    attachments () {
+      return this.currentTask.Attachments || []
+    },
     titleStyle () {
       const { Status } = this.currentTask
       return {
@@ -173,43 +178,30 @@ export default {
   },
 
   watch: {
-    currentTask: {
-      handler (newValue, oldValue) {
-        if (newValue.Id === oldValue.Id) return
-        this.attachments = []
-        const {
-          Body,
-          DueDateTime,
-          HasAttachments,
-          ParentFolderId,
-          ReminderDateTime,
-          Subject,
-          Attachments
-        } = newValue
-        if (ReminderDateTime) {
-          this.dateTime = dater(ReminderDateTime.DateTime).format('x')
-        } else this.dateTime = ''
-        if (DueDateTime) {
-          this.stopDate = dater(DueDateTime.DateTime).format('x')
-        } else this.stopDate = ''
+    currentTaskId () {
+      const {
+        Body,
+        DueDateTime,
+        HasAttachments,
+        ParentFolderId,
+        ReminderDateTime,
+        Subject
+      } = this.currentTask
+      if (ReminderDateTime) {
+        this.dateTime = dater(ReminderDateTime.DateTime).format('x')
+      } else this.dateTime = ''
+      if (DueDateTime) {
+        this.stopDate = dater(DueDateTime.DateTime).format('x')
+      } else this.stopDate = ''
 
-        this.parentId = ParentFolderId
-        this.name = Subject
-        this.note = Body && Body.Content
-        // get task attachments
-        if (HasAttachments && this.showTaskDetailModal) {
-          if (Attachments) {
-            this.attachments = Attachments
-          } else {
-            this.fetchAttachments()
-          }
-        } else this.attachments = []
-      },
-      deep: true
-    },
-    showTaskDetailModal (newValue) {
-      if (this.currentTask.HasAttachments && newValue) {
-        this.fetchAttachments()
+      this.parentId = ParentFolderId
+      this.name = Subject
+      this.note = Body && Body.Content
+      // get task attachments
+      if (HasAttachments && this.showTaskDetailModal && this.attachments.length === 0) {
+        setTimeout(() => {
+          this.fetchAttachments()
+        }, 200)
       }
     }
   },
@@ -262,20 +254,27 @@ export default {
         null,
         {showLoading: false}
       )
+
       this.updateStateTask({
-        Id: this.currentTask.Id, Attachments: value
+        Id: this.currentTask.Id,
+        Attachments: value
       })
       this.isLoading = false
-      this.attachments = value
     },
     async removeAttachment (item, index) {
       try {
         const message = `${this.$t('message.confirmToDelete')} ${item.Name}`
-        const result = await this.showNativeMessage(message)
-        if (!result) {
+        const { response } = await this.showNativeMessage(message)
+        if (!response) {
           await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}/attachments/${item.Id}`)
-          this.attachments.splice(index, 1)
-          this.updateTaskAttachment()
+          const newAttachment = [...this.attachments]
+          newAttachment.splice(index, 1)
+          this.updateStateTask({
+            Id: this.currentTask.Id,
+            Attachments: newAttachment,
+            HasAttachments: !!newAttachment.length
+          })
+          // this.updateTaskAttachment()
         }
       } catch (err) {
         this.$message.error(this.$t('message.deleteFailed'))
@@ -337,8 +336,9 @@ export default {
     async onDelete () {
       try {
         const message = `${this.$t('message.confirmToDelete')} ${this.currentTask.Subject} ？`
-        const result = await this.showNativeMessage(message)
-        if (!result) {
+        const { response } = await this.showNativeMessage(message)
+
+        if (!response) {
           await this.deleteTask()
           this.$message.success(this.$t('message.deleteSuccessfully'))
         }
@@ -348,21 +348,22 @@ export default {
       }
     },
     showNativeMessage (message) {
-      return new Promise((resolve, reject) => {
-        remote.dialog.showMessageBox(remote.getCurrentWindow(), {
-          type: 'question',
-          icon: remote.nativeImage.createFromDataURL(require('@/assets/image/warning.png')),
-          buttons: [this.$t('base.submit'), this.$t('base.cancel')],
-          defaultId: 0,
-          message: this.$t('base.notice'),
-          detail: message
-        }, resolve)
+      return remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+        type: 'question',
+        icon: remote.nativeImage.createFromDataURL(require('@/assets/image/warning.png')),
+        buttons: [this.$t('base.submit'), this.$t('base.cancel')],
+        defaultId: 0,
+        message: this.$t('base.notice'),
+        detail: message
       })
     },
     updateTaskAttachment () {
       const index = this.tasks.findIndex(o => o.Id === this.currentTask.Id)
       if (index !== -1) {
-        this.updateStateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
+        this.updateStateTask({
+          ...this.tasks[index],
+          HasAttachments: !!this.attachments.length
+        })
       }
     },
     async downloadAttachment (file) {
@@ -409,6 +410,7 @@ export default {
   i
     font-size 20px
     cursor pointer
+    color var(--text-main)
     &.icon-check
       color $green
     &.icon-star

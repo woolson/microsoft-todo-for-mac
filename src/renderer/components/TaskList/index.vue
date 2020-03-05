@@ -57,9 +57,6 @@ export default {
 
   computed: {
     ...mapState([
-      'taskFolders',
-      'currentTask',
-      'currentFolder',
       'sortDir',
       'sortBy',
       'showSearch',
@@ -68,7 +65,11 @@ export default {
     ...mapState({
       allTasks: 'tasks'
     }),
-    ...mapGetters(['tasks']),
+    ...mapGetters([
+      'tasks',
+      'currentTask',
+      'currentFolder'
+    ]),
     searchTasks () {
       if (!this.searchStr) return []
       return this.allTasks.filter(o => {

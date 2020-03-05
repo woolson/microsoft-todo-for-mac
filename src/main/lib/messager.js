@@ -18,10 +18,11 @@ export default function (mainWindow) {
     const LANG = language[store.get('language')]
     dialog.showMessageBox(mainWindow, {
       type: 'question',
-      buttons: [LANG.cancel, LANG.submit],
+      buttons: [LANG.submit, LANG.cancel],
+      defaultId: 0,
       message: LANG.notice,
       detail: `${LANG.confirmDeleteFolder} ${arg.Name} ？`
-    }, res => (event.returnValue = res))
+    }).then(res => (event.returnValue = res))
   })
 
   // Delete task
@@ -29,10 +30,11 @@ export default function (mainWindow) {
     const LANG = language[store.get('language')]
     dialog.showMessageBox(mainWindow, {
       type: 'question',
-      buttons: [LANG.cancel, LANG.submit],
+      buttons: [LANG.submit, LANG.cancel],
+      defaultId: 0,
       message: LANG.notice,
       detail: `${LANG.confirmDeleteTask} ${arg.Subject} ？`
-    }, res => (event.returnValue = res))
+    }).then(res => (event.returnValue = res))
   })
 
   // Fetch setting content

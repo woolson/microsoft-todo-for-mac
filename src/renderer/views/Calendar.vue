@@ -48,7 +48,7 @@ export default {
     }),
     onEventClick (event, e) {
       this.updateState({
-        currentTask: event.data,
+        currentTaskId: event.data.Id,
         showTaskDetailModal: true
       })
     }

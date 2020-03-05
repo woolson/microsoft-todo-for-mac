@@ -4,7 +4,6 @@ import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
 import { getStoreValue } from './utils'
-import { isEmpty } from '~/share/utils'
 
 export default function () {
   const { dispatch, commit, state } = store
@@ -13,7 +12,7 @@ export default function () {
     switch (evt.keyCode) {
       // Enter display detail
       case 13:
-        if (!isEmpty(state.currentTask) && !state.showTaskAddModal && !state.showTaskFolderAddModal) {
+        if (!state.currentTaskId && !state.showTaskAddModal && !state.showTaskFolderAddModal) {
           commit('UPDATE_STATE', { showTaskDetailModal: true })
         }
         break
@@ -39,6 +38,7 @@ export default function () {
   // Shortcut for create folder
   ipcRenderer.on('new-folder', () => {
     commit('UPDATE_STATE', {
+      isCreateFolder: true,
       showTaskFolderAddModal: true
     })
   })
@@ -105,7 +105,7 @@ export default function () {
 
 // Move current folder
 function nextFolder (dir) {
-  const { currentFolder } = store.state
+  const { currentFolder } = store.getters
   const folders = store.getters.folders.filter(o => o.Key !== 'Spacer')
   if (!folders.length) return
   const index = folders.findIndex(o => {
@@ -115,30 +115,30 @@ function nextFolder (dir) {
 
   if (nextIndex < 0 || nextIndex === folders.length) {
     store.commit('UPDATE_STATE', {
-      currentFolder: folders[dir < 0 ? folders.length - 1 : 0]
+      currentFolderId: folders[dir < 0 ? folders.length - 1 : 0].Id
     })
   } else {
     store.commit('UPDATE_STATE', {
-      currentFolder: folders[nextIndex]
+      currentFolderId: folders[nextIndex].Id
     })
   }
 }
 
 // Move current task
 export function nextTask (dir, tasks) {
-  const { currentTask, showSearch } = store.state
+  const { currentTaskId, showSearch } = store.state
   const taskList = showSearch ? tasks : store.getters.tasks
   if (!taskList.length) return
-  const index = taskList.findIndex(o => o.Id === currentTask.Id)
+  const index = taskList.findIndex(o => o.Id === currentTaskId)
   const nextIndex = index + dir
 
   if (nextIndex < 0 || nextIndex === taskList.length) {
     store.commit('UPDATE_STATE', {
-      currentTask: taskList[dir < 0 ? taskList.length - 1 : 0]
+      currentTaskId: taskList[dir < 0 ? taskList.length - 1 : 0].Id
     })
   } else {
     store.commit('UPDATE_STATE', {
-      currentTask: taskList[nextIndex]
+      currentTaskId: taskList[nextIndex].Id
     })
   }
 }

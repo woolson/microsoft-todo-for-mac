@@ -14,7 +14,7 @@ div#app
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import initShortCut from './common/event'
 import Notification from './common/notification'
 import LoginModal from '@/components/LoginModal'
@@ -54,14 +54,18 @@ export default {
       'sortStash',
       'language',
       'shouldLogin',
-      'currentTask',
-      'currentFolder',
+      'currentTaskId',
+      'currentFolderId',
       'playAlertVoice',
       'alertVoicevolume',
       'showCompleteTask',
       'showPlannedFolder',
       'showCalendarView',
       'showImportanceFolder'
+    ]),
+    ...mapGetters([
+      'currentTask',
+      'currentFolder'
     ])
   },
 
@@ -92,21 +96,17 @@ export default {
       },
       deep: true
     },
-    currentTask: {
-      handler (newValue) {
-        ipcRenderer.send('update-touchbar', {
-          ...this.currentTask,
-          showCompleteTask: this.showCompleteTask
-        })
-      },
-      deep: true
+    currentTaskId () {
+      // ipcRenderer.send('update-touchbar', {
+      //   ...this.currentTask,
+      //   showCompleteTask: this.showCompleteTask
+      // })
     },
-    currentFolder: {
-      handler (newValue) {
-        this.updateState({currentTask: {}})
-        ipcRenderer.sendSync('update-setting', {lastOpenFolder: newValue.Id})
-      },
-      deep: true
+    currentFolderId (newValue) {
+      this.updateState({currentTaskId: null})
+      // ipcRenderer.sendSync('update-setting', {
+      //   lastOpenFolder: newValue
+      // })
     },
     theme: {
       handler (newValue) {

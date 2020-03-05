@@ -8,6 +8,8 @@ import { dater, isEmpty, Storage, has } from '~/share/utils'
 import { BASE_URL } from '~/share/static'
 import { refreshToken } from '@/common/utils'
 
+axios.defaults.adapter = require('axios/lib/adapters/xhr')
+
 let loading
 const token = new Storage('TOKEN')
 

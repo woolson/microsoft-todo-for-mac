@@ -41,7 +41,7 @@ Modal.add-task(
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
   name: 'AddFolder',
@@ -55,8 +55,10 @@ export default {
     ...mapState([
       'tasks',
       'taskFolders',
-      'currentFolder',
       'showTaskAddModal'
+    ]),
+    ...mapGetters([
+      'currentFolder'
     ])
   },
 
