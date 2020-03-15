@@ -8,6 +8,7 @@ darkTheme() {
   // Text
   --text-main #BBBBBB
   --text-sub $text-light
+  --text-placeholder rgba(#BBBBBB, .3)
   // Border
   --border #222
   --border-arrow $background-dark
@@ -29,6 +30,7 @@ lightTheme() {
   // Text
   --text-main $text
   --text-sub $gray
+  --text-placeholder rgba($text, .3)
   // Border
   --border $border
   --border-arrow $arrow
@@ -56,6 +58,9 @@ lightTheme() {
 ::selection
   background $blue
   color white
+
+::-webkit-input-placeholder
+  color var(--text-placeholder) !important
 
 *:not(input,textarea)
   outline none

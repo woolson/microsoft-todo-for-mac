@@ -10,6 +10,7 @@ export default {
     completed: 'Completed',
     create: 'Create',
     delete: 'Delete',
+    detail: 'Detail',
     downloading: 'Downloading',
     due: 'Due',
     edit: 'Edit',
@@ -37,6 +38,7 @@ export default {
     setting: 'Setting',
     show: 'Show',
     sort: 'Sort',
+    status: 'Status',
     submit: 'Submit',
     successfully: 'Successfully',
     task: 'Task',
@@ -44,6 +46,8 @@ export default {
     time: 'Time',
     update: 'Update',
     upload: 'Upload',
+    uncompleted: 'UnCompleted',
+    unimportance: 'UnImportance',
     volume: 'Volume'
   },
   date: {
@@ -96,6 +100,7 @@ export default {
   },
   task: {
     addFile: 'Attachment',
+    detail: '@:base.task @:base.detail',
     completeAt: '@:base.completed @:base.at',
     create: '@:base.create @:base.task',
     createAt: '@:base.create @:base.at',

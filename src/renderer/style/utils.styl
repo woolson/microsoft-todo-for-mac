@@ -95,6 +95,9 @@ for $size in 10 11 12 13 14 15 20
 .u-mlauto
   margin-left auto !important
 
+.u-flex
+  display flex
+
 .u-flex-1
   flex 1
 
@@ -222,7 +225,7 @@ for $size in 10 11 12 13 14 15 20
 
 .u-form__row
   display flex
-  align-items center
+  align-items flex-start
   justify-content space-between
   min-height 40px
   padding 12px
@@ -234,6 +237,7 @@ for $size in 10 11 12 13 14 15 20
   transition background .2s
   @extend .u-bb
   > label
+    line-height 22px
     margin-right 10px
     white-space nowrap
     color var(--text-main)

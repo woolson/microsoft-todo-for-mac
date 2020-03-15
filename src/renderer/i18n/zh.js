@@ -10,6 +10,7 @@ export default {
     completed: '已完成',
     create: '新建',
     delete: '删除',
+    detail: '详情',
     downloading: 'Downloading',
     due: '截止',
     edit: '编辑',
@@ -37,6 +38,7 @@ export default {
     setting: '设置',
     show: '显示',
     sort: '排序',
+    status: '状态',
     submit: '确认',
     successfully: '成功',
     task: '任务',
@@ -44,6 +46,8 @@ export default {
     time: '时间',
     update: '更新',
     upload: '上传',
+    uncompleted: '未完成',
+    unimportance: '不重要',
     volume: '音量'
   },
   date: {
@@ -97,6 +101,7 @@ export default {
   },
   task: {
     addFile: '添加附件',
+    detail: '@:base.task@:base.detail',
     completeAt: '@:base.completed@:base.at',
     create: '@:base.create@:base.task',
     createAt: '@:base.create@:base.at',

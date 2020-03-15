@@ -1,10 +1,10 @@
 <template lang="pug">
 div.header
-  div.header__left
+  div.header__left(v-show="$slots.left")
     slot(name="left")
   div.header__content
     slot
-  div.header__right
+  div.header__right(v-show="$slots.right")
     slot(name="right")
 </template>
 
@@ -20,7 +20,6 @@ export default {
   display flex
   align-items center
   padding 5px 15px
-  // box-shadow 0 0 5px rgba(black, .1)
   user-select none
   height 50px
   box-sizing border-box

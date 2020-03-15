@@ -1,29 +1,29 @@
 <template lang="pug">
 div.task-detail-main
-  Header.task-detail__header
-    i.iconfont.u-mr10(
-      slot="left"
-      :class="checkClass"
-      @click="changeTaskStatus"
-    )
-    el-input(
-      v-model="name"
-      clearable
-      @blur="subjectSubmit"
-      @keyup.enter.native="subjectSubmit"
-    )
-    i.iconfont.u-ml10(
-      slot="right"
-      :class="starClass"
-      @click="changeTaskImportance"
-    )
-  el-alert(
-    :title="$t('message.enterToSubmit')"
-    type="info"
-    center
-    :closable="false"
-  )
+  Header.u-bb
+    span {{$t('task.detail')}}
   div.task-detail-main__content
+    div.u-form__row-section.u-mt12
+      div.u-form__row.u-bb
+        label {{$t('base.name')}}
+        el-input.u-mt-5.u-mb-5(
+          v-model="name"
+          clearable
+          @blur="subjectSubmit"
+        )
+      div.u-form__row
+        el-button.u-flex-1.u-mt-5.u-mb-5(
+          size="small"
+          @click="changeTaskStatus"
+        )
+          i.iconfont.u-s12.u-mr5(:class="checkClass")
+          span {{$t(`base.${isCompleted ? '' : 'un'}completed`)}}
+        el-button.u-flex-1.u-mt-5.u-mb-5(
+          size="small"
+          @click="changeTaskImportance"
+        )
+          i.iconfont.u-s12.u-mr5(:class="starClass")
+          span {{$t(`base.${isImportance ? '' : 'un'}importance`)}}
     div.u-form__row-section.u-mt12
       div.u-form__row.u-bb
         label {{$t('base.folder')}}
@@ -66,6 +66,16 @@ div.task-detail-main
       //-   label 重复
       //-   i.iconfont.icon-right.u-ml5
     div.u-form__row-section
+      //- Note
+      div.u-form__row
+        label {{$t('base.note')}}
+        el-input(
+          type="textarea"
+          v-model="note"
+          @blur="noteSubmit"
+          rows="3"
+        )
+    div.u-form__row-section
       //- Choose upload file
       div.u-form__row
         label
@@ -97,15 +107,6 @@ div.task-detail-main
         )
         i.el-icon-close.u-s16.u-pointer(
           @click="removeAttachment(item, index)"
-        )
-    div.u-form__row-section
-      //- Note
-      div.u-form__row
-        textarea(
-          v-model="note"
-          :placeholder="$t('base.note')"
-          @blur="noteSubmit"
-          @keyup.enter="noteSubmit"
         )
   div.task-detail-main__bottom
     span {{taskDateInfo}}
@@ -146,31 +147,40 @@ export default {
     ...mapGetters([
       'currentTask'
     ]),
+    isCompleted () {
+      return this.currentTask.Status === 'Completed'
+    },
+    isImportance () {
+      return this.currentTask.Importance === 'High'
+    },
     attachments () {
       return this.currentTask.Attachments || []
     },
     titleStyle () {
-      const { Status } = this.currentTask
       return {
-        textDecoration: Status === 'Completed' ? 'line-through' : 'none',
-        color: Status === 'Completed' ? '#AAAAAA' : ''
+        textDecoration: this.isCompleted ? 'line-through' : 'none',
+        color: this.isCompleted ? '#AAAAAA' : ''
       }
     },
     checkClass () {
-      return this.currentTask.Status === 'Completed' ? 'icon-check' : 'icon-check-o'
+      return this.isCompleted ? 'icon-check' : 'icon-check-o'
     },
     starClass () {
-      return this.currentTask.Importance === 'High' ? 'icon-star' : 'icon-star-o'
+      return this.isImportance ? 'icon-star' : 'icon-star-o'
     },
     remindDateText () {
-      return this.dateTime ? dater(this.dateTime).format('MM-DD HH:mm') : this.$t('base.select')
+      return this.dateTime
+        ? dater(this.dateTime).format('MM-DD HH:mm')
+        : this.$t('base.select')
     },
     stopDateText () {
-      return this.stopDate ? dater(this.stopDate).format('MM-DD') : this.$t('base.select')
+      return this.stopDate
+        ? dater(this.stopDate).format('MM-DD')
+        : this.$t('base.select')
     },
     taskDateInfo () {
-      const { CreatedDateTime, CompletedDateTime, Status } = this.currentTask
-      if (Status === 'Completed') {
+      const { CreatedDateTime, CompletedDateTime } = this.currentTask
+      if (this.isCompleted) {
         return `${this.$t('task.completeAt')} ${dater(CompletedDateTime.DateTime).format('YYYY-MM-DD HH:mm:SS')}`
       } else {
         return `${this.$t('task.createAt')} ${dater(CreatedDateTime).format('YYYY-MM-DD HH:mm:SS')}`
@@ -225,13 +235,13 @@ export default {
     changeTaskStatus () {
       this.updateTask({
         Id: this.currentTask.Id,
-        Status: this.currentTask.Status === 'Completed' ? 'NotStarted' : 'Completed'
+        Status: this.isCompleted ? 'NotStarted' : 'Completed'
       })
     },
     changeTaskImportance () {
       this.updateTask({
         Id: this.currentTask.Id,
-        Importance: this.currentTask.Importance === 'High' ? 'Normal' : 'High'
+        Importance: this.isImportance ? 'Normal' : 'High'
       })
     },
     showRemindPicker () {
@@ -379,6 +389,10 @@ export default {
     width 210px
   .el-alert
     flex-shrink 0
+  .icon-star
+    color $yellow
+  .icon-check
+    color $green
 
 .task-detail__header
   padding 5px 15px
@@ -403,15 +417,12 @@ export default {
     &.icon-star
       color $yellow
 
-textarea
-  width 100%
-  height 60px
-  border none
-  resize none
-  outline none
+>>> textarea
   font-size $size-text-medium
   color var(--text-main)
-  background transparent
+  background var(--background)
+  &:not(:focus)
+    border-color transparent
 
 .el-input__prefix
   top -2px
