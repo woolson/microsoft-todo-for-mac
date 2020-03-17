@@ -1,7 +1,5 @@
 <template lang="pug">
 div.task-detail-main
-  Header.u-bb
-    span {{$t('task.detail')}}
   div.task-detail-main__content
     div.u-form__row-section.u-mt12
       div.u-form__row.u-bb
@@ -67,7 +65,7 @@ div.task-detail-main
       //-   i.iconfont.icon-right.u-ml5
     div.u-form__row-section
       //- Note
-      div.u-form__row
+      div.u-form__row.start
         label {{$t('base.note')}}
         el-input(
           type="textarea"
@@ -213,6 +211,8 @@ export default {
         setTimeout(() => {
           this.fetchAttachments()
         }, 200)
+      } else {
+        this.attachments = []
       }
     }
   },

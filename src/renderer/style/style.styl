@@ -1,10 +1,11 @@
 darkTheme() {
   // Background
   --background-sidebar $sidebar-dark
+  --background-right-content rgba($background-dark-content, .8)
+
   --background $background-dark
   --background-content $background-dark-content
   --background-section $background-dark-section
-  --background-section-hover rgba(black, .25)
   // Text
   --text-main #BBBBBB
   --text-sub $text-light
@@ -23,10 +24,11 @@ darkTheme() {
 lightTheme() {
   // Background
   --background-sidebar $sidebar-light
+  --background-right-content rgba($gray, .5)
+
   --background white
   --background-content white
   --background-section #F8F8FA
-  --background-section-hover rgba($blue, .15)
   // Text
   --text-main $text
   --text-sub $gray
@@ -38,7 +40,8 @@ lightTheme() {
   --folder-background rgba(black, .08)
   --folder-color #333333
   // Task
-  --task-background-active linear-gradient(45deg, $blue, $purple)
+  --task-background-active #EEEEEE
+  // --task-background-active linear-gradient(45deg, $blue, $purple)
   --task-info-background rgba(white, .4)
 }
 

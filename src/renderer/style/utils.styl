@@ -225,7 +225,7 @@ for $size in 10 11 12 13 14 15 20
 
 .u-form__row
   display flex
-  align-items flex-start
+  align-items center
   justify-content space-between
   min-height 40px
   padding 12px
@@ -235,6 +235,8 @@ for $size in 10 11 12 13 14 15 20
   user-select none
   background var(--background-section)
   transition background .2s
+  &.start
+    align-items flex-start
   @extend .u-bb
   > label
     line-height 22px

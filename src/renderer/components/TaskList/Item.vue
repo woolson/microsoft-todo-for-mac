@@ -64,7 +64,7 @@ export default {
       return {
         textDecoration: Status === 'Completed' ? 'line-through' : 'none',
         color: Status === 'Completed'
-          ? this.theme === 'dark' ? '#666666 !important' : '#AAAAAA !important'
+          ? '#AAAAAA !important'
           : ''
       }
     },
@@ -125,7 +125,7 @@ export default {
 .task-item
   display flex
   align-items center
-  background var(--background-section)
+  background var(--background-content)
   padding 0 12px
   line-height 45px
   background-size 0px 100%
@@ -156,16 +156,15 @@ export default {
     &:after
       display none
   &.active
-    *
-      color white
     background var(--task-background-active)
     .task-item__info
       background var(--task-info-background)
   &.completed
     *
       opacity .7
-  &:hover:not(.active)
-    background rgba(black, .15)
+  &:hover
+    box-shadow 0 0 5px rgba(black, .1)
+    transform translateX(3px)
 
 .task-item__content
   flex 1

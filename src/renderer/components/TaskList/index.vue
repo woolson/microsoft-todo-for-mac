@@ -129,7 +129,7 @@ export default {
   display flex
   flex-direction column
   position relative
-  background var(--background-content)
+  background var(--background-right-content)
   transition background .2s
   .header
     position absolute
@@ -138,7 +138,7 @@ export default {
     z-index 9
     width 100%
     color var(--text-sub)
-    background var(--background-content)
+    // background var(--background-content)
     -webkit-app-region drag
 
 .task-list__content
