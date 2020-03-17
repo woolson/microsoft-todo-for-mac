@@ -121,6 +121,7 @@ import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import { dater, fileToBase64 } from '~/share/utils'
 import { ipcRenderer, remote } from 'electron'
 import { showNativeMessage } from '@/common/utils'
+import axios from 'axios'
 
 export default {
   data () {
@@ -131,7 +132,8 @@ export default {
       dateTime: '',
       stopDate: '',
       note: '',
-      isLoading: false
+      isLoading: false,
+      cancel: null
     }
   },
 
@@ -212,6 +214,8 @@ export default {
           this.fetchAttachments()
         }, 200)
       } else {
+        this.cancel && this.cancel()
+        this.isLoading = false
         this.attachments = []
       }
     }
@@ -255,15 +259,28 @@ export default {
       else showPicker()
     },
     async fetchAttachments () {
-      this.isLoading = true
+      const taskId = this.currentTask.Id
+      if (this.isLoading) {
+        if (this.cancel) {
+          this.cancel()
+          this.isLoading = false
+        }
+      } else {
+        this.isLoading = true
+      }
       const { value } = await this.$get(
-        `/me/tasks/${this.currentTask.Id}/attachments`,
+        `/me/tasks/${taskId}/attachments`,
         null,
-        {showLoading: false}
+        {
+          showLoading: false,
+          cancelToken: new axios.CancelToken(c => {
+            this.cancel = c
+          })
+        }
       )
 
       this.updateStateTask({
-        Id: this.currentTask.Id,
+        Id: taskId,
         Attachments: value
       })
       this.isLoading = false

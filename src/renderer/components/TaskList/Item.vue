@@ -125,7 +125,7 @@ export default {
 .task-item
   display flex
   align-items center
-  background var(--background-content)
+  background var(--background-section)
   padding 0 12px
   line-height 45px
   background-size 0px 100%

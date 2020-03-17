@@ -110,7 +110,7 @@ axios.interceptors.response.use(function (response) {
   return response.data || {}
 }, function (error) {
   loading && loading.close()
-  if (!error.config.quite) {
+  if (error.config && !error.config.quite) {
     Message.error(error.message)
   }
   if (error.response.status === 401 || error.response.status === 400) {
