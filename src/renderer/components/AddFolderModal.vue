@@ -35,7 +35,7 @@ Modal.add-task-folder(
 import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
-  name: 'AddFolder',
+  name: 'AddFolderModal',
 
   data: () => ({
     name: ''

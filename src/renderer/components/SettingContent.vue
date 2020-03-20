@@ -31,30 +31,6 @@ div
         )
     div.u-form__row-section
       div.u-form__row.u-bb
-        label {{$t('base.language')}}
-        el-radio-group.u-mt-5.u-mb-5(
-          size="mini"
-          v-model="currentLang"
-          :fill="$color.blue"
-          text-color="white"
-          @change="languageChange"
-        )
-          el-radio-button(name="language" label="zh") 中
-          el-radio-button(name="language" label="en") EN
-      div.u-form__row.u-bb
-        label {{$t('setting.selectTheme')}}
-        el-radio-group(
-          size="mini"
-          v-model="currentTheme"
-          :fill="$color.blue"
-          text-color="white"
-          @change="updateState({theme: $event})"
-        )
-          el-radio-button(name="theme" label="auto") {{$t('base.auto')}}
-          el-radio-button(name="theme" label="light") {{$t('setting.lightTheme')}}
-          el-radio-button(name="theme" label="dark") {{$t('setting.darkTheme')}}
-    div.u-form__row-section
-      div.u-form__row.u-bb
         label {{$t('base.alert')}}
         el-switch.u-mt-5.u-mb-5(
           :value="playAlertVoice"
@@ -67,6 +43,18 @@ div
           :min="10"
           :step="10"
         )
+    div.u-form__row-section
+      div.u-form__row.u-bb
+        label {{$t('base.language')}}
+        el-radio-group.u-mt-5.u-mb-5(
+          size="mini"
+          v-model="currentLang"
+          :fill="$color.blue"
+          text-color="white"
+          @change="languageChange"
+        )
+          el-radio-button(name="language" label="zh") 中
+          el-radio-button(name="language" label="en") EN
     el-button.u-ml12.u-mr12.u-mtauto(
       type="danger"
       @click="logout"

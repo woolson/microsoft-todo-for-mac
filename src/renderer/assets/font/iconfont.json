@@ -1,0 +1,247 @@
+{
+  "id": "1092149",
+  "name": "ms-todo",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11982721",
+      "name": "clipboard, note, document",
+      "font_class": "clipboard",
+      "unicode": "e9d5",
+      "unicode_decimal": 59861
+    },
+    {
+      "icon_id": "1330733",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e748",
+      "unicode_decimal": 59208
+    },
+    {
+      "icon_id": "6488979",
+      "name": "清空",
+      "font_class": "clear",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "6548526",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "886988",
+      "name": "设置",
+      "font_class": "setting-active",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "4423492",
+      "name": "设置",
+      "font_class": "setting",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "2570056",
+      "name": "日历",
+      "font_class": "calendar",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "2570058",
+      "name": "日历",
+      "font_class": "calendar-active",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "8081367",
+      "name": "功能",
+      "font_class": "function",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "8103423",
+      "name": "功能",
+      "font_class": "function-active",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "5379904",
+      "name": "list",
+      "font_class": "task",
+      "unicode": "e706",
+      "unicode_decimal": 59142
+    },
+    {
+      "icon_id": "6867453",
+      "name": "bell-outline",
+      "font_class": "bell",
+      "unicode": "e651",
+      "unicode_decimal": 58961
+    },
+    {
+      "icon_id": "1899049",
+      "name": "sticky-note-o",
+      "font_class": "note",
+      "unicode": "e725",
+      "unicode_decimal": 59173
+    },
+    {
+      "icon_id": "1444197",
+      "name": "check",
+      "font_class": "checked",
+      "unicode": "e69c",
+      "unicode_decimal": 59036
+    },
+    {
+      "icon_id": "4406934",
+      "name": "排序-降",
+      "font_class": "sort-desc",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "4406938",
+      "name": "排序-升",
+      "font_class": "sort-asc",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "833982",
+      "name": "close",
+      "font_class": "close",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "32305",
+      "name": "right",
+      "font_class": "right",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "7463954",
+      "name": "down",
+      "font_class": "down-o",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "2200153",
+      "name": "太空火箭",
+      "font_class": "empty",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "1347348",
+      "name": "edit",
+      "font_class": "edit",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "5466093",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e734",
+      "unicode_decimal": 59188
+    },
+    {
+      "icon_id": "5924900",
+      "name": "repeat-1",
+      "font_class": "repeat-o",
+      "unicode": "e66b",
+      "unicode_decimal": 58987
+    },
+    {
+      "icon_id": "1048871",
+      "name": "附件",
+      "font_class": "attachment",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "6986722",
+      "name": "alarm-on",
+      "font_class": "alarm",
+      "unicode": "e87e",
+      "unicode_decimal": 59518
+    },
+    {
+      "icon_id": "937495",
+      "name": "down",
+      "font_class": "down",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "937499",
+      "name": "up",
+      "font_class": "up",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "375659",
+      "name": "checkbox",
+      "font_class": "check",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "592856",
+      "name": "check02",
+      "font_class": "check-o",
+      "unicode": "e664",
+      "unicode_decimal": 58980
+    },
+    {
+      "icon_id": "1160172",
+      "name": "mark",
+      "font_class": "mark",
+      "unicode": "e66a",
+      "unicode_decimal": 58986
+    },
+    {
+      "icon_id": "5700821",
+      "name": "star",
+      "font_class": "star",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "6360766",
+      "name": "star",
+      "font_class": "star-o",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "586862",
+      "name": "dot-3-list",
+      "font_class": "list",
+      "unicode": "e710",
+      "unicode_decimal": 59152
+    },
+    {
+      "icon_id": "7141484",
+      "name": "calendar-outline",
+      "font_class": "calendar-o",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    }
+  ]
+}

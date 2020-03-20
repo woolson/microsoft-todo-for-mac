@@ -335,8 +335,11 @@ export default {
         ContentBytes: base64.split('base64,')[1]
       })
       evt.target.value = ''
-      this.attachments.push(result)
-      this.updateTaskAttachment()
+      this.updateStateTask({
+        Id: this.currentTask.Id,
+        Attachments: [...this.attachments, result],
+        HasAttachments: true
+      })
     },
     async noteSubmit () {
       const Body = this.currentTask.Body || {}

@@ -11,6 +11,7 @@ div#app
   AddFolderModal
   AddTaskModal
   SettingsModal
+  ClipBoardTip
 </template>
 
 <script>
@@ -25,8 +26,8 @@ import TaskDetailModal from '@/components/TaskDetailModal'
 import AddFolderModal from '@/components/AddFolderModal'
 import AddTaskModal from '@/components/AddTaskModal'
 import SettingsModal from '@/components/SettingsModal'
-import { ipcRenderer } from 'electron'
-import { changeTheme } from '@/common/utils'
+import ClipBoardTip from '@/components/ClipBoardTip'
+import { ipcRenderer, clipboard } from 'electron'
 
 const notify = new Notification()
 
@@ -41,7 +42,8 @@ export default {
     TaskDetailModal,
     AddFolderModal,
     AddTaskModal,
-    SettingsModal
+    SettingsModal,
+    ClipBoardTip
   },
 
   computed: {
@@ -73,8 +75,11 @@ export default {
     this.init()
     initShortCut()
     // Update data when window focus
-    if (process.env.NODE_ENV !== 'development') {
-      window.onfocus = () => this.init(false)
+    if (process.env.NODE_ENV === 'development') {
+      window.onfocus = () => {
+        this.checkClipBoard()
+        this.init(false)
+      }
     }
     // Update data every 30 minute
     // setInterval(() => {
@@ -110,13 +115,6 @@ export default {
       ipcRenderer.sendSync('update-setting', {
         lastOpenFolder: newValue
       })
-    },
-    theme: {
-      handler (newValue) {
-        changeTheme(newValue)
-        ipcRenderer.sendSync('update-setting', {theme: newValue})
-      },
-      immediate: true
     },
     language (newValue) {
       ipcRenderer.sendSync('update-setting', {language: newValue})
@@ -192,6 +190,15 @@ export default {
       }
       this.updateState({sortStash})
       ipcRenderer.sendSync('update-setting', {sortStash})
+    },
+    checkClipBoard () {
+      const text = clipboard.readText('clipboard')
+      if (text) {
+        this.updateState({
+          clipboard: text,
+          showClipboardTip: true
+        })
+      }
     }
   }
 }

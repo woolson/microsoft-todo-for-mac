@@ -44,7 +44,7 @@ Modal.add-task(
 import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
-  name: 'AddFolder',
+  name: 'AddTaskModel',
 
   data: () => ({
     name: '',
@@ -55,7 +55,9 @@ export default {
     ...mapState([
       'tasks',
       'taskFolders',
-      'showTaskAddModal'
+      'showTaskAddModal',
+      'clipboard',
+      'showClipboardTip'
     ]),
     ...mapGetters([
       'currentFolder'
@@ -73,6 +75,9 @@ export default {
       } else {
         const hasIdFolder = this.taskFolders.find(o => o.Id)
         if (hasIdFolder) this.belongFolder = hasIdFolder.Id
+      }
+      if (this.clipboard && this.showClipboardTip) {
+        this.name = this.clipboard
       }
       this.$nextTick(this.$refs.input.focus)
     }

@@ -44,7 +44,8 @@ const state = {
   tasks: [],
   // get token from localstorage
   token: token.get({}),
-  userPhoto: null
+  clipboard: '',
+  showClipboardTip: false
 }
 
 const getters = {

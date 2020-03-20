@@ -1,7 +1,7 @@
 darkTheme() {
   // Background
   --background-sidebar $sidebar-dark
-  --background-right-content rgba($background-dark-content, .8)
+  --background-right-content rgba(#222529, .9)
 
   --background $background-dark
   --background-content $background-dark-content
@@ -24,7 +24,7 @@ darkTheme() {
 lightTheme() {
   // Background
   --background-sidebar $sidebar-light
-  --background-right-content rgba($gray, .5)
+  --background-right-content rgba(#EFEFEF, .8)
 
   --background white
   --background-content white
@@ -51,12 +51,6 @@ lightTheme() {
 @media (prefers-color-scheme: dark)
   :root
     darkTheme()
-
-[data-theme="theme-light"]
-  lightTheme()
-
-[data-theme="theme-dark"]
-  darkTheme()
 
 ::selection
   background $blue
@@ -121,6 +115,9 @@ body
 .el-button--success:not(.is-plain)
   background $green
   border-color $green
+
+.el-button.is-plain:hover
+  background var(--background) !important
 
 .el-popover
   padding 0
