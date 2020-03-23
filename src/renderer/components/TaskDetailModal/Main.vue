@@ -216,7 +216,6 @@ export default {
       } else {
         this.cancel && this.cancel()
         this.isLoading = false
-        this.attachments = []
       }
     }
   },
