@@ -33,14 +33,14 @@ export default {
 <style lang="stylus" scoped>
 .clipboard-tip
   position fixed
-  left 0
-  top 50vh
+  right 15px
+  bottom 15px
   z-index 10
   color var(--text-main)
-  background var(--background-section)
-  border-radius 0 20px 20px 0
-  height 30px
-  width 30px
+  background linear-gradient(65deg, $blue, $purple)
+  border-radius 20px
+  height 35px
+  width 35px
   display flex
   flex-direction column
   align-items center
@@ -50,7 +50,6 @@ export default {
   &:hover
     width 120px
     height 180px
-    left 5px
     border-radius 5px
     .tip__head span
     .tip__text
@@ -58,12 +57,14 @@ export default {
       display flex
 
 .tip__head
-  width 100%
   display flex
+  justify-content center
   align-items center
-  justify-content flex-start
+  width 100%
+  height 35px
   padding 6px
   box-sizing border-box
+  color white
   span
     margin-left 5px
     display none
