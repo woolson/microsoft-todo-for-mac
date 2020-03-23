@@ -126,15 +126,16 @@ export default {
   display flex
   align-items center
   background var(--background-content)
-  padding 0 12px
+  padding 0 12px 0 5px
   line-height 45px
   background-size 0px 100%
   position relative
-  transition all .2s
+  transition all .3s
   cursor pointer
   user-select none
   box-sizing border-box
   color var(--text-main)
+  border-left 0 solid $blue
   > i
     &.icon-check
     &.icon-check-o
@@ -163,8 +164,7 @@ export default {
     *
       opacity .7
   &:hover
-    box-shadow 0 0 5px rgba(black, .1)
-    transform translateX(3px)
+    border-width 3px
 
 .task-item__content
   flex 1
