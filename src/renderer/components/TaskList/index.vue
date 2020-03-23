@@ -11,7 +11,7 @@ div.task-list
       @click="cancelSearch"
       round
     ) {{$t('base.cancel')}}
-  Header(v-if="!showSearch")
+  Header(v-if="!showSearch" :class="{'blur-bg': blurTop}")
     div.task-list__title(slot="left")
       span.u-bold(
         :style="{color: showCompleteTask ? $color.green : $color.red}"
@@ -20,6 +20,7 @@ div.task-list
     Options(slot="right")
   div.task-list__content(
     v-if="showSearch ? searchTasks.length : tasks.length"
+    @scroll="onScroll"
   )
     Item(
       v-for="item in showSearch ? searchTasks : tasks"
@@ -51,7 +52,8 @@ export default {
       cache: {
         showCompleteTask: false,
         currentFolder: {}
-      }
+      },
+      blurTop: false
     }
   },
 
@@ -118,6 +120,9 @@ export default {
       } else {
         nextTask(evt.keyCode === 40 ? 1 : -1, this.searchTasks)
       }
+    },
+    onScroll (evt) {
+      this.blurTop = evt.target.scrollTop > 10
     }
   }
 }
@@ -140,6 +145,8 @@ export default {
     color var(--text-sub)
     // background var(--background-content)
     -webkit-app-region drag
+    &.blur-bg
+      backdrop-filter saturate(180%) blur(20px)
 
 .task-list__content
   padding 15px
