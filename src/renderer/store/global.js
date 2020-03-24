@@ -45,6 +45,7 @@ const state = {
   // get token from localstorage
   token: token.get({}),
   clipboard: '',
+  clipboardAs: '',
   showClipboardTip: false
 }
 

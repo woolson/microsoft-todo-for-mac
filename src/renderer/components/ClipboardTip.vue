@@ -4,13 +4,21 @@ div.clipboard-tip(v-show="showClipboardTip")
     i.iconfont.icon-clipboard
     span 剪贴板内容
   div.tip__text {{clipboard}}
-  el-button(
-    size="mini"
-    @click="updateState({\
-      showTaskAddModal: true,\
-      showClipboardTip: false,\
-    })"
-  ) {{$t('task.create')}}
+  el-button-group
+    el-button(
+      size="mini"
+      @click="updateState({\
+        showTaskAddModal: true,\
+        clipboardAs: 'name',\
+      })"
+    ) {{$t('base.task')}}
+    el-button(
+      size="mini"
+      @click="updateState({\
+        showTaskAddModal: true,\
+        clipboardAs: 'note',\
+      })"
+    ) {{$t('base.note')}}
 </template>
 
 <script>
@@ -45,12 +53,14 @@ export default {
   flex-direction column
   align-items center
   cursor pointer
-  transition all .2s
+  transition width .2s,height .2s,border-radius .2s
   box-shadow 0 0 5px rgba(black, .2)
+  border 2px solid white
   &:hover
     width 120px
     height 180px
     border-radius 5px
+    border-width 0
     .tip__head span
     .tip__text
     .el-button
@@ -82,8 +92,12 @@ export default {
   width 100%
   box-sizing border-box
 
-.el-button
+.el-button-group
   width 100%
+  display flex
+
+.el-button
+  flex 1
   display none
   border-radius 0 0 5px 5px
   overflow hidden
