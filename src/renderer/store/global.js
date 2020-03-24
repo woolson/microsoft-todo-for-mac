@@ -140,7 +140,12 @@ const mutations = {
   },
   UPDATE_TASK (state, data) {
     const index = state.tasks.findIndex(o => o.Id === data.Id)
-    if (index !== -1) Vue.set(state.tasks, index, {...state.tasks[index], ...data})
+    if (index !== -1) {
+      Vue.set(state.tasks, index, {
+        ...state.tasks[index],
+        ...data
+      })
+    }
   }
 }
 
@@ -188,7 +193,10 @@ const actions = {
       playCompleteVoice(state.alertVoicevolume)
     }
 
-    newState.tasks[taskIndex] = newTask
+    newState.tasks[taskIndex] = {
+      ...state.tasks[taskIndex],
+      ...newTask
+    }
     newState.currentTaskId = newTask.Id
     commit('UPDATE_STATE', newState)
   },
