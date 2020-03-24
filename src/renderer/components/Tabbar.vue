@@ -1,11 +1,11 @@
 <template lang="pug">
 ul.tabbar
-  li.tabbar__item.iconfont(
-    :class="$route.fullPath === '/' ? 'icon-function-active' : 'icon-function'"
+  li.tabbar__item.iconfont.icon-tasks(
+    :class="{active: $route.fullPath === '/'}"
     @click="$router.push('/')"
   )
-  li.tabbar__item.iconfont(
-    :class="$route.fullPath === '/calendar' ? 'icon-calendar-active' : 'icon-calendar'"
+  li.tabbar__item.iconfont.icon-calendar(
+    :class="{active: $route.fullPath === '/calendar'}"
     @click="$router.push('/calendar')"
   )
   li.tabbar__item.iconfont(
@@ -29,20 +29,19 @@ ul.tabbar
   line-height 30px
   margin 0
   align-items center
-  // justify-content center
   color var(--folder-color)
-  // border-right 1px solid rgba(black, .1)
   box-shadow 0 0 1px rgba(black, .2)
   padding 30px 0 10px 0
   li
     margin 10px 0
     cursor pointer
     font-size 22px !important
+    opacity .6
     &.icon-function
     &.icon-calendar
       font-weight bold
-    &[class$="active"]
-      color $blue
+    &.active
+      opacity 1
 
 .icon-setting
 .icon-setting-active

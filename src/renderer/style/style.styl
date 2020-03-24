@@ -1,6 +1,6 @@
 darkTheme() {
   // Background
-  --background-sidebar $sidebar-dark
+  --background-sidebar linear-gradient(0, $sidebar-dark, darken($sidebar-dark, 20))
   --background-right-content rgba(#222529, .88)
 
   --background $background-dark
@@ -23,7 +23,8 @@ darkTheme() {
 
 lightTheme() {
   // Background
-  --background-sidebar $sidebar-light
+  // --background-sidebar $sidebar-light
+  --background-sidebar linear-gradient(0, lighten($sidebar-light, 50), $sidebar-light)
   --background-right-content rgba(#EFEFEF, .8)
 
   --background white

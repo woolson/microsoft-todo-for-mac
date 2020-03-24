@@ -15,7 +15,7 @@ div.sidebar
       )
   div.sidebar__folders
     template(v-for="item in compFolders")
-      div.sidebar__separate(v-if="item.Key === 'Spacer'")
+      div.sidebar__separate.u-bb(v-if="item.Key === 'Spacer'")
       TaskFolderItem(:data="item" v-else)
   div.sidebar__setting(
     v-if="!showCalendarView"

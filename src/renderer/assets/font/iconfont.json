@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "10561615",
+      "name": "List, interface",
+      "font_class": "tasks",
+      "unicode": "e66c",
+      "unicode_decimal": 58988
+    },
+    {
+      "icon_id": "10915895",
+      "name": "calendar-todo-line",
+      "font_class": "calendar",
+      "unicode": "e690",
+      "unicode_decimal": 59024
+    },
+    {
       "icon_id": "11982721",
       "name": "clipboard, note, document",
       "font_class": "clipboard",
@@ -46,34 +60,6 @@
       "font_class": "setting",
       "unicode": "e61d",
       "unicode_decimal": 58909
-    },
-    {
-      "icon_id": "2570056",
-      "name": "日历",
-      "font_class": "calendar",
-      "unicode": "e61a",
-      "unicode_decimal": 58906
-    },
-    {
-      "icon_id": "2570058",
-      "name": "日历",
-      "font_class": "calendar-active",
-      "unicode": "e61b",
-      "unicode_decimal": 58907
-    },
-    {
-      "icon_id": "8081367",
-      "name": "功能",
-      "font_class": "function",
-      "unicode": "e60d",
-      "unicode_decimal": 58893
-    },
-    {
-      "icon_id": "8103423",
-      "name": "功能",
-      "font_class": "function-active",
-      "unicode": "e632",
-      "unicode_decimal": 58930
     },
     {
       "icon_id": "5379904",
