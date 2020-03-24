@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1908250",
+      "name": "181 right arrow",
+      "font_class": "go",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
       "icon_id": "10561615",
       "name": "List, interface",
       "font_class": "tasks",

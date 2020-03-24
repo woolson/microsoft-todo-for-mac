@@ -73,6 +73,11 @@ div.task-detail-main
           @blur="noteSubmit"
           rows="3"
         )
+      div.u-form__row.link(
+        v-for="link in noteLinks"
+      )
+        label {{link}}
+        i.iconfont.icon-go.u-ml15.u-pointer(@click="openLink(link)")
     div.u-form__row-section
       //- Choose upload file
       div.u-form__row
@@ -119,7 +124,7 @@ div.task-detail-main
 <script>
 import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import { dater, fileToBase64 } from '~/share/utils'
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer, remote, shell } from 'electron'
 import { showNativeMessage } from '@/common/utils'
 import axios from 'axios'
 
@@ -185,6 +190,10 @@ export default {
       } else {
         return `${this.$t('task.createAt')} ${dater(CreatedDateTime).format('YYYY-MM-DD HH:mm:SS')}`
       }
+    },
+    noteLinks () {
+      const note = this.note || ''
+      return note.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig)
     }
   },
 
@@ -394,6 +403,9 @@ export default {
     viewFile (file) {
       // console.log('viewFile')
       ipcRenderer.sendSync('view-file', file)
+    },
+    openLink (link) {
+      shell.openExternal(link)
     }
   }
 }
@@ -412,6 +424,18 @@ export default {
     color $yellow
   .icon-check
     color $green
+
+.link
+  display flex
+  label
+    flex 1
+    width 1px
+    text-overflow ellipsis
+    white-space nowrap
+    overflow hidden
+    text-decoration underline
+  i:hover
+    color $blue
 
 .task-detail__header
   padding 5px 15px
