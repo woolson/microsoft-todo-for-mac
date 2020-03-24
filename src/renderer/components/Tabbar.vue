@@ -8,8 +8,8 @@ ul.tabbar
     :class="{active: $route.fullPath === '/calendar'}"
     @click="$router.push('/calendar')"
   )
-  li.tabbar__item.iconfont(
-    :class="$route.fullPath === '/setting' ? 'icon-setting-active' : 'icon-setting'"
+  li.tabbar__item.iconfont.icon-setting-active(
+    :class="{active: $route.fullPath === '/setting'}"
     @click="$router.push('/setting')"
   )
 </template>

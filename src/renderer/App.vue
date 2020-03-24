@@ -74,17 +74,10 @@ export default {
   mounted () {
     this.init()
     initShortCut()
-    // Update data when window focus
-    if (process.env.NODE_ENV === 'development') {
-      window.onfocus = () => {
-        this.checkClipBoard()
-        this.init(false)
-      }
+    // Check clipboard when window focus
+    window.onfocus = () => {
+      this.checkClipBoard()
     }
-    // Update data every 30 minute
-    // setInterval(() => {
-    //   this.init(false)
-    // }, 1000 * 60 * 30)
   },
 
   beforeDestroy () {
