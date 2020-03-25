@@ -162,13 +162,13 @@ export default {
   align-items center
   justify-content center
   padding-bottom 50px
+  color var(--text-main)
+  opacity .5
   i
-    color $gray
     font-size 180px
   span
-    color $gray
     margin-top 10px
-    font-size $size-text-medium
+    font-size 14px
 
 .task-list__title
   outline none

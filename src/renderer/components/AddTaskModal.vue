@@ -83,10 +83,10 @@ export default {
         this.note = ''
         return
       }
-      if (this.currentFolder.Id) {
+      if (this.currentFolder.Id.length > 20) {
         this.belongFolder = this.currentFolder.Id
       } else {
-        const hasIdFolder = this.taskFolders.find(o => o.Id)
+        const hasIdFolder = this.taskFolders.find(o => o.Id.length > 20)
         if (hasIdFolder) this.belongFolder = hasIdFolder.Id
       }
       if (this.clipboard && this.clipboardAs) {

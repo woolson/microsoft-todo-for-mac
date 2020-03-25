@@ -464,6 +464,7 @@ export default {
   font-size $size-text-medium
   color var(--text-main)
   background var(--background)
+  word-break break-all
   &:not(:focus)
     border-color transparent
 

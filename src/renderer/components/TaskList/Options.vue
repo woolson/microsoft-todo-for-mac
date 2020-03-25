@@ -155,6 +155,7 @@ export default {
   align-items stretch
   button
     font-size 14px
+    color var(--text-main)
     background var(--background-section)
     border none !important
 
