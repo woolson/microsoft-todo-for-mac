@@ -318,7 +318,7 @@ export default {
         IsReminderOn: !!value,
         ReminderDateTime: value ? {
           DateTime: value.toISOString(),
-          TimeZone: 'Asia/Shanghai'
+          TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         } : null
       })
     },
@@ -327,7 +327,7 @@ export default {
         Id: this.currentTask.Id,
         DueDateTime: value ? {
           DateTime: value.toISOString(),
-          TimeZone: 'Asia/Shanghai'
+          TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         } : null
       })
     },
