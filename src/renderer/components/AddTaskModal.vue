@@ -11,12 +11,6 @@ Modal.add-task(
       circle
       icon="el-icon-check"
     )
-  el-alert(
-    :title="$t('message.enterToSubmit')"
-    type="info"
-    center
-    :closable="false"
-  )
   div.add-task__content
     div.u-form__row-section
       div.u-form__row

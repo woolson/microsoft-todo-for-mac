@@ -1,6 +1,6 @@
 {
   "name": "microsoft-todo",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "author": "Woolson Lee <woolson.lee@gmail.com>",
   "description": "macOS client for microsoft todo app",
   "license": "MIT",

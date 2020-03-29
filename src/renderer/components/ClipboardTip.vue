@@ -53,7 +53,7 @@ export default {
   flex-direction column
   align-items center
   cursor pointer
-  transition width .2s,height .2s,border-radius .2s
+  transition width .2s,height .2s,border-radius .1s
   box-shadow 0 0 5px rgba(black, .2)
   border 2px solid white
   &:hover

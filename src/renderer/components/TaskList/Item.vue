@@ -162,7 +162,7 @@ export default {
       background var(--task-info-background)
   &.completed
     *
-      opacity .7
+      opacity .9
   &:hover
     border-width 3px
 

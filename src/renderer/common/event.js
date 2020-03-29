@@ -73,7 +73,7 @@ export default function () {
     showNativeMessage(
       `${i18n.t('message.confirmDeleteTask')}「 ${store.getters.currentTask.Subject} 」`
     ).then(({response}) => {
-      if (!response) commit('DELETE_TAKS')
+      if (!response) dispatch('DELETE_TASK')
     })
   })
 
@@ -140,7 +140,6 @@ export function nextTask (dir, tasks) {
   // if (!taskList.length) return
   const index = taskList.findIndex(o => o.Id === currentTaskId)
   const nextIndex = index + dir
-  console.log(index, nextIndex)
 
   if (nextIndex < 0) {
     nextFolder(-1)
