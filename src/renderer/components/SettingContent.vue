@@ -7,53 +7,32 @@ div
       div.u-form__row
         label {{$t('base.async')}}
         el-button.u-w100.u-mt-5.u-mb-5(
-          round
+          size="mini"
           @click="syncData"
         ) {{$t('base.async')}}
       div.u-form__row.u-bb
         label {{$t('setting.showCalendar')}}
-        el-switch(
+        el-switch.u-mt-5.u-mb-5(
           :value="showCalendarView"
           @change="updateState({showCalendarView: !showCalendarView})"
         )
     div.u-form__row-section
       div.u-form__row.u-bb
         label {{$t('task.showImportance')}}
-        el-switch(
+        el-switch.u-mt-5.u-mb-5(
           :value="showImportanceFolder"
           @change="updateState({showImportanceFolder: !showImportanceFolder})"
         )
       div.u-form__row.u-bb
         label {{$t('task.showPlanned')}}
-        el-switch(
+        el-switch.u-mt-5.u-mb-5(
           :value="showPlannedFolder"
           @change="updateState({showPlannedFolder: !showPlannedFolder})"
         )
     div.u-form__row-section
       div.u-form__row.u-bb
-        label {{$t('base.language')}}
-        el-radio-group(
-          v-model="currentLang"
-          @change="languageChange"
-          :fill="$color.blue"
-          text-color="white"
-        )
-          el-radio-button(name="language" label="中")
-          el-radio-button(name="language" label="EN")
-      div.u-form__row.u-bb
-        label {{$t('setting.selectTheme')}}
-        el-select.settings__theme(
-          :value="theme"
-          :collapse-tags="true"
-          @change="updateState({theme: $event})"
-        )
-          el-option(:label="$t('base.auto')" value="auto")
-          el-option(:label="$t('setting.lightTheme')" value="light")
-          el-option(:label="$t('setting.darkTheme')" value="dark")
-    div.u-form__row-section
-      div.u-form__row.u-bb
         label {{$t('base.alert')}}
-        el-switch(
+        el-switch.u-mt-5.u-mb-5(
           :value="playAlertVoice"
           @change="updateState({playAlertVoice: !playAlertVoice})"
         )
@@ -64,8 +43,19 @@ div
           :min="10"
           :step="10"
         )
+    div.u-form__row-section
+      div.u-form__row.u-bb
+        label {{$t('base.language')}}
+        el-radio-group.u-mt-5.u-mb-5(
+          size="mini"
+          v-model="currentLang"
+          :fill="$color.blue"
+          text-color="white"
+          @change="languageChange"
+        )
+          el-radio-button(name="language" label="zh") 中
+          el-radio-button(name="language" label="en") EN
     el-button.u-ml12.u-mr12.u-mtauto(
-      round
       type="danger"
       @click="logout"
     ) {{$t('base.logout')}}
@@ -84,6 +74,7 @@ export default {
     return {
       volume: this.alertVoicevolume,
       currentLang: null,
+      currentTheme: null,
       newVersion: false
     }
   },
@@ -105,18 +96,16 @@ export default {
   watch: {
     language: {
       handler (newValue) {
-        this.currentLang = newValue === 'zh' ? '中' : 'EN'
+        this.currentLang = newValue
       },
       immediate: true
     },
-    // theme (newValue) {
-    //   if (newValue === 'auto') {
-    //     document.documentElement.removeAttribute('data-theme')
-    //   } else {
-    //     const isDark = ipcRenderer.sendSync('get-theme')
-    //     document.documentElement.setAttribute('data-theme', `theme-${isDark ? 'dark' : 'light'}`)
-    //   }
-    // },
+    theme: {
+      handler (newValue) {
+        this.currentTheme = newValue
+      },
+      immediate: true
+    },
     volume (newValue, oldValue) {
       oldValue && playCompleteVoice(newValue)
       this.updateState({alertVoicevolume: newValue})
@@ -143,9 +132,8 @@ export default {
       loading.close()
     },
     languageChange (value) {
-      const lang = value === 'EN' ? 'en' : 'zh'
-      this.$i18n.locale = lang
-      this.updateState({language: lang})
+      this.$i18n.locale = value
+      this.updateState({language: value})
     },
     logout () {
       token.remove()

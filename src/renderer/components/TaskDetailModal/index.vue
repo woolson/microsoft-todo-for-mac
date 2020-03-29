@@ -3,9 +3,7 @@ Modal.task-detail(
   v-model="showTaskDetailModal"
   @cancel="updateState({showTaskDetailModal: false});currentStep = 0"
 )
-  Steps(v-model="currentStep")
-    Main(:step.sync="currentStep")
-    Repeat(:step.sync="currentStep")
+  Main(:step.sync="currentStep")
 </template>
 
 <script>

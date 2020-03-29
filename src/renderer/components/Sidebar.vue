@@ -8,11 +8,14 @@ div.sidebar
       placement="right"
     )
       i.task-add.iconfont.icon-add(
-        @click="updateState({showTaskFolderAddModal: true})"
+        @click="updateState({\
+          showTaskFolderAddModal: true,\
+          isCreateFolder: true\
+        })"
       )
   div.sidebar__folders
     template(v-for="item in compFolders")
-      div.sidebar__separate(v-if="item.Key === 'Spacer'")
+      div.sidebar__separate.u-bb(v-if="item.Key === 'Spacer'")
       TaskFolderItem(:data="item" v-else)
   div.sidebar__setting(
     v-if="!showCalendarView"
@@ -35,12 +38,14 @@ export default {
     ...mapState([
       'tasks',
       'taskFolders',
-      'currentFolder',
       'showCalendarView',
       'showPlannedFolder',
       'showImportanceFolder'
     ]),
-    ...mapGetters(['folders']),
+    ...mapGetters([
+      'folders',
+      'currentFolder'
+    ]),
     compFolders () {
       const folders = JSON.parse(JSON.stringify(this.folders))
       const processTasks = this.tasks.filter(o => o.Status !== 'Completed')

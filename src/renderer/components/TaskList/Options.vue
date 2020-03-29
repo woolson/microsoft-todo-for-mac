@@ -80,9 +80,10 @@ div.task-options
 </template>
 
 <script>
-import { ipcRenderer } from 'electron'
-import { mapMutations, mapState } from 'vuex'
+// import { ipcRenderer } from 'electron'
+import { mapMutations, mapState, mapGetters, mapActions } from 'vuex'
 import { has } from '~/share/utils'
+import { showNativeMessage } from '@/common/utils'
 
 export default {
   data () {
@@ -104,12 +105,14 @@ export default {
     ...mapState([
       'sortBy',
       'sortDir',
-      'currentFolder',
       'showCompleteTask'
     ]),
+    ...mapGetters([
+      'currentFolder'
+    ]),
     dontDelete () {
-      const { Id, Name } = this.currentFolder
-      return Id && !has(['任务', 'Task', 'task'], Name)
+      const { Id, Name, Key } = this.currentFolder
+      return Id && !Key && !has(['任务', 'Task', 'task'], Name)
     },
     sortText () {
       return this.sortList.find(o => o.value === this.sortBy).name
@@ -120,15 +123,20 @@ export default {
     ...mapMutations({
       updateState: 'UPDATE_STATE'
     }),
+    ...mapActions({
+      deleteFolder: 'DELETE_FOLDER'
+    }),
     renameTaskFolder () {
       this.updateState({
-        currentFolder: {...this.currentFolder, Type: 'Rename'},
+        isCreateFolder: false,
         showTaskFolderAddModal: true
       })
     },
     async deleteTaskFolder () {
-      const result = ipcRenderer.sendSync('delete-folder', this.currentFolder)
-      if (result) {
+      const { response } = await showNativeMessage(
+        `${this.$t('message.confirmDeleteFolder')}「 ${this.currentFolder.Name} 」？`
+      )
+      if (!response) {
         try {
           await this.deleteFolder()
           this.$message.success('删除成功')
@@ -146,8 +154,10 @@ export default {
   display flex
   align-items stretch
   button
+    font-size 14px
+    color var(--text-main)
     background var(--background-section)
-    border-color var(--background-section)
+    border none !important
 
 .task-options__title
   display flex
@@ -163,6 +173,7 @@ export default {
   h1
     font-size $size-text-medium
     text-align center
+    color var(--text-main)
 
 .task-options__list
   color var(--text-main)
@@ -172,39 +183,41 @@ export default {
     user-select none
   .u-form__row
     border-radius 0 !important
-    // background white
     cursor pointer
-    &.rename
-      color $green
+    background var(--background-content)
+    border-color var(--background-section)
     &.delete
       color $red
 
 .task-options__sort
   .u-form__row
     border-radius 0 !important
-    // background white
+    background var(--background-content)
+    border-color var(--background-section)
     padding 0 12px
     cursor pointer
 
 .button-more
-  border-radius 50% 0 0 50%
-  padding 8px
+  border-radius 5px 0 0 5px
+  padding 5px 5px 5px 10px
 
 .button-sort
-  padding 8px
+  padding 5px
   border-radius 0
   margin 0 -1px
 
 .button-dir
-  border-radius 0 50% 50% 0
-  padding 8px
+  border-radius 0 5px 5px 0
+  padding 5px 10px 5px 5px
 
 .button-search
-  border-radius 50% 0 0 50%
+  border-radius 5px 0 0 5px
+  padding 5px 5px 5px 10px
 
 .button-add
   margin-left 0
-  border-radius 0 50% 50% 0
+  border-radius 0 5px 5px 0
+  padding 5px 10px 5px 5px
 
 .steps
   height 200px !important

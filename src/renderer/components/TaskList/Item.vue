@@ -6,7 +6,7 @@ div.task-item.u-bb(
     completed: data.Status === 'Completed'\
   }"
   @click="updateState({\
-    currentTask: data,\
+    currentTaskId: data.Id,\
     showTaskDetailModal: true\
   })"
 )
@@ -42,7 +42,7 @@ div.task-item.u-bb(
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 
 export default {
   props: {
@@ -54,7 +54,9 @@ export default {
 
   computed: {
     ...mapState([
-      'theme',
+      'theme'
+    ]),
+    ...mapGetters([
       'currentTask'
     ]),
     titleStyle () {
@@ -62,7 +64,7 @@ export default {
       return {
         textDecoration: Status === 'Completed' ? 'line-through' : 'none',
         color: Status === 'Completed'
-          ? this.theme === 'dark' ? '#666666 !important' : '#AAAAAA !important'
+          ? '#AAAAAA !important'
           : ''
       }
     },
@@ -123,16 +125,17 @@ export default {
 .task-item
   display flex
   align-items center
-  background var(--background-section)
-  padding 0 12px
+  background var(--background-content)
+  padding 0 12px 0 5px
   line-height 45px
   background-size 0px 100%
   position relative
-  transition all .2s
+  transition all .3s
   cursor pointer
   user-select none
   box-sizing border-box
   color var(--text-main)
+  border-left 0 solid $blue
   > i
     &.icon-check
     &.icon-check-o
@@ -154,16 +157,14 @@ export default {
     &:after
       display none
   &.active
-    *
-      color white
     background var(--task-background-active)
     .task-item__info
       background var(--task-info-background)
   &.completed
     *
-      opacity .7
-  &:hover:not(.active)
-    background rgba(black, .15)
+      opacity .9
+  &:hover
+    border-width 3px
 
 .task-item__content
   flex 1

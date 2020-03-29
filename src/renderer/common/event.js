@@ -3,8 +3,7 @@ import router from './router'
 import i18n from '../common/i18n'
 import { Message } from 'element-ui'
 import { ipcRenderer } from 'electron'
-import { getStoreValue } from './utils'
-import { isEmpty } from '~/share/utils'
+import { getStoreValue, showNativeMessage } from './utils'
 
 export default function () {
   const { dispatch, commit, state } = store
@@ -13,7 +12,7 @@ export default function () {
     switch (evt.keyCode) {
       // Enter display detail
       case 13:
-        if (!isEmpty(state.currentTask) && !state.showTaskAddModal && !state.showTaskFolderAddModal) {
+        if (state.currentTaskId && !state.showTaskAddModal && !state.showTaskFolderAddModal) {
           commit('UPDATE_STATE', { showTaskDetailModal: true })
         }
         break
@@ -39,6 +38,7 @@ export default function () {
   // Shortcut for create folder
   ipcRenderer.on('new-folder', () => {
     commit('UPDATE_STATE', {
+      isCreateFolder: true,
       showTaskFolderAddModal: true
     })
   })
@@ -68,10 +68,19 @@ export default function () {
     commit('UPDATE_STATE', { showSearch: true })
   })
 
+  // Delete task
+  ipcRenderer.on('delete-task', () => {
+    showNativeMessage(
+      `${i18n.t('message.confirmDeleteTask')}「 ${store.getters.currentTask.Subject} 」`
+    ).then(({response}) => {
+      if (!response) dispatch('DELETE_TASK')
+    })
+  })
+
   // Toggle task completed
   ipcRenderer.on('complete-task', async () => {
     try {
-      const { currentTask } = store.state
+      const { currentTask } = store.getters
       await dispatch('UPDATE_TASK', {
         Id: currentTask.Id,
         Status: currentTask.Status === 'Completed' ? 'NotStarted' : 'Completed'
@@ -85,7 +94,7 @@ export default function () {
   // Toggle task importance
   ipcRenderer.on('importance-task', async () => {
     try {
-      const { currentTask } = store.state
+      const { currentTask } = store.getters
       await dispatch('UPDATE_TASK', {
         Id: currentTask.Id,
         Importance: currentTask.Importance === 'High' ? 'Normal' : 'High'
@@ -105,7 +114,7 @@ export default function () {
 
 // Move current folder
 function nextFolder (dir) {
-  const { currentFolder } = store.state
+  const { currentFolder } = store.getters
   const folders = store.getters.folders.filter(o => o.Key !== 'Spacer')
   if (!folders.length) return
   const index = folders.findIndex(o => {
@@ -115,30 +124,38 @@ function nextFolder (dir) {
 
   if (nextIndex < 0 || nextIndex === folders.length) {
     store.commit('UPDATE_STATE', {
-      currentFolder: folders[dir < 0 ? folders.length - 1 : 0]
+      currentFolderId: folders[dir < 0 ? folders.length - 1 : 0].Id
     })
   } else {
     store.commit('UPDATE_STATE', {
-      currentFolder: folders[nextIndex]
+      currentFolderId: folders[nextIndex].Id
     })
   }
 }
 
 // Move current task
 export function nextTask (dir, tasks) {
-  const { currentTask, showSearch } = store.state
+  const { currentTaskId, showSearch } = store.state
   const taskList = showSearch ? tasks : store.getters.tasks
-  if (!taskList.length) return
-  const index = taskList.findIndex(o => o.Id === currentTask.Id)
+  // if (!taskList.length) return
+  const index = taskList.findIndex(o => o.Id === currentTaskId)
   const nextIndex = index + dir
 
-  if (nextIndex < 0 || nextIndex === taskList.length) {
-    store.commit('UPDATE_STATE', {
-      currentTask: taskList[dir < 0 ? taskList.length - 1 : 0]
+  if (nextIndex < 0) {
+    nextFolder(-1)
+    // eslint-disable-next-line no-undef
+    vm.$nextTick(() => {
+      nextTask(1)
+    })
+  } else if (nextIndex === taskList.length) {
+    nextFolder(1)
+    // eslint-disable-next-line no-undef
+    vm.$nextTick(() => {
+      nextTask(1)
     })
   } else {
     store.commit('UPDATE_STATE', {
-      currentTask: taskList[nextIndex]
+      currentTaskId: taskList[nextIndex].Id
     })
   }
 }

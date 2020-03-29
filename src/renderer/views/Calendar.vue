@@ -48,7 +48,7 @@ export default {
     }),
     onEventClick (event, e) {
       this.updateState({
-        currentTask: event.data,
+        currentTaskId: event.data.Id,
         showTaskDetailModal: true
       })
     }
@@ -61,18 +61,18 @@ export default {
   flex 1
   >>> .vuecal__header
     -webkit-app-region drag
-    background var(--task-background-active) !important
+    background var(--background-section) !important
   >>> .vuecal__menu
   >>> .vuecal__title-bar
     background none !important
     button
     span
-      color white !important
+      color var(--text-main) !important
   >>> .vuecal__menu button
     border-top 4px solid transparent
     &.active
       border-bottom-width 0
-      border-color white
+      border-color var(--text-main)
       background transparent
   >>> .vuecal__title-bar
     font-size $size-text-medium

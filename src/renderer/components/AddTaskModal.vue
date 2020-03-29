@@ -11,53 +11,62 @@ Modal.add-task(
       circle
       icon="el-icon-check"
     )
-  el-alert(
-    :title="$t('message.enterToSubmit')"
-    type="info"
-    center
-    :closable="false"
-  )
   div.add-task__content
     div.u-form__row-section
       div.u-form__row
         label.u-w50 {{$t('base.folder')}}
-        el-select.u-flex-1(v-model="belongFolder")
+        el-select.u-flex-1.u-mt-5.u-mb-5(v-model="belongFolder")
           el-option(
             v-for="item in taskFolders"
             :key="item.Id"
             :value="item.Id"
             :label="item.Name"
           )
-    div.u-form__row-section
       div.u-form__row
         label.u-w50 {{$t('base.name')}}
-        el-input(
+        el-input.u-mt-5.u-mb-5(
           ref="input"
           v-model="name"
           :placeholder="$t('task.name')"
-          @keyup.enter.native.stop="submit"
+          @keyup.enter.meta.native.stop="submit"
           clearable
           autofocus
+        )
+      //- Note
+      div.u-form__row.start
+        label.u-w50 {{$t('base.note')}}
+        el-input(
+          type="textarea"
+          v-model="note"
+          :placeholder="$t('base.note')"
+          rows="3"
+          clearable
         )
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations, mapGetters } from 'vuex'
 
 export default {
-  name: 'AddFolder',
+  name: 'AddTaskModel',
 
   data: () => ({
     name: '',
-    belongFolder: null
+    belongFolder: null,
+    note: ''
   }),
 
   computed: {
     ...mapState([
       'tasks',
       'taskFolders',
-      'currentFolder',
-      'showTaskAddModal'
+      'showTaskAddModal',
+      'clipboard',
+      'clipboardAs',
+      'showClipboardTip'
+    ]),
+    ...mapGetters([
+      'currentFolder'
     ])
   },
 
@@ -65,13 +74,22 @@ export default {
     showTaskAddModal (newValue) {
       if (!newValue) {
         this.name = ''
+        this.note = ''
         return
       }
-      if (this.currentFolder.Id) {
+      if (this.currentFolder.Id.length > 20) {
         this.belongFolder = this.currentFolder.Id
       } else {
-        const hasIdFolder = this.taskFolders.find(o => o.Id)
+        const hasIdFolder = this.taskFolders.find(o => o.Id.length > 20)
         if (hasIdFolder) this.belongFolder = hasIdFolder.Id
+      }
+      if (this.clipboard && this.clipboardAs) {
+        this[this.clipboardAs] = this.clipboard
+        this.updateState({
+          clipboard: '',
+          clipboardAs: '',
+          showClipboardTip: false
+        })
       }
       this.$nextTick(this.$refs.input.focus)
     }
@@ -84,7 +102,11 @@ export default {
     async submit () {
       try {
         const newTask = await this.$post(`/me/taskfolders/${this.belongFolder}/tasks`, {
-          Subject: this.name
+          Subject: this.name,
+          Body: {
+            ContentType: 'Text',
+            Content: this.note
+          }
         })
         this.updateState({
           tasks: [...this.tasks, newTask],
@@ -111,4 +133,11 @@ export default {
   display flex
   flex-direction column
   align-items stretch
+
+>>> textarea
+  font-size $size-text-medium
+  color var(--text-main)
+  background var(--background)
+  &:not(:focus)
+    border-color transparent
 </style>

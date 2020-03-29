@@ -11,10 +11,11 @@ div#app
   AddFolderModal
   AddTaskModal
   SettingsModal
+  ClipBoardTip
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import initShortCut from './common/event'
 import Notification from './common/notification'
 import LoginModal from '@/components/LoginModal'
@@ -25,8 +26,8 @@ import TaskDetailModal from '@/components/TaskDetailModal'
 import AddFolderModal from '@/components/AddFolderModal'
 import AddTaskModal from '@/components/AddTaskModal'
 import SettingsModal from '@/components/SettingsModal'
-import { ipcRenderer } from 'electron'
-import { changeTheme } from '@/common/utils'
+import ClipBoardTip from '@/components/ClipBoardTip'
+import { ipcRenderer, clipboard } from 'electron'
 
 const notify = new Notification()
 
@@ -41,7 +42,8 @@ export default {
     TaskDetailModal,
     AddFolderModal,
     AddTaskModal,
-    SettingsModal
+    SettingsModal,
+    ClipBoardTip
   },
 
   computed: {
@@ -54,28 +56,28 @@ export default {
       'sortStash',
       'language',
       'shouldLogin',
-      'currentTask',
-      'currentFolder',
+      'currentTaskId',
+      'currentFolderId',
       'playAlertVoice',
       'alertVoicevolume',
       'showCompleteTask',
       'showPlannedFolder',
       'showCalendarView',
       'showImportanceFolder'
+    ]),
+    ...mapGetters([
+      'currentTask',
+      'currentFolder'
     ])
   },
 
   mounted () {
     this.init()
     initShortCut()
-    // Update data when window focus
-    if (process.env.NODE_ENV !== 'development') {
-      window.onfocus = () => this.init(false)
+    // Check clipboard when window focus
+    window.onfocus = () => {
+      this.checkClipBoard()
     }
-    // Update data every 30 minute
-    // setInterval(() => {
-    //   this.init(false)
-    // }, 1000 * 60 * 30)
   },
 
   beforeDestroy () {
@@ -93,7 +95,7 @@ export default {
       deep: true
     },
     currentTask: {
-      handler (newValue) {
+      handler () {
         ipcRenderer.send('update-touchbar', {
           ...this.currentTask,
           showCompleteTask: this.showCompleteTask
@@ -101,19 +103,11 @@ export default {
       },
       deep: true
     },
-    currentFolder: {
-      handler (newValue) {
-        this.updateState({currentTask: {}})
-        ipcRenderer.sendSync('update-setting', {lastOpenFolder: newValue.Id})
-      },
-      deep: true
-    },
-    theme: {
-      handler (newValue) {
-        changeTheme(newValue)
-        ipcRenderer.sendSync('update-setting', {theme: newValue})
-      },
-      immediate: true
+    currentFolderId (newValue) {
+      this.updateState({currentTaskId: null})
+      ipcRenderer.sendSync('update-setting', {
+        lastOpenFolder: newValue
+      })
     },
     language (newValue) {
       ipcRenderer.sendSync('update-setting', {language: newValue})
@@ -174,7 +168,7 @@ export default {
         // await this.getUserPhoto()
         loading && loading.close()
       } catch (err) {
-        console.log(err)
+        // console.log(err)
         loading && loading.close()
       }
     },
@@ -189,6 +183,15 @@ export default {
       }
       this.updateState({sortStash})
       ipcRenderer.sendSync('update-setting', {sortStash})
+    },
+    checkClipBoard () {
+      const text = clipboard.readText('clipboard')
+      if (text) {
+        this.updateState({
+          clipboard: text,
+          showClipboardTip: true
+        })
+      }
     }
   }
 }

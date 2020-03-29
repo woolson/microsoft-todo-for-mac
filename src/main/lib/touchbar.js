@@ -1,9 +1,19 @@
-import { TouchBar } from 'electron'
+import { TouchBar, nativeImage } from 'electron'
 import store from './store'
 import language from './language'
 
 const { TouchBarButton, TouchBarSpacer } = TouchBar
 let cacheOptions = {}
+/** Touchbar Icons */
+const ICONS = {
+  viewDisable: nativeImage.createFromPath('static/image/view-disable.png'),
+  view: nativeImage.createFromPath('static/image/view.png'),
+  completed: nativeImage.createFromPath('static/image/completed.png'),
+  uncompleted: nativeImage.createFromPath('static/image/uncompleted.png'),
+  importance: nativeImage.createFromPath('static/image/importance.png'),
+  unimportance: nativeImage.createFromPath('static/image/unimportance.png'),
+  delete: nativeImage.createFromPath('static/image/delete.png')
+}
 
 export default function setTouchBar (mainWindow, options) {
   if (options === void 0) {
@@ -25,10 +35,9 @@ export default function setTouchBar (mainWindow, options) {
     }
   })
   const showComplete = new TouchBarButton({
-    label: options.showCompleteTask
-      ? LANG.hideComplete
-      : LANG.showComplete,
-    backgroundColor: '#1c9fff',
+    icon: options.showCompleteTask
+      ? ICONS.viewDisable
+      : ICONS.view,
     click () {
       setTouchBar(mainWindow, {
         ...options,
@@ -38,26 +47,23 @@ export default function setTouchBar (mainWindow, options) {
     }
   })
   const complete = new TouchBarButton({
-    label: options.Status !== 'Completed'
-      ? LANG.taskComplete
-      : LANG.taskStart,
-    backgroundColor: '#3DC550',
+    icon: options.Status !== 'Completed'
+      ? ICONS.uncompleted
+      : ICONS.completed,
     click () {
       mainWindow.webContents.send('complete-task')
     }
   })
   const importance = new TouchBarButton({
-    label: options.Importance === 'High'
-      ? LANG.taskNormal
-      : LANG.taskImportance,
-    backgroundColor: '#FBBB4D',
+    icon: options.Importance === 'High'
+      ? ICONS.importance
+      : ICONS.unimportance,
     click () {
       mainWindow.webContents.send('importance-task')
     }
   })
   const deleteTask = new TouchBarButton({
-    label: LANG.deleteTask,
-    backgroundColor: '#FA6260',
+    icon: ICONS.delete,
     click () {
       mainWindow.webContents.send('delete-task', options)
     }
@@ -71,10 +77,9 @@ export default function setTouchBar (mainWindow, options) {
 
   if (options.Id) {
     touchbar.push(...[
-      new TouchBarSpacer({ size: 'flexible' }),
+      new TouchBarSpacer({ size: 'large' }),
       complete,
       importance,
-      new TouchBarSpacer({ size: 'flexible' }),
       deleteTask
     ])
   }

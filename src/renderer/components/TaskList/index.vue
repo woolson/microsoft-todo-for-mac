@@ -11,7 +11,7 @@ div.task-list
       @click="cancelSearch"
       round
     ) {{$t('base.cancel')}}
-  Header(v-if="!showSearch")
+  Header(v-if="!showSearch" :class="{'blur-bg': blurTop}")
     div.task-list__title(slot="left")
       span.u-bold(
         :style="{color: showCompleteTask ? $color.green : $color.red}"
@@ -20,6 +20,7 @@ div.task-list
     Options(slot="right")
   div.task-list__content(
     v-if="showSearch ? searchTasks.length : tasks.length"
+    @scroll="onScroll"
   )
     Item(
       v-for="item in showSearch ? searchTasks : tasks"
@@ -51,15 +52,13 @@ export default {
       cache: {
         showCompleteTask: false,
         currentFolder: {}
-      }
+      },
+      blurTop: false
     }
   },
 
   computed: {
     ...mapState([
-      'taskFolders',
-      'currentTask',
-      'currentFolder',
       'sortDir',
       'sortBy',
       'showSearch',
@@ -68,7 +67,11 @@ export default {
     ...mapState({
       allTasks: 'tasks'
     }),
-    ...mapGetters(['tasks']),
+    ...mapGetters([
+      'tasks',
+      'currentTask',
+      'currentFolder'
+    ]),
     searchTasks () {
       if (!this.searchStr) return []
       return this.allTasks.filter(o => {
@@ -117,6 +120,9 @@ export default {
       } else {
         nextTask(evt.keyCode === 40 ? 1 : -1, this.searchTasks)
       }
+    },
+    onScroll (evt) {
+      this.blurTop = evt.target.scrollTop > 10
     }
   }
 }
@@ -128,7 +134,7 @@ export default {
   display flex
   flex-direction column
   position relative
-  background var(--background-content)
+  background var(--background-right-content)
   transition background .2s
   .header
     position absolute
@@ -137,19 +143,17 @@ export default {
     z-index 9
     width 100%
     color var(--text-sub)
-    background var(--background-content)
+    // background var(--background-content)
     -webkit-app-region drag
+    &.blur-bg
+      backdrop-filter saturate(180%) blur(20px)
 
 .task-list__content
   padding 15px
-  padding-top 65px
+  padding-top 55px
   transition background .2s
   flex 1
   overflow auto
-  &::-webkit-scrollbar
-    width 3px !important
-  &::-webkit-scrollbar-thumb
-    background rgba(black, .25)
 
 .task-list__empty
   flex 1
@@ -158,13 +162,13 @@ export default {
   align-items center
   justify-content center
   padding-bottom 50px
+  color var(--text-main)
+  opacity .5
   i
-    color $gray
     font-size 180px
   span
-    color $gray
     margin-top 10px
-    font-size $size-text-medium
+    font-size 14px
 
 .task-list__title
   outline none

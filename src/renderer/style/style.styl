@@ -1,13 +1,15 @@
 darkTheme() {
   // Background
-  --background-sidebar $sidebar-dark
+  --background-sidebar linear-gradient(0, $sidebar-dark, darken($sidebar-dark, 20))
+  --background-right-content rgba(#222529, .88)
+
   --background $background-dark
   --background-content $background-dark-content
   --background-section $background-dark-section
-  --background-section-hover rgba(black, .25)
   // Text
   --text-main #BBBBBB
   --text-sub $text-light
+  --text-placeholder rgba(#BBBBBB, .3)
   // Border
   --border #222
   --border-arrow $background-dark
@@ -21,14 +23,17 @@ darkTheme() {
 
 lightTheme() {
   // Background
-  --background-sidebar $sidebar-light
+  // --background-sidebar $sidebar-light
+  --background-sidebar linear-gradient(0, $sidebar-light, lighten($sidebar-light, 50))
+  --background-right-content rgba(#EFEFEF, .8)
+
   --background white
   --background-content white
   --background-section #F8F8FA
-  --background-section-hover rgba($blue, .15)
   // Text
   --text-main $text
   --text-sub $gray
+  --text-placeholder rgba($text, .3)
   // Border
   --border $border
   --border-arrow $arrow
@@ -36,7 +41,8 @@ lightTheme() {
   --folder-background rgba(black, .08)
   --folder-color #333333
   // Task
-  --task-background-active linear-gradient(45deg, $blue, $purple)
+  --task-background-active #EEEEEE
+  // --task-background-active linear-gradient(45deg, $blue, $purple)
   --task-info-background rgba(white, .4)
 }
 
@@ -47,15 +53,12 @@ lightTheme() {
   :root
     darkTheme()
 
-[data-theme="theme-light"]
-  lightTheme()
-
-[data-theme="theme-dark"]
-  darkTheme()
-
 ::selection
   background $blue
   color white
+
+::-webkit-input-placeholder
+  color var(--text-placeholder) !important
 
 *:not(input,textarea)
   outline none
@@ -114,6 +117,9 @@ body
   background $green
   border-color $green
 
+.el-button.is-plain:hover
+  background var(--background) !important
+
 .el-popover
   padding 0
 
@@ -155,39 +161,63 @@ body
 .el-date-editor.el-input
   width auto
 
+.el-date-picker
+  width 275px
+  .el-date-table td
+    padding 0
+  .el-picker-panel__content
+    width 250px
+  .el-date-picker__header
+    margin 5px 12px 0
+  .el-picker-panel__content
+    margin 0 12px 5px
+
 .el-input__inner
 .el-select-dropdown
 .el-alert--info
 .el-input__inner
-.el-picker-panel
-.el-picker-panel__footer
 .el-message-box
+.el-time-spinner__item:hover:not(.disabled):not(.active)
   background var(--background-section)
 
 .el-popover
 .el-select-dropdown
-  background var(--background-content)
-
-.el-popover
-.el-button--default
-.el-date-picker__time-header
+.el-time-panel
 .el-picker-panel
 .el-picker-panel__footer
-.el-date-table th
+  background var(--background-content)
+
+.el-button--default
   border-color var(--border)
 
 .el-input__inner
 .el-select-dropdown
+.el-picker-panel
+.el-picker-panel__footer
+.el-date-table th
+.el-date-picker__time-header
+.el-time-panel
+.el-time-panel__footer
+.el-time-panel__content::before
+.el-time-panel__content::after
+.el-popover
   border-color var(--background-section)
 
 .el-select-dropdown__item
 .el-input__inner
 .el-date-table__row .available
 .el-picker-panel__icon-btn
+.el-time-panel__btn.cancel
   color var(--text-main) !important
 
 .el-date-table__row .prev-month
 .el-date-table__row .next-month
+  opacity .3
+
+.el-picker-panel__footer
+  border-radius 0 0 4px 4px
+
+.el-time-spinner__item.active
   color var(--text-main) !important
 
 .el-input__inner::-webkit-input-placeholder
@@ -196,7 +226,7 @@ body
 .el-popover
 .el-popper
   .popper__arrow
-    border-bottom-color var(--border-arrow) !important
+    border-bottom-color var(--background-section) !important
   .popper__arrow::after
     border-bottom-color var(--background-content) !important
 
@@ -209,11 +239,11 @@ body
 .el-input input
   background var(--background) !important
 
-.el-select-dropdown__item
-  max-width 180px
-  text-overflow ellipsis
-  white-space nowrap
-  overflow hidden
+// .el-select-dropdown__item
+//   max-width 180px
+//   text-overflow ellipsis
+//   white-space nowrap
+//   overflow hidden
 
 .el-button--default
 .el-radio-button__inner

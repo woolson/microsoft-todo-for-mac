@@ -95,6 +95,9 @@ for $size in 10 11 12 13 14 15 20
 .u-mlauto
   margin-left auto !important
 
+.u-flex
+  display flex
+
 .u-flex-1
   flex 1
 
@@ -232,8 +235,11 @@ for $size in 10 11 12 13 14 15 20
   user-select none
   background var(--background-section)
   transition background .2s
+  &.start
+    align-items flex-start
   @extend .u-bb
   > label
+    line-height 22px
     margin-right 10px
     white-space nowrap
     color var(--text-main)

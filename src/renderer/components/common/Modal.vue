@@ -138,7 +138,7 @@ export default {
   position relative
   z-index 99
   overflow hidden
-  box-shadow 0 0 15px rgba(black, .2)
+  // box-shadow 0 0 15px rgba(black, .2)
   transition background .2s
 
 .modal--right

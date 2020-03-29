@@ -1,34 +1,32 @@
 <template lang="pug">
 div.task-detail-main
-  Header.task-detail__header
-    i.iconfont.u-mr10(
-      slot="left"
-      :class="checkClass"
-      @click="changeTaskStatus"
-    )
-    el-input(
-      v-model="name"
-      clearable
-      @blur="subjectSubmit"
-      @keyup.enter.native="subjectSubmit"
-    )
-    i.iconfont.u-ml10(
-      slot="right"
-      :class="starClass"
-      @click="changeTaskImportance"
-    )
-  el-alert(
-    :title="$t('message.enterToSubmit')"
-    type="info"
-    center
-    :closable="false"
-  )
   div.task-detail-main__content
+    div.u-form__row-section.u-mt12
+      div.u-form__row.u-bb
+        label {{$t('base.name')}}
+        el-input.u-mt-5.u-mb-5(
+          v-model="name"
+          clearable
+          @blur="subjectSubmit"
+        )
+      div.u-form__row
+        el-button.u-flex-1.u-mt-5.u-mb-5(
+          size="small"
+          @click="changeTaskStatus"
+        )
+          i.iconfont.u-s12.u-mr5(:class="checkClass")
+          span {{$t(`base.${isCompleted ? '' : 'un'}completed`)}}
+        el-button.u-flex-1.u-mt-5.u-mb-5(
+          size="small"
+          @click="changeTaskImportance"
+        )
+          i.iconfont.u-s12.u-mr5(:class="starClass")
+          span {{$t(`base.${isImportance ? '' : 'un'}importance`)}}
     div.u-form__row-section.u-mt12
       div.u-form__row.u-bb
         label {{$t('base.folder')}}
         div.u-center-end
-          el-select.u-w210(
+          el-select.u-w180.u-mt-5.u-mb-5(
             v-model="parentId"
             @change="changeParent"
           )
@@ -41,7 +39,7 @@ div.task-detail-main
       div.u-form__row.u-bb
         label {{$t('task.remindTime')}}
         div.u-center-end
-          el-date-picker(
+          el-date-picker.u-w180.u-mt-5.u-mb-5(
             ref="remindPicker"
             v-model="dateTime"
             type="datetime"
@@ -53,7 +51,7 @@ div.task-detail-main
       div.u-form__row
         label {{$t('task.dueTime')}}
         div.u-center-end
-          el-date-picker(
+          el-date-picker.u-w180.u-mt-5.u-mb-5(
             ref="stopPicker"
             v-model="stopDate"
             type="date"
@@ -66,15 +64,39 @@ div.task-detail-main
       //-   label 重复
       //-   i.iconfont.icon-right.u-ml5
     div.u-form__row-section
+      //- Note
+      div.u-form__row.start
+        label {{$t('base.note')}}
+        el-input(
+          type="textarea"
+          v-model="note"
+          @blur="noteSubmit"
+          rows="3"
+        )
+      div.u-form__row.link(
+        v-for="link in noteLinks"
+      )
+        label {{link}}
+        i.iconfont.icon-go.u-ml15.u-pointer(@click="openLink(link)")
+    div.u-form__row-section
       //- Choose upload file
       div.u-form__row
-        label {{$t('task.addFile')}}
+        label
+          span {{$t('base.attachment')}}
+          i.el-icon-loading.u-ml5(v-if="isLoading")
+          i.el-icon-refresh.u-ml5.u-pointer(
+            v-else
+            :title="$t('base.update')"
+            @click="fetchAttachments"
+          )
         input.u-transparent.u-w0(
           ref="file"
           type="file"
           @change="selectFile"
         )
-        el-button(@click="showSelect") {{$t('base.upload')}}
+        el-button.u-mt-5.u-mb-5(
+          @click="showSelect"
+        ) {{$t('base.upload')}}
       //- Attachment file list
       div.u-form__row.u-bb(
         v-for="item,index in attachments"
@@ -89,15 +111,6 @@ div.task-detail-main
         i.el-icon-close.u-s16.u-pointer(
           @click="removeAttachment(item, index)"
         )
-    div.u-form__row-section
-      //- Note
-      div.u-form__row
-        textarea(
-          v-model="note"
-          :placeholder="$t('base.note')"
-          @blur="noteSubmit"
-          @keyup.enter="noteSubmit"
-        )
   div.task-detail-main__bottom
     span {{taskDateInfo}}
     el-button(
@@ -109,9 +122,11 @@ div.task-detail-main
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from 'vuex'
+import { mapState, mapActions, mapMutations, mapGetters } from 'vuex'
 import { dater, fileToBase64 } from '~/share/utils'
-import { ipcRenderer, remote } from 'electron'
+import { ipcRenderer, remote, shell } from 'electron'
+import { showNativeMessage } from '@/common/utils'
+import axios from 'axios'
 
 export default {
   data () {
@@ -122,83 +137,96 @@ export default {
       dateTime: '',
       stopDate: '',
       note: '',
-      attachments: []
+      isLoading: false,
+      cancel: null
     }
   },
 
   computed: {
     ...mapState([
       'tasks',
-      'currentTask',
       'taskFolders',
+      'currentTaskId',
       'showTaskDetailModal'
     ]),
+    ...mapGetters([
+      'currentTask'
+    ]),
+    isCompleted () {
+      return this.currentTask.Status === 'Completed'
+    },
+    isImportance () {
+      return this.currentTask.Importance === 'High'
+    },
+    attachments () {
+      return this.currentTask.Attachments || []
+    },
     titleStyle () {
-      const { Status } = this.currentTask
       return {
-        textDecoration: Status === 'Completed' ? 'line-through' : 'none',
-        color: Status === 'Completed' ? '#AAAAAA' : ''
+        textDecoration: this.isCompleted ? 'line-through' : 'none',
+        color: this.isCompleted ? '#AAAAAA' : ''
       }
     },
     checkClass () {
-      return this.currentTask.Status === 'Completed' ? 'icon-check' : 'icon-check-o'
+      return this.isCompleted ? 'icon-check' : 'icon-check-o'
     },
     starClass () {
-      return this.currentTask.Importance === 'High' ? 'icon-star' : 'icon-star-o'
+      return this.isImportance ? 'icon-star' : 'icon-star-o'
     },
     remindDateText () {
-      return this.dateTime ? dater(this.dateTime).format('MM-DD HH:mm') : this.$t('base.select')
+      return this.dateTime
+        ? dater(this.dateTime).format('MM-DD HH:mm')
+        : this.$t('base.select')
     },
     stopDateText () {
-      return this.stopDate ? dater(this.stopDate).format('MM-DD') : this.$t('base.select')
+      return this.stopDate
+        ? dater(this.stopDate).format('MM-DD')
+        : this.$t('base.select')
     },
     taskDateInfo () {
-      const { CreatedDateTime, CompletedDateTime, Status } = this.currentTask
-      if (Status === 'Completed') {
+      const { CreatedDateTime, CompletedDateTime } = this.currentTask
+      if (this.isCompleted) {
         return `${this.$t('task.completeAt')} ${dater(CompletedDateTime.DateTime).format('YYYY-MM-DD HH:mm:SS')}`
       } else {
         return `${this.$t('task.createAt')} ${dater(CreatedDateTime).format('YYYY-MM-DD HH:mm:SS')}`
       }
+    },
+    noteLinks () {
+      const note = this.note || ''
+      return note.match(/(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/ig)
     }
   },
 
   watch: {
-    currentTask: {
-      handler (newValue, oldValue) {
-        if (newValue.Id === oldValue.Id) return
-        const {
-          Body,
-          DueDateTime,
-          HasAttachments,
-          ParentFolderId,
-          ReminderDateTime,
-          Subject
-        } = newValue
-        if (ReminderDateTime) {
-          this.dateTime = dater(ReminderDateTime.DateTime).format('x')
-        } else this.dateTime = ''
-        if (DueDateTime) {
-          this.stopDate = dater(DueDateTime.DateTime).format('x')
-        } else this.stopDate = ''
+    currentTaskId () {
+      const {
+        Body,
+        DueDateTime,
+        HasAttachments,
+        ParentFolderId,
+        ReminderDateTime,
+        Subject
+      } = this.currentTask
+      if (ReminderDateTime) {
+        this.dateTime = dater(ReminderDateTime.DateTime).format('x')
+      } else this.dateTime = ''
+      if (DueDateTime) {
+        this.stopDate = dater(DueDateTime.DateTime).format('x')
+      } else this.stopDate = ''
 
-        this.parentId = ParentFolderId
-        this.name = Subject
-        this.note = Body && Body.Content
-        // get task attachments
-        if (HasAttachments && this.showTaskDetailModal) this.fetchAttachments()
-        else this.attachments = []
-      },
-      deep: true
-    },
-    showTaskDetailModal (newValue) {
-      if (this.currentTask.HasAttachments && newValue) {
-        this.fetchAttachments()
+      this.parentId = ParentFolderId
+      this.name = Subject
+      this.note = Body && Body.Content
+      // get task attachments
+      if (HasAttachments && this.showTaskDetailModal && this.attachments.length === 0) {
+        setTimeout(() => {
+          this.fetchAttachments()
+        }, 200)
+      } else {
+        this.cancel && this.cancel()
+        this.isLoading = false
       }
     }
-  },
-
-  mounted () {
-    ipcRenderer.on('delete-task', () => this.onDelete())
   },
 
   methods: {
@@ -219,13 +247,13 @@ export default {
     changeTaskStatus () {
       this.updateTask({
         Id: this.currentTask.Id,
-        Status: this.currentTask.Status === 'Completed' ? 'NotStarted' : 'Completed'
+        Status: this.isCompleted ? 'NotStarted' : 'Completed'
       })
     },
     changeTaskImportance () {
       this.updateTask({
         Id: this.currentTask.Id,
-        Importance: this.currentTask.Importance === 'High' ? 'Normal' : 'High'
+        Importance: this.isImportance ? 'Normal' : 'High'
       })
     },
     showRemindPicker () {
@@ -239,21 +267,46 @@ export default {
       else showPicker()
     },
     async fetchAttachments () {
+      const taskId = this.currentTask.Id
+      if (this.isLoading) {
+        if (this.cancel) {
+          this.cancel()
+          this.isLoading = false
+        }
+      } else {
+        this.isLoading = true
+      }
       const { value } = await this.$get(
-        `/me/tasks/${this.currentTask.Id}/attachments`,
+        `/me/tasks/${taskId}/attachments`,
         null,
-        {showLoading: false}
+        {
+          showLoading: false,
+          cancelToken: new axios.CancelToken(c => {
+            this.cancel = c
+          })
+        }
       )
-      this.attachments = value
+
+      this.updateStateTask({
+        Id: taskId,
+        Attachments: value
+      })
+      this.isLoading = false
     },
     async removeAttachment (item, index) {
       try {
         const message = `${this.$t('message.confirmToDelete')} ${item.Name}`
-        const result = await this.showNativeMessage(message)
-        if (!result) {
+        const { response } = await showNativeMessage(message)
+        if (!response) {
           await this.$fetch('DELETE', `/me/tasks/${this.currentTask.Id}/attachments/${item.Id}`)
-          this.attachments.splice(index, 1)
-          this.updateTaskAttachment()
+          const newAttachment = [...this.attachments]
+          newAttachment.splice(index, 1)
+          this.updateStateTask({
+            Id: this.currentTask.Id,
+            Attachments: newAttachment,
+            HasAttachments: !!newAttachment.length
+          })
+          // this.updateTaskAttachment()
         }
       } catch (err) {
         this.$message.error(this.$t('message.deleteFailed'))
@@ -265,7 +318,7 @@ export default {
         IsReminderOn: !!value,
         ReminderDateTime: value ? {
           DateTime: value.toISOString(),
-          TimeZone: 'Asia/Shanghai'
+          TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         } : null
       })
     },
@@ -274,7 +327,7 @@ export default {
         Id: this.currentTask.Id,
         DueDateTime: value ? {
           DateTime: value.toISOString(),
-          TimeZone: 'Asia/Shanghai'
+          TimeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
         } : null
       })
     },
@@ -290,8 +343,11 @@ export default {
         ContentBytes: base64.split('base64,')[1]
       })
       evt.target.value = ''
-      this.attachments.push(result)
-      this.updateTaskAttachment()
+      this.updateStateTask({
+        Id: this.currentTask.Id,
+        Attachments: [...this.attachments, result],
+        HasAttachments: true
+      })
     },
     async noteSubmit () {
       const Body = this.currentTask.Body || {}
@@ -315,47 +371,41 @@ export default {
     async onDelete () {
       try {
         const message = `${this.$t('message.confirmToDelete')} ${this.currentTask.Subject} ？`
-        const result = await this.showNativeMessage(message)
-        if (!result) {
+        const { response } = await showNativeMessage(message)
+
+        if (!response) {
           await this.deleteTask()
           this.$message.success(this.$t('message.deleteSuccessfully'))
         }
       } catch (err) {
-        // console.log(err)
+        console.log(err)
         this.$message.error(this.$t('message.deleteFailed'))
       }
-    },
-    showNativeMessage (message) {
-      return new Promise((resolve, reject) => {
-        remote.dialog.showMessageBox(remote.getCurrentWindow(), {
-          type: 'question',
-          icon: remote.nativeImage.createFromDataURL(require('@/assets/image/warning.png')),
-          buttons: [this.$t('base.submit'), this.$t('base.cancel')],
-          defaultId: 0,
-          message: this.$t('base.notice'),
-          detail: message
-        }, resolve)
-      })
     },
     updateTaskAttachment () {
       const index = this.tasks.findIndex(o => o.Id === this.currentTask.Id)
       if (index !== -1) {
-        this.updateStateTask(Object.assign({}, this.tasks[index], {HasAttachments: !!this.attachments.length}))
+        this.updateStateTask({
+          ...this.tasks[index],
+          HasAttachments: !!this.attachments.length
+        })
       }
     },
-    downloadAttachment (file) {
-      remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
+    async downloadAttachment (file) {
+      const res = await remote.dialog.showSaveDialog(remote.getCurrentWindow(), {
         defaultPath: file.Name
-      }, (filename) => {
-        if (filename) {
-          ipcRenderer.sendSync('save-file', {file, filename})
-          this.$message.success('成功')
-        }
       })
+      if (res.filePath) {
+        ipcRenderer.sendSync('save-file', {file, filename: res.filePath})
+        this.$message.success('成功')
+      }
     },
     viewFile (file) {
       // console.log('viewFile')
       ipcRenderer.sendSync('view-file', file)
+    },
+    openLink (link) {
+      shell.openExternal(link)
     }
   }
 }
@@ -370,6 +420,22 @@ export default {
     width 210px
   .el-alert
     flex-shrink 0
+  .icon-star
+    color $yellow
+  .icon-check
+    color $green
+
+.link
+  display flex
+  label
+    flex 1
+    width 1px
+    text-overflow ellipsis
+    white-space nowrap
+    overflow hidden
+    text-decoration underline
+  i:hover
+    color $blue
 
 .task-detail__header
   padding 5px 15px
@@ -388,20 +454,19 @@ export default {
   i
     font-size 20px
     cursor pointer
+    color var(--text-main)
     &.icon-check
       color $green
     &.icon-star
       color $yellow
 
-textarea
-  width 100%
-  height 60px
-  border none
-  resize none
-  outline none
+>>> textarea
   font-size $size-text-medium
   color var(--text-main)
-  background transparent
+  background var(--background)
+  word-break break-all
+  &:not(:focus)
+    border-color transparent
 
 .el-input__prefix
   top -2px

@@ -1,7 +1,8 @@
 import axios from 'axios'
 import { objToForm, dater } from '~/share/utils'
 import { AUTH_SCOPE, CLIENT_ID, CLIENT_SECRET, REDIRECT_URI } from '~/share/static'
-import { ipcRenderer } from 'electron'
+import { ipcRenderer, remote } from 'electron'
+import i18n from './i18n'
 
 // Get setting from store
 export function getStoreValue (key, defaultValue) {
@@ -63,4 +64,15 @@ export function changeTheme (theme) {
   } else {
     document.documentElement.removeAttribute('data-theme')
   }
+}
+
+export function showNativeMessage (message) {
+  return remote.dialog.showMessageBox(remote.getCurrentWindow(), {
+    type: 'question',
+    icon: remote.nativeImage.createFromDataURL(require('@/assets/image/warning.png')),
+    buttons: [i18n.t('base.submit'), i18n.t('base.cancel')],
+    defaultId: 0,
+    message: i18n.t('base.notice'),
+    detail: message
+  })
 }

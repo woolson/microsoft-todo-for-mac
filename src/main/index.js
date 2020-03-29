@@ -4,7 +4,6 @@ import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import initMessager from './lib/messager'
 import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
-import storeSetting from './lib/store'
 import fundebug from 'fundebug-nodejs'
 
 fundebug.apikey = 'd7014f96a99bf969b1a571343679a75b4ac453f4c5cd1496fa63782b2ee3ea6b'
@@ -62,10 +61,8 @@ function createWindow () {
   initMessager(mainWindow)
   // Listen preference for theme
   nativeTheme.on('updated', () => {
-    if (storeSetting.get('theme') === 'auto') {
-      const isDark = nativeTheme.shouldUseDarkColors
-      mainWindow.webContents.send('theme-change', isDark)
-    }
+    const isDark = nativeTheme.shouldUseDarkColors
+    mainWindow.webContents.send('theme-change', isDark)
   })
 
   mainWindow.on('closed', () => {
