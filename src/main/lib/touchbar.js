@@ -1,43 +1,57 @@
 import { TouchBar, nativeImage } from 'electron'
 import store from './store'
 import language from './language'
-
+// import { readFileSync } from 'fs'
+import { join } from 'path'
 const { TouchBarButton, TouchBarSpacer } = TouchBar
+
 let cacheOptions = {}
 /** Touchbar Icons */
-const ICONS = {
-  viewDisable: nativeImage.createFromPath('static/image/view-disable.png'),
-  view: nativeImage.createFromPath('static/image/view.png'),
-  completed: nativeImage.createFromPath('static/image/completed.png'),
-  uncompleted: nativeImage.createFromPath('static/image/uncompleted.png'),
-  importance: nativeImage.createFromPath('static/image/importance.png'),
-  unimportance: nativeImage.createFromPath('static/image/unimportance.png'),
-  delete: nativeImage.createFromPath('static/image/delete.png')
+let Icons
+
+/**
+ * 文件路径转原生图片
+ * @param {string} path 静态文件路径
+ */
+function pathToNativeImg (path) {
+  return nativeImage.createFromPath(join(__static, path))
 }
 
 export default function setTouchBar (mainWindow, options) {
+  if (!Icons) {
+    Icons = {
+      viewDisable: pathToNativeImg('/image/view-disable.png'),
+      view: pathToNativeImg('/image/view.png'),
+      completed: pathToNativeImg('/image/completed.png'),
+      uncompleted: pathToNativeImg('/image/uncompleted.png'),
+      importance: pathToNativeImg('/image/importance.png'),
+      unimportance: pathToNativeImg('/image/unimportance.png'),
+      delete: pathToNativeImg('/image/delete.png')
+    }
+  }
+
   if (options === void 0) {
     options = cacheOptions
   }
-  const LANG = language[store.get('language')]
+  const Lang = language[store.get('language')]
 
   cacheOptions = options
   const newFolder = new TouchBarButton({
-    label: LANG.createFolder,
+    label: Lang.createFolder,
     click () {
       mainWindow.webContents.send('new-folder')
     }
   })
   const newTask = new TouchBarButton({
-    label: LANG.createTask,
+    label: Lang.createTask,
     click () {
       mainWindow.webContents.send('new-task')
     }
   })
   const showComplete = new TouchBarButton({
     icon: options.showCompleteTask
-      ? ICONS.viewDisable
-      : ICONS.view,
+      ? Icons.view
+      : Icons.viewDisable,
     click () {
       setTouchBar(mainWindow, {
         ...options,
@@ -48,22 +62,22 @@ export default function setTouchBar (mainWindow, options) {
   })
   const complete = new TouchBarButton({
     icon: options.Status !== 'Completed'
-      ? ICONS.uncompleted
-      : ICONS.completed,
+      ? Icons.uncompleted
+      : Icons.completed,
     click () {
       mainWindow.webContents.send('complete-task')
     }
   })
   const importance = new TouchBarButton({
     icon: options.Importance === 'High'
-      ? ICONS.importance
-      : ICONS.unimportance,
+      ? Icons.importance
+      : Icons.unimportance,
     click () {
       mainWindow.webContents.send('importance-task')
     }
   })
   const deleteTask = new TouchBarButton({
-    icon: ICONS.delete,
+    icon: Icons.delete,
     click () {
       mainWindow.webContents.send('delete-task', options)
     }

@@ -2,13 +2,8 @@
 
 import { app, BrowserWindow, ipcMain, nativeTheme } from 'electron'
 import initMessager from './lib/messager'
-import setTouchBar from './lib/touchbar'
 import setMenu from './lib/menu'
-import fundebug from 'fundebug-nodejs'
-
-fundebug.apikey = 'd7014f96a99bf969b1a571343679a75b4ac453f4c5cd1496fa63782b2ee3ea6b'
-
-// const setting = storeSetting.get()
+import setTouchBar from './lib/touchbar'
 
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')

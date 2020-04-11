@@ -1,7 +1,6 @@
 import { app } from 'electron'
 import path from 'path'
 import merge from 'deepmerge'
-import fundebug from 'fundebug-nodejs'
 import { readFileSync, writeFileSync, existsSync } from 'fs'
 
 export class Store {
@@ -22,7 +21,6 @@ export class Store {
         ...JSON.parse(readFileSync(this.filePath) || '{}')
       }
     } catch (err) {
-      fundebug.notifyError(err)
       result = {}
     }
     return key ? result[key] : result
