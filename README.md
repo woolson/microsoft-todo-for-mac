@@ -11,7 +11,7 @@
 <a href="https://woolson.github.io/npmer-page/">
 <img src="https://woolson.gitee.io/npmer-badge/DarkMode%20%E9%BB%91%E6%9A%97%E6%A8%A1%E5%BC%8F-555555-Supported%20%E6%94%AF%E6%8C%81-46bc99-gear-ffffff-square-flat-plain.svg" />
 <img src="https://woolson.gitee.io/npmer-badge/TouchBar-555555-Supported%20%E6%94%AF%E6%8C%81-e05d44-up-ffffff-square-flat-plain.svg" />
-<img src="https://woolson.gitee.io/npmer-badge/version%20%E7%89%88%E6%9C%AC-555555-2.2.1-7289da-check-ffffff-square-flat-plain.svg" />
+<img src="https://woolson.cn/npmer/github/release/b77db66c-dd6b-409a-a1f3-3ff0bf414c15?user=woolson&repo=microsoft-todo-mac" />
 </a>
 </div>
 
